@@ -5,6 +5,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 from tornado.options import define, options
+from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
 from utils import session
@@ -21,14 +22,19 @@ class ZebraApplicatoin(tornado.web.Application):
                 'redis_port': 6379,
                 'redis_pass': '123456',
                 },
-            debug = True
+            debug = True,
+            xsrf_cookies= True,
+            login_url="/login"
         )
         handlers = [
             (r"/", MainHandler),
             (r"", MainHandler),
-            (r"/login", LoginHandler)
-            (r"/wx/login", LoginHandler)
-        ]
+            (r"/wx/login", LoginHandler),
+            (r"/wx/car/list", DefaultHandler),
+            (r"/wx/car/info", DefaultHandler),
+            (r"/wx/car/ctrl/", DefaultHandler),
+            (r"/wx/user/", DefaultHandler),
+            ]
         tornado.web.Application.__init__(self, handlers, **settings)
         self.session_manager = session.SessionManager(settings["session_secret"], settings["store_options"], settings["session_timeout"])
 

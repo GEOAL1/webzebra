@@ -9,12 +9,7 @@ class SessionData(dict):
     def __init__(self, session_id, hmac_key):
         self.session_id = session_id
         self.hmac_key = hmac_key
-#   @property
-#   def sid(self):
-#       return self.session_id
-#   @x.setter
-#   def sid(self, value):
-#       self.session_id = value
+
 class Session(SessionData):
     def __init__(self, session_manager, request_handler):
         self.session_manager = session_manager
