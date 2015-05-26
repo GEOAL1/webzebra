@@ -12,6 +12,7 @@ class ErrorCode(Enum):
 
 class JsonTemplate:
     def __init__(self):
+        self.errorCode = ErrorCode.success
         pass
 
     errorCode = ErrorCode.success

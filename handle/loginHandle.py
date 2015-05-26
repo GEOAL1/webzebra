@@ -16,7 +16,6 @@ class LoginHandler(BaseHandler):
         username = self.get_argument("un");
         password = self.get_argument("pw");
         if (self.userService.validateUP(username, password)):
-            # do username and
             self.write(JsonTemplate.newJsonRes().setErrorCode(ErrorCode.success).toJson());
             self.session["un"] = username;
             self.session.save()

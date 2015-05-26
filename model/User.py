@@ -7,3 +7,4 @@ class User:
     password = None
     state = None
     create_time = None
+    id = None;

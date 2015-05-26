@@ -5,11 +5,10 @@ from service.IService import IService
 
 class UserService(IService):
     def validateUP(self, username, password):
-        self.userDao.selectByUandP(username, password)
+        self.userDao.selectByUP(username, password)
 
     def getByUsername(self, username):
-        self.userDao.
-        pass
+        return self.userDao.selectByUsername(username)
 
-    def add(self, username, password):
-        pass
+    def add(self, user):
+        return self.userDao.add(user)
