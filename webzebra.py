@@ -11,7 +11,7 @@ from tornado.options import define, options
 from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
-from handle.regHandle import RegHandler, SendPhoneCodeHandle
+from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
 from service.userService import UserService
 from utils import session
 
@@ -44,7 +44,9 @@ class ZebraApplicatoin(tornado.web.Application):
             (r"/wx/b/info", DefaultHandler),
             (r"/wx/b/ctrl", DefaultHandler),
             (r"/wx/u/reg", RegHandler),
+            (r"/wx/u/checkPhone/(\d{11})", CheckPhoneHandle),
             (r"/wx/send/phoneCode", SendPhoneCodeHandle)
+
         ]
 
         tornado.web.Application.__init__(self, handlers, **settings)

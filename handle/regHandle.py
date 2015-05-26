@@ -59,6 +59,7 @@ class RegHandler(BaseHandler):
             raise gen.Return(result)
 
 class SendPhoneCodeHandle(BaseHandler):
+
     @tornado.gen.coroutine
     def get(self):
         result = JsonTemplate.newJsonRes().setErrMsg("success").toJson()
@@ -88,3 +89,28 @@ class SendPhoneCodeHandle(BaseHandler):
             self.write(result)
             self.finish()
             pass
+
+class CheckPhoneHandle(BaseHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    def get(self,input):
+        x = yield self.check_phone(input)
+        self.write(x)
+        self.finish()
+
+    @tornado.gen.coroutine
+    def check_phone(self,phone):
+        result = ""
+
+        try:
+            rcds = self.userService.getByUsername(phone)
+            if(len(rcds) <= 0):
+                result = JsonTemplate.newJsonRes().setErrMsg("success").toJson()
+            else:
+                result = JsonTemplate.newErrorJsonRes().setErrMsg("用户已存在").toJson()
+
+        except Exception as e:
+                result = JsonTemplate.newErrorJsonRes().setErrMsg("call api failed").toJson()
+
+        raise gen.Return(result)
+

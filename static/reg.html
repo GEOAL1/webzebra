@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,38 +19,57 @@
 
 <div class="container">
     <div class="content">
-        <form class="form-signin ">
+        <form class="form-signin" ng-controller="registerController" name="signup_form">
 
             <div class="form-group input-group-lg">
-                <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="phone" id="inputEmail" class="form-control" placeholder="手机号" required autofocus>
+                <label for="ph" class="sr-only">Email address</label>
+                <input type="phone" id="ph" name="ph" class="form-control" placeholder="手机号" ng-model="signup.phone"
+                ng-pattern="/^1\d{10}$/" required autofocus checkunquirePhone>
             </div>
             <div class="form-group input-group-lg">
-                <label for="inputPassword" class="sr-only">Password</label>
-
-                <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" id="password"  name="password" class="form-control" placeholder="密码(6-20位)"
+                       ng-model="signup.passwd"  ng-minlength="6" ng-maxlength="20" required>
             </div>
 
             <div class="form-group input-group-lg">
-                <label for="againPassword" class="sr-only">Password</label>
+                <label for="confirmPassword" class="sr-only">Password</label>
 
-                <input type="password" id="againPassword" class="form-control" placeholder="再次输入密码" required>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="再次输入密码"
+                       ng-model="signup.confirmPassword" ng-model="sigup.confirmPassword" pw-check="password" required>
+
             </div>
 
 
             <div class="form-group row ">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 input-group-lg">
-                    <label for="valatileCode" class="sr-only">valatileCode</label>
-                    <input type="password" id="valatileCode" class="form-control" placeholder="输入验证码" required>
+                    <label for="confirmCode" class="sr-only">valatileCode</label>
+                    <input type="password" id="confirmCode" name="confirmCode" class="form-control" placeholder="输入验证码" required>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-top: 6px;display: inline-block;">
-                    <a href="javascript:" class="text-center text-left" ><h4>发送验证码</h4></a>
+
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-top: 6px;display: inline-block;"  ng-show="!signup_form.ph.$invalid">
+                    <a id="sendCode" class="text-center text-left" onclick="alert(1)"  ><h4>发送验证码</h4></a>
                 </div>
             </div>
 
-
             <div class="form-group">
-                <a class="btn btn-lg btn-primary btn-block" href="reg.html">注册</a>
+                <a class="btn btn-lg btn-primary btn-block"  ng-disabled="signup_form.$invalid" href="reg.html">注册</a>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 input-group-lg error">
+                <div ng-show="signup_form.confirmPassword.$dirty && signup_form.confirmPassword.$invalid" >
+                    两次输入的密码不一致
+                </div>
+                <div ng-show="signup_form.password.$dirty && signup_form.password.$invalid" >
+                    密码不合法
+                </div>
+                <div ng-show="signup_form.ph.$dirty && signup_form.ph.$invalid" >
+                    手机号不合法
+                </div>
+
+                <div ng-show="signup_form.confirmCode.$dirty && signup_form.confirmCode.$invalid" >
+                    验证码不正确
+                </div>
             </div>
         </form>
     </div>
@@ -58,5 +77,11 @@
 
 
 </body>
+
+
+    <script src="js/app.js"></script>
+    <script src="js/ctrl/regCtrl.js"></script>
+
+
 
 </html>

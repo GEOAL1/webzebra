@@ -81,3 +81,8 @@ a:active {
     zoom: 1;
 }
 
+
+.error {
+    color: red;
+    padding-top: 12px;
+}
