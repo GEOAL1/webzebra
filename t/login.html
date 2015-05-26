@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{static_url('css/login.css')}}">
+    <link rel="stylesheet" href="{{static_url('css/common.css')}}">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" id="top-nav">
+    登录
+</nav>
+
+<div class="container">
+    <div class="content">
+        <form class="form-signin" action="/wx/login" method="post">
+            {% raw xsrf_form_html() %}
+            <div class="form-group input-group-lg">
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input name="un" type="phone" id="inputEmail" class="form-control" placeholder="手机号" required autofocus>
+            </div>
+            <div class="form-group input-group-lg">
+                <label for="inputPassword" class="sr-only">Password</label>
+
+                <input name="pw" type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+            <a class="btn btn-lg btn-primary btn-block" href="/user/register">注册</a>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -14,10 +14,4 @@ class Singleton(object):
 
 
 class MysqlMananger(Singleton):
-    db=torndb.Connection("10.111.32.61","fckb","shuai","shuai123")
-
-
-if __name__ == '__main__':
-    dbmanager = MysqlMananger();
-    a = dbmanager.db.get("select * from t_strategy_type")
-    print a
+    db = torndb.Connection("127.0.0.1", "zebra", "root", "123456")

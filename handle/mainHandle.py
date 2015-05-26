@@ -1,13 +1,13 @@
 #/usr/bin/python
 #coding: utf-8
 #Createtime 2015/5/25
-import tornado
-from handle.baseHandle import BaseHandler
-from utils.AuthorUtils import login_required
 from tornado.web import authenticated;
 
+from handle.baseHandle import BaseHandler
+
+
 class MainHandler(BaseHandler):
-    @login_required
+    @authenticated
     def get(self):
         cookie = self.get_secure_cookie("count")
         count = int(cookie) + 1 if cookie else 1

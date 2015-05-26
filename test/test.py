@@ -1,14 +1,18 @@
 #/usr/bin/python
 # coding: utf-8
 from wsgiref.handlers import BaseHandler
+
 import tornado
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.options
-from utils import session
 
 from tornado.options import define, options
+
+from utils import session
+from utils.AuthorUtils import login_required
+
 define("port", default=8001, help="run on the given port", type=int)
 
 
