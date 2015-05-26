@@ -41,6 +41,6 @@ if __name__ == '__main__':
     user.password = "qqqq"
     user.state = "1";
     dao.add(user.__dict__)
-    print dao.selectAll()
+    #print dao.selectAll()
     print dao.selectByUP("shuai1", "qqqq")
-    print dao.selectByUsername("shuai1")
+    #print dao.selectByUsername("shuai1")

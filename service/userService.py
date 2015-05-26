@@ -5,7 +5,11 @@ from service.IService import IService
 
 class UserService(IService):
     def validateUP(self, username, password):
-        self.userDao.selectByUP(username, password)
+        if(len(self.userDao.selectByUP(username, password))) >= 1:
+            return True
+        else:
+            return False
+
 
     def getByUsername(self, username):
         return self.userDao.selectByUsername(username)

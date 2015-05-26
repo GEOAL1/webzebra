@@ -58,7 +58,6 @@ class RegHandler(BaseHandler):
         finally:
             raise gen.Return(result)
 
-
 class SendPhoneCodeHandle(BaseHandler):
     @tornado.gen.coroutine
     def get(self):
@@ -88,3 +87,4 @@ class SendPhoneCodeHandle(BaseHandler):
         finally:
             self.write(result)
             self.finish()
+            pass
