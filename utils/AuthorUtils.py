@@ -11,3 +11,5 @@ def login_required(f):
         else:
             ret = f(self,*args, **kwargs)
     return _wrapper
+
+

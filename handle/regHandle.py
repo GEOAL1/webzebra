@@ -7,7 +7,6 @@ import urllib
 
 import tornado
 from tornado.web import authenticated;
-
 from tornado import gen
 import tornado.httpclient
 
@@ -17,27 +16,25 @@ from model.jsonTemplate import JsonTemplate
 
 
 class RegHandler(BaseHandler):
-    # @tornado.web.asynchronous
-    def back(self):
-        yield tornado.gen.Task(self.reg)
-        self.finish()
 
     @tornado.web.asynchronous
     @tornado.gen.coroutine
-    def get(self):
-        x = yield self.get_result()
+    def post(self):
+        x = self.get_result()
         self.write(x)
         self.finish()
 
-    @tornado.gen.coroutine
+    #@tornado.gen.coroutine
     def get_result(self):
         result = ""
         try:
-            username = self.get_argument("un")
-            password = self.get_arguments("pw")
-            retryPassword = self.get_arguments("rpw")
-            mcode1 = self.get_argument("mcode")
-            mcode2 = self.session["mcode"]
+            password = self.get_argument("password")
+            retryPassword = self.get_argument("confirmPassword")
+            username = self.get_argument("ph")
+            #mcode1 = self.get_argument("confirmCode")
+            #mcode2 = self.session["confirmCode"]
+            mcode1 = 123456;
+            mcode2 = 123456;
 
             if mcode2 is not None and mcode1 == mcode2:
                 if password == retryPassword:
@@ -56,10 +53,12 @@ class RegHandler(BaseHandler):
         except Exception as e:
             result = JsonTemplate.newErrorJsonRes().setErrMsg("unknow error").toJson()
         finally:
+            return result
             raise gen.Return(result)
 
 class SendPhoneCodeHandle(BaseHandler):
 
+    @tornado.web.asynchronous
     @tornado.gen.coroutine
     def get(self):
         result = JsonTemplate.newJsonRes().setErrMsg("success").toJson()
@@ -68,7 +67,9 @@ class SendPhoneCodeHandle(BaseHandler):
             phone = self.get_argument("ph")
             template = "3030"
             code = random.randrange(100000, 999999)
+            code = 123456
             client = tornado.httpclient.AsyncHTTPClient()
+
             args = urllib.urlencode(
                 {'mobile': phone, 'tpl_id': template, 'tpl_value': "#code#=%s" % (code), 'key': key})
 
@@ -79,8 +80,10 @@ class SendPhoneCodeHandle(BaseHandler):
                 print body
                 result = JsonTemplate.newErrorJsonRes().setErrMsg("call api failed").toJson()
             else:
-                self.session["mcode"] = '%s' % code
+                self.session["confirmCode"] = '%s' % code
                 self.session.save();
+            self.session["confirmCode"] = '%s' % code
+            self.session.save();
 
         except Exception as e:
             print e

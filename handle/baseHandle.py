@@ -19,3 +19,4 @@ class BaseHandler(tornado.web.RequestHandler):
         print(self.session.get("un"))
         return self.session.get("un")
 
+
