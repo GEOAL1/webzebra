@@ -1,3 +1,5 @@
-body {
-    padding-top: 50px;
+#loginForm a {
+    color: #999999;
+    margin-top: 17px;
+    display: block;
 }

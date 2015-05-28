@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head lang="en">
+    <link rel="stylesheet" type="text/css" href="static/css/login.css"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/static/css/login.css">
+    <script src="/static/js/angular.min.js"></script>
+
     <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/login.css">
 </head>
 <body>
-
 <nav class="navbar navbar-inverse navbar-fixed-top" id="top-nav">
-    登录
+    用户注册
 </nav>
 
-<div class="container">
+<div class="container" ng-controller="loginController">
     <div class="content">
-        <form class="form-signin" action="/wx/login" method="post">
-            {% raw xsrf_form_html() %}
+        <form class="form-signin" id="loginForm" name="loginForm" ng-submit="login()">
             <div class="form-group input-group-lg">
                 <label for="inputEmail" class="sr-only">Email address</label>
                 <input name="un" type="phone" id="inputEmail" class="form-control" placeholder="手机号" required autofocus>
@@ -31,10 +33,11 @@
                 <input name="pw" type="password" id="inputPassword" class="form-control" placeholder="密码" required>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-            <a class="btn btn-lg btn-primary btn-block" href="/t/reg">注册</a>
+            <a href="/static/reg.html">>>>没有帐号-立刻注册</a>
         </form>
     </div>
 </div>
-
 </body>
+<script src="/static/js/app.js"></script>
+<script src="/static/js/ctrl/loginCtrl.js"></script>
 </html>

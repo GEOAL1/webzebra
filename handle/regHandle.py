@@ -13,6 +13,7 @@ import tornado.httpclient
 from error.zebraError import ZebraError
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
+from utils.Constants import SessionUsername
 
 
 class RegHandler(BaseHandler):
@@ -39,9 +40,11 @@ class RegHandler(BaseHandler):
             if mcode2 is not None and mcode1 == mcode2:
                 if password == retryPassword:
                     rcds = self.userService.getByUsername(username)
-                    if (len(rcds)) == 0:
+                    if (len(rcds)) <= 0:
                         res = self.userService.add({"username": username, "password": password})
                         result = JsonTemplate.newJsonRes().toJson()
+                        self.session[SessionUsername] = username
+                        self.session.save();
                     else:
                         result = JsonTemplate.newErrorJsonRes().setErrMsg("用户名已存在或格式不正确").toJson()
                 else:
@@ -77,7 +80,6 @@ class SendPhoneCodeHandle(BaseHandler):
             resp = yield client.fetch(url)
             body = json.loads(resp.body)
             if (body["error_code"] > 0):
-                print body
                 result = JsonTemplate.newErrorJsonRes().setErrMsg("call api failed").toJson()
             else:
                 self.session["confirmCode"] = '%s' % code

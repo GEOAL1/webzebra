@@ -27,7 +27,7 @@
             <div class="form-group input-group-lg">
                 <label for="ph" class="sr-only">Email address</label>
                 <input type="phone" id="ph" name="ph" class="form-control" placeholder="手机号" ng-model="signup.ph"
-                       ng-pattern="/^1\d{10}$/" required autofocus unique-phone>
+                       ng-pattern="/^1\d{10}$/" required autofocus unique-phone autocomplete="off">
             </div>
 
             <!--密码-->
@@ -96,8 +96,11 @@
 
 
 <!--loading 折照区-->
+<!--
 <div class="loading" ng-show="isloading"><img src="img/loading.png" alt="" width="50" height="50" class="loading"/>
+
 </div>
+-->
 
 </body>
 <script src="js/app.js"></script>

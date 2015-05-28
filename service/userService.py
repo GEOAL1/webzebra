@@ -12,7 +12,7 @@ class UserService(IService):
     def validateUP(self, username, password):
         if len(username) < 6 or len(password) < 6 or len(password) > 20 or len(username) > 20:
             return False
-        return True;
+        return True
 
     def getByUsername(self, username):
         return self.userDao.selectByUsername(username)

@@ -6,13 +6,14 @@ from tornado import  gen
 
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate, ErrorCode
+from utils.Constants import SessionUsername
 
 
 class LoginHandler(BaseHandler):
     # @tornado.web.asynchronous
     # @tornado.gen.engine
     def get(self):
-        self.render("login.html")
+        self.redirect("/static/login.html")
 
     @tornado.web.asynchronous
     @tornado.gen.coroutine
@@ -27,8 +28,8 @@ class LoginHandler(BaseHandler):
         try:
             username = self.get_argument("un")
             password = self.get_argument("pw")
-            if (self.userService.validateUP(username, password)):
-                self.session["un"] = username;
+            if (self.userService.getByUP(username, password)):
+                self.session[SessionUsername] = username;
                 self.session.save()
                 ret = JsonTemplate.newJsonRes().setErrorCode(ErrorCode.success).toJson()
             else:

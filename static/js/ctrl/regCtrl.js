@@ -11,9 +11,10 @@ app.controller("registerController", function ($scope,$http) {
             $scope.countdown--;
             if($scope.countdown <= 0) {
                 $scope.sendCode_show=true
+                clearInterval(c$sope.myTime)
             }else{
                 $scope.sendCode_show=false
-                clearInterval($scope.myTime)
+
             }
             $scope.$digest(); // 通知视图模型的变化
         }, 1000);
@@ -24,7 +25,6 @@ app.controller("registerController", function ($scope,$http) {
         }).success(function(data,status,headers,config){
             if(data.errorCode===0) {
                 console.log("send success");
-
             }
             alert(data.errorCode);
         }).error(function(data,status,headers,config){
@@ -33,8 +33,7 @@ app.controller("registerController", function ($scope,$http) {
     }
 
     $scope.signupForm = function (e) {
-        alert($.param($scope.signup))
-
+        //alert($.param($scope.signup))
         $http({
             method:"POST",
             url:"/wx/u/reg",
@@ -53,7 +52,6 @@ app.controller("registerController", function ($scope,$http) {
     }
 
 })
-
 
 
 app.directive('pwCheck', [function () {
