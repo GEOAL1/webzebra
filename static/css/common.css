@@ -36,10 +36,14 @@ body {
 
 #top-nav {
     text-align: center;
-    color: #CCCCCC;
+    color: #fff;
     font-size: 18px;
     padding-top: 10px;
     clear: both;
+    background-color: #00CC00;
+    /*
+    background-image: linear-gradient(to bottom, #00CC00 0px, #00CC00 100%);
+    */
 }
 
 a:link {

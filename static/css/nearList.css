@@ -13,12 +13,13 @@
     display: -webkit-box;
     -webkit-box-orient: horizontal;
     font-size: 12px;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-    color: #333;
+    padding: 10px 0;
+    border-bottom: 1px solid #666;
     width: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
+    background-color: #fff;
+    color: #009900;
 }
 
 #detail_info > a > div:nth-child(2) {
@@ -31,6 +32,9 @@
     padding-right: 5px;
 }
 
+#detail_info div.btn-area {
+    padding-top: 6px;
+}
 span.addr {
     background: url("../img/flag.png") no-repeat;
     background-size: 15px 15px;

@@ -11,6 +11,7 @@
           <option value="unittest.TestCase" />
           <option value="unittest.case.TestCase" />
           <option value="service.userService.UserService" />
+          <option value="utils.WeixinUtils.WeixinMananger" />
         </list>
       </option>
     </inspection_tool>

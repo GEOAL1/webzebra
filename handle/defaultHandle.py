@@ -4,6 +4,5 @@
 from handle.baseHandle import BaseHandler
 
 class DefaultHandler(BaseHandler):
-
     def get(self):
         None

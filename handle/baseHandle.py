@@ -17,5 +17,4 @@ class BaseHandler(tornado.web.RequestHandler):
         self.userService = self.application.userService
 
     def get_current_user(self):
-        print(self.session.get(SessionUsername))
         return self.session.get(SessionUsername)

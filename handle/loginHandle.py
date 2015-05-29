@@ -13,6 +13,7 @@ class LoginHandler(BaseHandler):
     # @tornado.web.asynchronous
     # @tornado.gen.engine
     def get(self):
+        # 判断是否为微信用户，如果是，则存SESSION，和COOKIE后，直接重定向到主页，否则重定向到LOGIN页
         self.redirect("/static/login.html")
 
     @tornado.web.asynchronous
@@ -31,6 +32,7 @@ class LoginHandler(BaseHandler):
             if (self.userService.getByUP(username, password)):
                 self.session[SessionUsername] = username;
                 self.session.save()
+                self.set_secure_cookie(SessionUsername, username)
                 ret = JsonTemplate.newJsonRes().setErrorCode(ErrorCode.success).toJson()
             else:
                 ret = JsonTemplate.newJsonRes().setErrorCode(ErrorCode.error).setErrMsg("用户名或密码不正确").toJson()

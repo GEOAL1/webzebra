@@ -33,7 +33,7 @@ app.controller("registerController", function ($scope,$http) {
     }
 
     $scope.signupForm = function (e) {
-        //alert($.param($scope.signup))
+        alert($.param($scope.signup))
         $http({
             method:"POST",
             url:"/wx/u/reg",

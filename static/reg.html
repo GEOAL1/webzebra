@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=0;">
 
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
@@ -42,16 +42,15 @@
                 <label for="confirmPassword" class="sr-only">Password</label>
 
                 <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
-                       placeholder="再次输入密码"
-                       ng-model="signup.confirmPassword" ng-model="sigup.confirmPassword" pw-check="password" required>
-
+                       placeholder="再次输入密码" ng-model="signup.confirmPassword" pw-check="password" required/>
             </div>
 
             <!--掩证码-->
             <div class="form-group row ">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 input-group-lg">
                     <label for="confirmCode" class="sr-only">valatileCode</label>
-                    <input type="text" id="confirmCode" name="confirmCode" class="form-control" placeholder="输入验证码"
+                    <input type="text" id="confirmCode" name="confirmCode" ng-model="signup.confirmCode"
+                           class="form-control" placeholder="输入验证码"
                            required>
                 </div>
 
@@ -66,7 +65,7 @@
 
             <!--注册区-->
             <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" ng-disabled="signup_form.$invalid">注册</button>
+                <button class="btn btn-lg btn-success btn-block" ng-disabled="signup_form.$invalid">注册</button>
             </div>
 
             <!--ERROR区-->

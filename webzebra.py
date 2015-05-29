@@ -12,10 +12,13 @@ from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
 from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
+from handle.userHandler import userInfoHandler
+from handle.weixinServiceHandle import WeixinServiceHandle
 from service.userService import UserService
 from utils import session
 
 define("port", default=8001, help="run on the given port", type=int)
+
 
 class ZebraApplicatoin(tornado.web.Application):
     def __init__(self):
@@ -40,12 +43,21 @@ class ZebraApplicatoin(tornado.web.Application):
             (r"/", MainHandler),
             (r"", MainHandler),
             (r"/wx/login", LoginHandler),
+
+            # 车辆管理
             (r"/wx/b/list", DefaultHandler),
             (r"/wx/b/info", DefaultHandler),
             (r"/wx/b/ctrl", DefaultHandler),
+
+            # 用户信息管理
             (r"/wx/u/reg", RegHandler),
             (r"/wx/u/checkPhone/(\d{11})", CheckPhoneHandle),
-            (r"/wx/send/phoneCode", SendPhoneCodeHandle)
+            (r"/wx/u/info", userInfoHandler),
+
+            # 第三方服务
+            (r"/wx/send/phoneCode", SendPhoneCodeHandle),
+            # 微信服务
+            (r"/wx/service/{\w*}", WeixinServiceHandle)
 
         ]
 
