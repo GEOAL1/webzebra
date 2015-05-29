@@ -1,22 +1,42 @@
-app.controller("panelController", function ($cookies, $scope, $http) {
-    //加载折挡
-    //玲玲加
+app.controller("panelController", function ($scope, userService, wxService, bikeService) {
+    userService.getUserInfo($scope)
 
-    $scope.loadUserInfo = function () {
+    getGeo(function (lng, lat) {
+        $scope.lng = lng;
+        $scope.lat = lat;
+        bikeService.getNearBike($scope, lng, lat)
+    })
+
+
+    /*
+     alert(JSON.parse(wxService.wx.config))
+     */
+
+    //加载折挡     //玲玲加
+
+    //加载用户信息
+
+    /* $scope.getNearBike = function() {
         $http({
             method: "GET",
-            url: '/wx/u/info',
+     url: '/wx/b/list',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status, headers, config) {
             if (data.errorCode === 0) {
                 console.log("send success");
-                alert(data.body)
+     $scope.user=data.body
             }
         }).error(function (data, status, headers, config) {
             console.log("send error")
         })
-    }()
-    //加载用户信息
+     }
+
+
+
+     $scope.getLocation = function(callback) {
+
+     }*/
+
 
     //获得位置信息
     //加载附近的车

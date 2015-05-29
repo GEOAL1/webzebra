@@ -1,6 +1,5 @@
 # /usr/bin/python
 # coding: utf-8
-import json
 import time
 
 import redis
@@ -60,7 +59,7 @@ class WeixinMananger:
         data["signature"] = self.wechat.generate_jsapi_signature(timestamp, noncestr, url, jsApiToken)
         data["jsApiList"] = ["openLocation", "getLocation", "hideOptionMenu", "showOptionMenu", "hideMenuItems",
                              "showMenuItems"]
-        return json.dumps(data)
+        return data
 
 
 if __name__ == '__main__':

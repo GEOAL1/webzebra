@@ -11,13 +11,15 @@ from tornado.options import define, options
 from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
+from handle.nearBikeHandle import NearBikeHandler
 from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
 from handle.userHandler import userInfoHandler
 from handle.weixinServiceHandle import WeixinServiceHandle
 from service.userService import UserService
 from utils import session
+from utils.WeixinUtils import WeixinMananger
 
-define("port", default=8001, help="run on the given port", type=int)
+define("port", default=80, help="run on the given port", type=int)
 
 
 class ZebraApplicatoin(tornado.web.Application):
@@ -48,6 +50,8 @@ class ZebraApplicatoin(tornado.web.Application):
             (r"/wx/b/list", DefaultHandler),
             (r"/wx/b/info", DefaultHandler),
             (r"/wx/b/ctrl", DefaultHandler),
+            (r"/wx/b/nearBike", NearBikeHandler),
+
 
             # 用户信息管理
             (r"/wx/u/reg", RegHandler),
@@ -57,7 +61,7 @@ class ZebraApplicatoin(tornado.web.Application):
             # 第三方服务
             (r"/wx/send/phoneCode", SendPhoneCodeHandle),
             # 微信服务
-            (r"/wx/service/{\w*}", WeixinServiceHandle)
+            (r"/wx/service/(.*)", WeixinServiceHandle)
 
         ]
 
@@ -65,6 +69,7 @@ class ZebraApplicatoin(tornado.web.Application):
         self.session_manager = session.SessionManager(settings["session_secret"], settings["store_options"],
                                                       settings["session_timeout"])
         self.userService = UserService()
+        self.weixinManager = WeixinMananger();
 
         # xsrf_cookies=True,
 

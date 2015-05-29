@@ -3,26 +3,32 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>xxxx</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=0;">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="js/angular.min.js"></script>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/nearList.css">
     <link rel="stylesheet" type="text/css" href="css/panel.css"/>
+
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/utile/commonUtils.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/service/bikeService.js"></script>
+    <script src="js/service/userService.js"></script>
+    <script src="js/service/wxService.js"></script>
     <script src="js/ctrl/panleCtrl.js"></script>
+
 </head>
-<body>
+<body ng-controller="panelController">
 <nav class="navbar navbar-inverse navbar-fixed-top" id="top-nav">
     主面板
 </nav>
-<div np-controller="panelController" style="height:132px;"></div>
+<div style="height:132px;"></div>
 <div id="fixed-pos">
     <div class="d_panel">
         <div class="img-area">
@@ -30,28 +36,29 @@
         </div>
         <div>
             <div style="font-size: 20px;font-weight: bold;color: #339933">
-                Phone: 156-0000-0000
+                Phone: {{user.phone}}
             </div>
             <div class="detail-info">
-                <div><span>积分</span><span>32514</span></div>
-                <div><span>积累里程：12公里</span><span>积累时间：20天6小时</span></div>
+                <div><span>积分</span><span>{{user.totalScore}}</span></div>
+                <div><span>积累里程：{{user.totalKm}}公里</span><span>积累时间：{{user.totalTime}}</span></div>
             </div>
             <div class="detail-info">
-                <div><span>余额</span><span>32514</span></div>
-                <div><span>里程:12公里</span><span>时间：20天6小时</span></div>
+                <div><span>余额</span><span>{{user.acctRemain}}</span></div>
+                <div><span>里程:{{user.remainKm}}公里</span><span>时间：{{user.remainTime}}</span></div>
             </div>
         </div>
     </div>
 </div>
 <div id="detail_info">
-    <a href="carInfo.html">
+    <a href="carInfo.html" ng-repeat="car in nearCars">
         <div>
             <img src="img/car3.jpg" height="80" width="100">
         </div>
         <div>
-            <div class="clear"><span class="fl">电班马靓丽车型</span><span class="fr">0.8元/公里</span></div>
-            <div class="clear"><span class="fl addr"> 北京市海滨区中关村南大街</span><span class="fr">500米</span></div>
-            <div class="clear"><span class="fl">剩余电量50%</span><span class="fr">可续航里程: 30公里</span></div>
+            <div class="clear"><span class="fl">车号：{{car.id}}</span><span class="fr">{{car.price}}元/公里</span></div>
+            <div class="clear"><span class="fl addr"> 北京市海滨区中关村南大街</span><span class="fr">{{car.distance}}米</span></div>
+            <div class="clear"><span class="fl">剩余电量{{car.remainPower}}%</span><span class="fr">可续航里程: {{car.reserveKm}}公里</span>
+            </div>
             <div class="btn-area">
                 <input type="button" value="预订" id="order"/>
                 <input type="button" value="鸣笛" id="voice"/>
@@ -60,21 +67,6 @@
         </div>
     </a>
 
-    <a href="carInfo.html">
-        <div>
-            <img src="img/car3.jpg" height="80" width="100">
-        </div>
-        <div>
-            <div class="clear"><span class="fl">车辆编号:1234567</span><span class="fr">0.8元/公里</span></div>
-            <div class="clear"><span class="fl addr"> 北京市海滨区中关村南大街</span><span class="fr">500米</span></div>
-            <div class="clear"><span class="fl">剩余电量50%</span><span class="fr">可续航里程: 30公里</span></div>
-            <div class="btn-area">
-                <input type="button" value="预订" id="reserve"/>
-                <input type="button" value="鸣笛" id="horns"/>
-                <input type="button" value="导航" id="navigation"/>
-            </div>
-        </div>
-    </a>
 
 </div>
 </body>
