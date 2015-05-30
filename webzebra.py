@@ -8,6 +8,8 @@ import tornado.web
 import tornado.options
 from tornado.options import define, options
 
+from handle.bikeCtrlHandle import BikeCtrlHandler
+
 from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
@@ -49,7 +51,7 @@ class ZebraApplicatoin(tornado.web.Application):
             # 车辆管理
             (r"/wx/b/list", DefaultHandler),
             (r"/wx/b/info", DefaultHandler),
-            (r"/wx/b/ctrl", DefaultHandler),
+            (r"/wx/b/ctrl/(\w*)", BikeCtrlHandler),
             (r"/wx/b/nearBike", NearBikeHandler),
 
 

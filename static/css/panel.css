@@ -1,6 +1,6 @@
 #fixed-pos {
     position: fixed;
-    z-index: 9999;
+    z-index: 99;
     top: 45px;
     left: 0px;
     background: #fff;
@@ -31,7 +31,7 @@
     display: table;
     width: 100%;
     border-radius: 2px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .detail-info div {

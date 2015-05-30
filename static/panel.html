@@ -50,7 +50,7 @@
     </div>
 </div>
 <div id="detail_info">
-    <a href="carInfo.html" ng-repeat="car in nearCars">
+    <a href="#" ng-repeat="car in nearCars">
         <div>
             <img src="img/car3.jpg" height="80" width="100">
         </div>
@@ -60,14 +60,21 @@
             <div class="clear"><span class="fl">剩余电量{{car.remainPower}}%</span><span class="fr">可续航里程: {{car.reserveKm}}公里</span>
             </div>
             <div class="btn-area">
-                <input type="button" value="预订" id="order"/>
-                <input type="button" value="鸣笛" id="voice"/>
-                <input type="button" value="导航" id="navigate"/>
+                <input type="button" ng-click="bikeOrder(car,$event)" value="预订" id="order"/>
+                <input type="button" ng-click="bikeVoice(car,$event)" value="鸣笛" id="voice"/>
+                <input type="button" ng-click="bikeNavigate(car,$event)" value="导航" id="navigate"/>
             </div>
         </div>
     </a>
+</div>
 
+
+<!--loading 折照区-->
+
+<div class="loading" ng-show="!user_load_ok  || !bike_load_ok"><img src="img/loading.png" alt="" width="50" height="50"
+                                                                    class="loading"/>
 
 </div>
+
 </body>
 </html>

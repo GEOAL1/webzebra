@@ -37,6 +37,7 @@ html, body {
     position: relative;
     color: #fff;
     font-size: 15px;
+    overflow: hidden;
 }
 
 .main > div.article div:nth-child(1) {
@@ -45,8 +46,8 @@ html, body {
 
 .one {
     position: absolute;
+    height: 100%;
     top: 50%;
-    height: 60px;
     margin-top: -30px;
     width: 60px;
     left: 50%;

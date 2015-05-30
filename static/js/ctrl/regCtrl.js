@@ -3,7 +3,6 @@ app.controller("registerController", function ($scope,$http) {
     $scope.countdown = 0
     $scope.sendCode_show=true
 
-
     $scope.sendCode = function() {
         phone = $scope.signup.phone
         $scope.countdown = 30;
@@ -59,7 +58,7 @@ app.directive('pwCheck', [function () {
            require: 'ngModel',
                 link: function (scope, elem, attrs, ctrl) {
                     var firstPassword = '#' + attrs.pwCheck;
-                    elem.add(firstPassword).on('keyup', function () {
+                    elem.add(firstPassword).on('blur', function () {
                             scope.$apply(function () {
                                     var v = elem.val()===$(firstPassword).val();
                                    ctrl.$setValidity('pwCheck', v);
