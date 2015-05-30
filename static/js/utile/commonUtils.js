@@ -20,6 +20,7 @@ function getGeo(callback) {
                 var speed = res.speed; // 速度，以米/每秒计
                 var accuracy = res.accuracy; // 位置精度
                 callback(longitude, latitude)
+                alert("get location from weixin success")
             },
             error: function () {
                 alert('获得地理信息失败')

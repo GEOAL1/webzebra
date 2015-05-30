@@ -35,7 +35,6 @@ app.service('bikeService', function ($rootScope, $http) {
         },
 
         bikeNavigate: function (car, $event) {
-            SendCmd("nivigate", "", function () {
                 wx.openLocation({
                     latitude: car.lat,
                     longtitude: car.lng,
@@ -44,7 +43,7 @@ app.service('bikeService', function ($rootScope, $http) {
                     scale: 1,
                     infoUrl: ""
                 })
-            })
+
 
             $event.preventDefault();
         },
