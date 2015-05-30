@@ -20,23 +20,28 @@ function getGeo(callback) {
                 var speed = res.speed; // 速度，以米/每秒计
                 var accuracy = res.accuracy; // 位置精度
                 alert("get location from weixin success")
-
-                callback(longitude, latitude)
+                callback(0, longitude, latitude)
             },
             error: function () {
                 alert('获得地理信息失败')
+                callback(-1, "", "")
             }
         })
     } else {
-        var config = {enableHighAccuracy: true, timeout: 5000, maximumAge: 30000};
+        var config = {enableHighAccuracy: true, timeout: 1000, maximumAge: 10000};
         navigator.geolocation.getCurrentPosition(function (position) {
             var lng = position.coords.longitude;
             var lat = position.coords.latitude;
-            callback(lng, lat)
+            callback(0, lng, lat)
         }, function (error) {
             alert("获得地理信息失败")
-        })
+            callback(-1, "", "")
+        }, config)
     }
+}
+
+function getLocation(lat, lng, callback) {
+    geocoder = new soso.maps.Geocoder();
 }
 
 

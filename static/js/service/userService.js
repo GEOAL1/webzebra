@@ -1,19 +1,23 @@
 app.service('userService', function ($rootScope, $http) {
     var service = {
-        getUserInfo: function ($scope) {
-            $scope.user_load_ok = false
+        getUserInfo: function (cb) {
             $http({
                 method: "GET",
                 url: '/wx/u/info',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                timeout: 3000
             }).success(function (data, status, headers, config) {
+
                 if (data.errorCode === 0) {
-                    $scope.user = data.body
-                    $scope.user_load_ok = true
+
+                    cb(0, data.body)
+                } else {
+                    cb(1, "")
                 }
             }).error(function (data, status, headers, config) {
                 console.log("get user error")
-                alert(status)
+                alert(2)
+                cb(1, "")
             })
         },
         login: function (phone, password) {

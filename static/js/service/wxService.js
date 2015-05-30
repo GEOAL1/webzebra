@@ -7,7 +7,6 @@ app.service('wxService', function ($rootScope, $http) {
         if (data.errorCode === 0) {
             wx.config(data.body)
         }
-        alert("error" + data.errMsg)
     }).error(function (data, status, headers, config) {
         alert(status)
     })

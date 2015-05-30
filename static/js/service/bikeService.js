@@ -55,21 +55,18 @@ app.service('bikeService', function ($rootScope, $http) {
             $event.preventDefault();
         },
 
-        getNearBike: function ($scope, lng, lat) {
-            $scope.bike_load_ok = false
-            $scope.touchon()
+        getNearBike: function (lng, lat, callback) {
             $http({
                 method: "GET",
                 url: '/wx/b/nearBike',
                 params: {"lng": lng, "lat": lat},
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                timeout: 3000
             }).success(function (data, status, headers, config) {
                 if (data.errorCode === 0) {
-                    $scope.nearCars = data.body
-                    $scope.bike_load_ok = true
-                    $scope.touchoff()
-                    //alert("get car near success")
+                    callback(0, data.body)
                 } else {
+                    callback(-1, {})
                     alert('请求附近的车失败')
                 }
             }).error(function (data, status, headers, config) {
