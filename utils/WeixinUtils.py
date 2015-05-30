@@ -54,11 +54,12 @@ class WeixinMananger:
         jsApiToken = self.getJsApiToken();
         data = {};
         data["timestamp"] = timestamp
-        data["noncestr"] = noncestr
-        data["appid"] = self.appid
+        data["nonceStr"] = noncestr
+        data["appId"] = self.appid
         data["signature"] = self.wechat.generate_jsapi_signature(timestamp, noncestr, url, jsApiToken)
         data["jsApiList"] = ["openLocation", "getLocation", "hideOptionMenu", "showOptionMenu", "hideMenuItems",
                              "showMenuItems"]
+        data["debug"] = True
         return data
 
 

@@ -35,14 +35,21 @@ app.service('bikeService', function ($rootScope, $http) {
         },
 
         bikeNavigate: function (car, $event) {
-                wx.openLocation({
-                    latitude: car.lat,
-                    longtitude: car.lng,
-                    name: "",
-                    address: "",
-                    scale: 1,
-                    infoUrl: ""
+            wx.getLocation({
+                success: function (res) {
+                    qq.maps.convertor.translate(new qq.maps.LatLng(res.latitude, res.longitude), 1, function (res) {
+                        wx.openLocation({
+                            latitude: res[0].lat,
+                            longitude: res[0].lng,
+                            name: "",
+                            address: "",
+                            scale: 28,
+                            infoUrl: ""
+                        })
                 })
+                }
+
+            })
 
 
             $event.preventDefault();
