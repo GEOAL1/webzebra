@@ -22,10 +22,10 @@ app.service('userService', function ($rootScope, $http) {
             $.ajax({
                 type: "POST",
                 url: "/wx/login",
-                data: $.param({"phone": phone, "password": password}),
+                data: $.param({"un": phone, "pw": password}),
 
-                success: function (data, status, headers, config) {
-
+                success: function (data1, status, headers, config) {
+                    data = JSON.parse(data1)
                     if (data.errorCode === 0) {
                         window.location.href = "/"
                     } else {
