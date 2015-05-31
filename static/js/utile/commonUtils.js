@@ -32,7 +32,7 @@ function getGeo(callback) {
             })
         })
     } else {
-        var config = {enableHighAccuracy: true, timeout: 1000, maximumAge: 10000};
+        var config = {enableHighAccuracy: true, timeout: 5000, maximumAge: 10000};
         navigator.geolocation.getCurrentPosition(function (position) {
             var lng = position.coords.longitude;
             var lat = position.coords.latitude;
