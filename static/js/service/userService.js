@@ -9,14 +9,12 @@ app.service('userService', function ($rootScope, $http) {
             }).success(function (data, status, headers, config) {
 
                 if (data.errorCode === 0) {
-
                     cb(0, data.body)
                 } else {
                     cb(1, "")
                 }
             }).error(function (data, status, headers, config) {
-                console.log("get user error")
-                alert(2)
+                console.log("获取用户信息失败")
                 cb(1, "")
             })
         },

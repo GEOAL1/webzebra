@@ -8,13 +8,13 @@ app.service('wxService', function ($rootScope, $http) {
             wx.config(data.body)
         }
     }).error(function (data, status, headers, config) {
-        alert(status)
+        alert("请求微信配制失败")
     })
 
 
     var service = {
         isWeixinClient: function () {
-            if ("micromessenger" === ua.match(/MicroMessenger/i)) {
+            if ("micromessenger" == ua.match(/MicroMessenger/i)) {
                 return true
             } else {
                 return false

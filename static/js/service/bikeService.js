@@ -30,7 +30,7 @@ app.service('bikeService', function ($rootScope, $http) {
 
         bikeOrder: function (car, $event) {
             alert("订购编号" + "成功，跳转到控制页")
-            location.href = "/static/carInfo.html?carid=" + car.id
+            location.href = "/static/bikeInfo.html?carid=" + car.id
             $event.preventDefault();
         },
 
