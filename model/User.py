@@ -5,6 +5,11 @@
 class User:
     username = None
     password = None
-    state = None
+    recharge_amount = None
+    balance = None
+    integral = None
+    user_sex = None
+    user_age = None
+    occupation = None
     create_time = None
-    id = None;
+    edit_time = None
