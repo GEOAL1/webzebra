@@ -24,7 +24,7 @@ create table b_bike_common
    images               varchar(64),
    note                 varchar(256),
    primary key (bike_id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: b_bike_dynamic                                        */
@@ -43,13 +43,14 @@ create table b_bike_dynamic
    speed                double,
    time_samp            timestamp,
    primary key (bike_id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
 /* Table: sys_user                                              */
 /*==============================================================*/
 create table sys_user
 (
+   user_id              int(11) AUTO_INCREMENT=100000000
    phone_num            varchar(128) not null,
    password             varchar(128) not null,
    username             varchar(128),
@@ -60,6 +61,19 @@ create table sys_user
    occupation           varchar(16),
    create_time          timestamp,
    edit_time            timestamp,
-   primary key (phone_num)
-);
+   primary key (user_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE u_d_history (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  user_id int(11) NOT NULL,
+  bike_id int(11) NOT NULL,
+  mileage double NOT NULL DEFAULT '0',
+  costTime int(11) NOT NULL DEFAULT '0',
+  start_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  end_time timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+
 

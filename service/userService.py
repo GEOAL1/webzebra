@@ -5,20 +5,24 @@ from service.IService import IService
 
 class UserService(IService):
 
-    def getByUP(self,username,password):
-        return self.userDao.selectByUP(username, password)
+    def getByPP(self,phone,password):
+        return self.userDao.selectByUP(phone, password)
 
 
-    def validateUP(self, username, password):
-        if len(username) < 6 or len(password) < 6 or len(password) > 20 or len(username) > 20:
+    def validatePP(self, phone, password):
+        if len(phone) != 11 or len(password) < 6 or len(password) > 20:
             return False
         return True
 
-    def getByUsername(self, username):
-        return self.userDao.selectByUsername(username)
+    def getByPhone(self, phone):
+        return self.userDao.selectByPhone(phone)
 
     def add(self, user):
-        if(self.validateUP(user["username"],user["password"]) == False):
+        if(self.validatePP(user["phone"],user["password"]) == False):
             return 0;
         return self.userDao.add(user)
+
+
+    def selecDInfoByUserID(self,userid):
+        return self.userDao.selecDInfoByUserID(userid)
 

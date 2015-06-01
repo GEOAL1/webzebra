@@ -1,5 +1,6 @@
 # /usr/bin/python
 # coding: utf-8
 
-SessionUsername = "un"
+SessionPhone = "p"
+SessionUserID = "u"
 SessionConfirmCode = "comfirmCode"

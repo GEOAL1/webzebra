@@ -14,7 +14,7 @@ import tornado.httpclient
 from error.zebraError import ZebraError
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
-from utils.Constants import SessionUsername
+from utils.Constants import SessionPhone
 
 
 class RegHandler(BaseHandler):
@@ -32,7 +32,7 @@ class RegHandler(BaseHandler):
         try:
             password = self.get_argument("password")
             retryPassword = self.get_argument("confirmPassword")
-            username = self.get_argument("ph")
+            phone = self.get_argument("ph")
             #mcode1 = self.get_argument("confirmCode")
             #mcode2 = self.session["confirmCode"]
             mcode1 = 123456;
@@ -40,11 +40,11 @@ class RegHandler(BaseHandler):
 
             if mcode2 is not None and mcode1 == mcode2:
                 if password == retryPassword:
-                    rcds = self.userService.getByUsername(username)
-                    if (len(rcds)) <= 0:
-                        res = self.userService.add({"username": username, "password": password})
+                    rcds = self.userService.getByPhone(phone)
+                    if rcds == None:
+                        res = self.userService.add({"phone": phone, "password": password})
                         result = JsonTemplate.newJsonRes().toJson()
-                        self.session[SessionUsername] = username
+                        self.session[SessionPhone] = phone
                         self.session.save();
                     else:
                         result = JsonTemplate.newErrorJsonRes().setErrMsg("用户名已存在或格式不正确").toJson()
@@ -109,8 +109,8 @@ class CheckPhoneHandle(BaseHandler):
         result = ""
 
         try:
-            rcds = self.userService.getByUsername(phone)
-            if(len(rcds) <= 0):
+            rcds = self.userService.getByPhone(phone)
+            if rcds == None:
                 result = JsonTemplate.newJsonRes().setErrMsg("success").toJson()
             else:
                 result = JsonTemplate.newErrorJsonRes().setErrMsg("用户已存在").toJson()

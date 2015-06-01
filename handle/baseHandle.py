@@ -6,7 +6,7 @@ from tornado.web import RequestHandler
 
 from service.userService import UserService
 from utils import session
-from utils.Constants import SessionUsername
+from utils.Constants import SessionPhone
 from utils.WeixinUtils import WeixinMananger
 
 
@@ -20,4 +20,4 @@ class BaseHandler(tornado.web.RequestHandler):
         # self.weixinManager = self.application.weixinManager
 
     def get_current_user(self):
-        return self.session.get(SessionUsername)
+        return self.session.get(SessionPhone)

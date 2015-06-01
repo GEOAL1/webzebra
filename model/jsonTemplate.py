@@ -1,6 +1,9 @@
 # /usr/bin/python
 # coding: utf-8
+from datetime import datetime
+from datetime import date
 import json
+from decimal import Decimal
 
 from enum import Enum
 
@@ -8,6 +11,17 @@ from enum import Enum
 class ErrorCode(Enum):
     success = 0
     error = 1
+
+
+def _default(obj):
+    if isinstance(obj, datetime):
+        return obj.strftime('%Y-%m-%d %H:%M:%S')
+    elif isinstance(obj, date):
+        return obj.strftime('%Y-%m-%d')
+    elif isinstance(obj,Decimal):
+        return int(obj)
+    else:
+        raise TypeError('%r is not JSON serializable' % obj)
 
 
 class JsonTemplate:
@@ -40,4 +54,5 @@ class JsonTemplate:
         return self;
 
     def toJson(self):
-        return json.dumps(self.__dict__)
+        return json.dumps(self.__dict__,default=_default)
+

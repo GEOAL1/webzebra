@@ -6,7 +6,7 @@ from tornado import  gen
 
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate, ErrorCode
-from utils.Constants import SessionUsername
+from utils.Constants import SessionPhone, SessionUserID
 
 
 class LoginHandler(BaseHandler):
@@ -27,12 +27,14 @@ class LoginHandler(BaseHandler):
     @tornado.gen.coroutine
     def validateUser(self):
         try:
-            username = self.get_argument("un")
+            phone = self.get_argument("un")
             password = self.get_argument("pw")
-            if (self.userService.getByUP(username, password)):
-                self.session[SessionUsername] = username;
+            user = self.userService.getByPP(phone, password)
+            if (user  != None):
+                self.session[SessionPhone] = phone;
+                self.session[SessionUserID] = user["user_id"];
                 self.session.save()
-                self.set_secure_cookie(SessionUsername, username)
+                self.set_secure_cookie(SessionPhone, phone)
                 ret = JsonTemplate.newJsonRes().setErrorCode(ErrorCode.success).toJson()
             else:
                 ret = JsonTemplate.newJsonRes().setErrorCode(ErrorCode.error).setErrMsg("用户名或密码不正确").toJson()
