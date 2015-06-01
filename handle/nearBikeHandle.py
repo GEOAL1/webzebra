@@ -12,7 +12,7 @@ class NearBikeHandler(BaseHandler):
         try:
             lng = float(self.get_argument("lng"))
             lat = float(self.get_argument("lat"))
-
+            print(lng)
             body = [
                 {'id': "06580", 'price': 12, 'distance': 222, 'remainPower': 50, 'reserveKm': 5000,
                  'lng': lng + random.uniform(0.001, 0.000),
