@@ -21,7 +21,7 @@ from service.userService import UserService
 from utils import session
 from utils.WeixinUtils import WeixinMananger
 
-define("port", default=80, help="run on the given port", type=int)
+define("port", default=8001, help="run on the given port", type=int)
 
 
 class ZebraApplicatoin(tornado.web.Application):
@@ -32,7 +32,7 @@ class ZebraApplicatoin(tornado.web.Application):
             session_timeout=600,
 
             store_options={
-                'redis_host': '127.0.0.1',
+                'redis_host': 'localhost',
                 'redis_port': 6379,
                 'redis_pass': '',
             },
