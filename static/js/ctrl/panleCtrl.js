@@ -61,3 +61,14 @@ app.controller("panelController", function ($scope, userService, wxService, bike
     });
 
 })
+
+$(function () {
+    ;
+    (function ($) {
+        var menuBtn = $('.menu');
+        var subMenu = $('#sub-menu');
+        $(menuBtn).click(function () {
+            $(subMenu).slideToggle();
+        });
+    })(jQuery);
+});

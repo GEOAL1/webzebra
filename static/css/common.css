@@ -109,6 +109,7 @@ a:active {
     left: 50%;
     margin-left: -25px;
     margin-top: -25px;
+    background: transparent;
     animation: myfirst 1.5s infinite;
     -moz-animation: myfirst 1.5s linear infinite; /* Firefox */
     -webkit-animation: myfirst 1.5s infinite; /* Safari 和 Chrome */
