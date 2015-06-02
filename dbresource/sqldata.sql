@@ -157,7 +157,7 @@ DROP FUNCTION IF EXISTS `fun_distance`$$
 
 CREATE FUNCTION `fun_distance`(lat1 float,lng1 float,lat2 float,lng2 float) RETURNS float
 BEGIN
-set @num=2 * 6378.137*ASIN(SQRT(POW(SIN(PI()*(lat1–(lat2))/360),2)+ COS(PI()*lat1/180)*COS(lat2*PI()/180)*POW(SIN(PI()*(lng1–(lng2))/360),2)));
+set @num=2 * 6378.137*ASIN(SQRT(POW(SIN(PI()*(lat1 - (lat2))/360),2)+ COS(PI()*lat1/180)*COS(lat2*PI()/180)*POW(SIN(PI()*(lng1 - (lng2))/360),2)));
 RETURN @num;
 END$$
 
