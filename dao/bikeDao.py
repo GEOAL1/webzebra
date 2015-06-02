@@ -20,7 +20,8 @@ class BikeDao(IMysqlDao):
         return self.db.query("select * from b_bike_dynamic");
 
     def getRangeeDyByLoLa(self,centerLo,centerLa,scopeRange):
-        sql = "select b_bike_dynamic.*, fun_distance(%s,%s,latitude,longitude) as distance from b_bike_dynamic  where fun_distance(%s,%s,latitude,longitude) < %s"
+        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from b_bike_dynamic a  join  b_bike_common b  on " \
+              "fun_distance(%s,%s,a.latitude,a.longitude) < %s and a.bike_id = b.bike_id "
         ret = self.db.query(sql, centerLa, centerLo,centerLa, centerLo,scopeRange/1000.0);
         return ret
     
@@ -58,4 +59,4 @@ if __name__ == '__main__':
     info.speed = 0
     info.timesamp =  time.strftime( FORMAT_TIME, time.localtime() )
 
-    print dao.getRangeeDyByLoLa(116.440255, 39.947385,10000.0)
+    print dao.getRangeeDyByLoLa(116.440255, 39.947385,5000.0)

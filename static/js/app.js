@@ -39,3 +39,14 @@ app.directive('uniquePhone', function ($http) {
         }
     }
 });
+
+$(function () {
+    ;
+    (function ($) {
+        var menuBtn = $('.menu');
+        var subMenu = $('#sub-menu');
+        $(menuBtn).click(function () {
+            $(subMenu).slideToggle();
+        });
+    })(jQuery);
+});

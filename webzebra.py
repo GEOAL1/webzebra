@@ -7,15 +7,14 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 from tornado.options import define, options
-
-from handle.bikeCtrlHandle import BikeCtrlHandler
+from handle.amountHandle import RechargeHandler
+from handle.bikeHandle import NearBikeHandler, BikeCtrlHandler
 
 from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
-from handle.nearBikeHandle import NearBikeHandler
 from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
-from handle.userHandler import userInfoHandler
+from handle.userHandler import UserInfoHandler
 from handle.weixinServiceHandle import WeixinServiceHandle
 from service.userService import UserService
 from utils import session
@@ -58,7 +57,10 @@ class ZebraApplicatoin(tornado.web.Application):
             # 用户信息管理
             (r"/wx/u/reg", RegHandler),
             (r"/wx/u/checkPhone/(\d{11})", CheckPhoneHandle),
-            (r"/wx/u/info", userInfoHandler),
+            (r"/wx/u/info", UserInfoHandler),
+
+            #帐户管理
+            (r"/wx/a/recharge", RechargeHandler),
 
             # 第三方服务
             (r"/wx/send/phoneCode", SendPhoneCodeHandle),

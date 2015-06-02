@@ -10,12 +10,23 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         $(document).off('touchmove');
     }
 
-    $scope.bikeVoice = bikeService.bikeVoice
+    $scope.openBikeLV = function (bike, $event) {
+        bikeService.bikeLight(bike, $event)
+        bikeService.bikeVoice(bike, $event)
+    }
+
     $scope.bikeNavigate = bikeService.bikeNavigate
     $scope.bikeOrder = bikeService.bikeOrder
 
+
+    $scope.openOrderModal = function(bike,$event) {
+        $('#myModal').modal('show')
+        $scope.selectBike = bike;
+        $event.preventDefault()
+    }
+
     $scope.user_load_ok = false
-    $scope.distance = 500
+    $scope.distance = 5000
 
     userService.getUserInfo(function (status, user) {
         if (status === 0) {
@@ -43,7 +54,7 @@ app.controller("panelController", function ($scope, userService, wxService, bike
                 $scope.bike_load_ok = true
                 $scope.touchoff()
                 bikes.forEach(function (bike) {
-                    geoService.getAddress(bike.lng, bike.lat, function (t, address) {
+                    geoService.getAddress(bike.longitude, bike.latitude, function (t, address) {
                         bike.address = address
                         console.log(address)
                         $scope.$digest()
@@ -63,13 +74,3 @@ app.controller("panelController", function ($scope, userService, wxService, bike
 
 })
 
-$(function () {
-    ;
-    (function ($) {
-        var menuBtn = $('.menu');
-        var subMenu = $('#sub-menu');
-        $(menuBtn).click(function () {
-            $(subMenu).slideToggle();
-        });
-    })(jQuery);
-});

@@ -55,6 +55,23 @@ app.service('userService', function ($rootScope, $http) {
             }).error(function () {
                 alert("请求服务器失败")
             })
+        },
+        recharge: function(rechargeNum,cb) {
+            $http({
+                method: "POST",
+                url: "/wx/a/recharge",
+                data: $.param({rechargeNum:rechargeNum}),  // pass in data as strings
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function (data) {
+                if (data.errorCode === 0) {
+                    cb(0)
+                } else {
+                    cb(-1)
+                }
+            }).error(function () {
+                    cb(-2)
+                alert("请求服务器失败")
+            })
         }
 
     }

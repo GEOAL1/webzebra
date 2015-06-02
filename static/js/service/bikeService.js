@@ -21,29 +21,28 @@ app.service('bikeService', function ($rootScope, $http) {
     }
 
     var service = {
-        bikeVoice: function (car, $event) {
-            SendCmd("voice", {bikeID: car.id}, function () {
+        bikeVoice: function (bike, $event) {
+            SendCmd("voice", {bikeID: bike.bike_id}, function () {
                 alert("响铃发送成功")
             })
             $event.preventDefault();
         },
 
-        bikeLight: function (car, $event) {
-            SendCmd("voice", {bikeID: car.id}, function () {
+        bikeLight: function (bike, $event) {
+            SendCmd("voice", {bikeID: bike.bike_id}, function () {
                 alert("亮灯发送成功")
             })
             $event.preventDefault();
         },
 
-        bikeOrder: function (car, $event) {
+        bikeOrder: function (bike, $event) {
             alert("订购编号" + "成功，跳转到控制页")
-            location.href = "bikeInfo.html?carid=" + car.id
+            location.href = "bikeInfo.html?bike_id=" + bike.bike_id
             $event.preventDefault();
         },
 
-        bikeNavigate: function (car, $event) {
-
-            qq.maps.convertor.translate(new qq.maps.LatLng(car.lat, car.lng), 1, function (res) {
+        bikeNavigate: function (bike, $event) {
+            qq.maps.convertor.translate(new qq.maps.LatLng(bike.latitude, bike.longitude), 1, function (res) {
                         wx.openLocation({
                             latitude: res[0].lat,
                             longitude: res[0].lng,
@@ -53,9 +52,6 @@ app.service('bikeService', function ($rootScope, $http) {
                             infoUrl: ""
                         })
                 })
-
-
-
             $event.preventDefault();
         },
 

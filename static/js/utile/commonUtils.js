@@ -14,7 +14,7 @@ function getGeo(callback) {
 
     var ua = navigator.userAgent.toLowerCase();
 
-    if ("micromessenger" == ua.match(/MicroMessenger/i)) {
+    if ("micromessenger" === ua.match(/MicroMessenger/i)) {
         wx.ready(function () {
             wx.getLocation({
                 success: function (res) {

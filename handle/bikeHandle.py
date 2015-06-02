@@ -1,6 +1,10 @@
+#/usr/bin/python
+#coding: utf-8
+
 # /usr/bin/python
 # coding: utf-8
 # Createtime 2015/5/25
+import random
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
 
@@ -28,4 +32,16 @@ class BikeCtrlHandler(BaseHandler):
             print e
             result = JsonTemplate.newErrorJsonRes().setBody("error argument").toJson()
         self.write(result)
+        pass
+
+class NearBikeHandler(BaseHandler):
+    def get(self):
+        try:
+            lng = float(self.get_argument("lng"))
+            lat = float(self.get_argument("lat"))
+            distance = int(self.get_argument("distance"))
+            bikeList = self.bikeService.getNearBIke(lng,lat,distance)
+            self.write(JsonTemplate.newJsonRes().setBody(bikeList).toJson())
+        except Exception as e:
+            self.write(JsonTemplate.newErrorJsonRes().setBody("error argument").toJson())
         pass

@@ -19,7 +19,7 @@ def _default(obj):
     elif isinstance(obj, date):
         return obj.strftime('%Y-%m-%d')
     elif isinstance(obj,Decimal):
-        return int(obj)
+        return float(obj)
     else:
         raise TypeError('%r is not JSON serializable' % obj)
 

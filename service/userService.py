@@ -8,7 +8,6 @@ class UserService(IService):
     def getByPP(self,phone,password):
         return self.userDao.selectByUP(phone, password)
 
-
     def validatePP(self, phone, password):
         if len(phone) != 11 or len(password) < 6 or len(password) > 20:
             return False

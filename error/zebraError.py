@@ -8,3 +8,7 @@ class ZebraError(StandardError):
 
 class SqlError(ZebraError):
     pass
+
+
+class ErrorArgExpection(ZebraError):
+    pass

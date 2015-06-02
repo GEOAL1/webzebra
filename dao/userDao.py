@@ -47,6 +47,9 @@ class UserDao(IMysqlDao):
 
         return self.db.get(sql, user_id)
 
+    def recharge(self,userid,rechargeNum):
+        sql = "update sys_user set balance=%s+balance where user_id = %s"
+        return self.db.update(sql,rechargeNum,userid)
 
 if __name__ == '__main__':
     dao = UserDao();

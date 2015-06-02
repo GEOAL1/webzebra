@@ -10,7 +10,7 @@ from tornado.escape import json_encode
 from utils.Constants import SessionUserID
 
 
-class userInfoHandler(BaseHandler):
+class UserInfoHandler(BaseHandler):
     @authenticated
     def get(self):
         user_id = self.session[SessionUserID]
@@ -23,4 +23,6 @@ class userInfoHandler(BaseHandler):
         print body
         self.write(JsonTemplate.newJsonRes().setErrMsg("success").setBody(body).toJson())
         print(JsonTemplate.newJsonRes().setErrMsg("success").setBody(body).toJson())
+
+
 

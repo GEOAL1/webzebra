@@ -6,4 +6,4 @@ from service.IService import IService
 class BikeService(IService):
 
     def  getNearBIke(self,lng,lat,distance):
-        return self.bikeDao.getRangeByLoLa(lng,lat,distance)
+        return self.bikeDao.getRangeeDyByLoLa(lng,lat,distance)
