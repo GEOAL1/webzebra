@@ -14,4 +14,4 @@ class Singleton(object):
 
 
 class MysqlMananger(Singleton):
-    db = torndb.Connection("127.0.0.1", "zebra", "root", "123456")
+    db = torndb.Connection("127.0.0.1", "zebra", "root", "root")

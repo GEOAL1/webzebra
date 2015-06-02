@@ -17,7 +17,7 @@ class BikeDao(IMysqlDao):
         动态表操作
     '''
     def selectDyAll(self):
-        return self.db.query("select * from b_bike_dynamic");
+        return self.db.query(self.defaultDynamicSelectSql % "1");
 
     def getRangeeDyByLoLa(self,centerLo,centerLa,scopeRange):
         sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from b_bike_dynamic a  join  b_bike_common b  on " \
@@ -40,7 +40,15 @@ class BikeDao(IMysqlDao):
     """
         静态表操作
     """
-
+    def selectCommonAll(self):
+        return self.db.query(self.defaultCommonSelectSql % "1");
+    
+    def getBikeCommonInfoByid(self,bikeId):
+        cond = "bike_id = %d" % bikeId
+        sql = self.defaultCommonSelectSql % (cond)
+        ret = self.db.query(sql)
+        return ret
+    
 
     
 if __name__ == '__main__':
