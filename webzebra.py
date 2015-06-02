@@ -19,6 +19,7 @@ from handle.weixinServiceHandle import WeixinServiceHandle
 from service.userService import UserService
 from utils import session
 from utils.WeixinUtils import WeixinMananger
+from handle.orderBIkeHandle import OrderBikeHandler
 
 define("port", default=8001, help="run on the given port", type=int)
 
@@ -47,7 +48,7 @@ class ZebraApplicatoin(tornado.web.Application):
             (r"", MainHandler),
             (r"/wx/login", LoginHandler),
 
-            # 车辆管理
+            # 车辆管理OrderBikeHandler
             (r"/wx/b/list", DefaultHandler),
             (r"/wx/b/info", DefaultHandler),
             (r"/wx/b/ctrl/(\w*)", BikeCtrlHandler),
