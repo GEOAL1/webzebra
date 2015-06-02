@@ -5,6 +5,7 @@ import tornado
 from tornado.web import RequestHandler
 from service.amountService import AmountService
 from service.bikeService import BikeService
+from service.orderService import OrderService
 
 from service.userService import UserService
 from utils import session
@@ -21,6 +22,7 @@ class BaseHandler(tornado.web.RequestHandler):
         # self.userService = self.application.userService
         self.weixinManager = WeixinMananger()
         self.amountService = AmountService()
+        self.orderService = OrderService()
         # self.weixinManager = self.application.weixinManager
 
     def get_current_user(self):

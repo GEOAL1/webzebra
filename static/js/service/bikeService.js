@@ -1,17 +1,17 @@
 app.service('bikeService', function ($rootScope, $http) {
 
-    SendCmd = function (cmd, args, callback) {
+    SendCmd = function (url, args, callback) {
         $http({
             method: "GET",
-            url: '/wx/b/ctrl/' + cmd,
+            url:  url,
             params: args,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status, headers, config) {
             if (data.errorCode === 0) {
-                callback(data)
+                callback(data.errorCode,data)
                 console.log("bike ctrl " + cmd + " success")
             } else {
-                alert('cmd:' + cmd + "send failed")
+                callback(data.errorCode,"")
                 console.log(data.errMsg)
             }
         }).error(function (data, status, headers, config) {
@@ -22,22 +22,34 @@ app.service('bikeService', function ($rootScope, $http) {
 
     var service = {
         bikeVoice: function (bike, $event) {
-            SendCmd("voice", {bikeID: bike.bike_id}, function () {
-                alert("响铃发送成功")
+            SendCmd('/wx/b/ctrl/' +"voice", {bikeID: bike.id}, function (state,data) {
+                if(state == 0) {
+                    alert("响铃发送成功")
+                }else{
+                    alert("响玲发送失败")
+                }
             })
             $event.preventDefault();
         },
 
         bikeLight: function (bike, $event) {
-            SendCmd("voice", {bikeID: bike.bike_id}, function () {
-                alert("亮灯发送成功")
-            })
+            SendCmd('/wx/b/ctrl/' +"light", {bikeID: bike.id}, function () {
+                if(state == 0) {
+                    alert("灯光发送成功")
+                }else{
+                    alert("灯光发送失败")
+                }            })
             $event.preventDefault();
         },
 
         bikeOrder: function (bike, $event) {
-            alert("订购编号" + "成功，跳转到控制页")
-            location.href = "bikeInfo.html?bike_id=" + bike.bike_id
+            SendCmd('/wx/b/' + "order", {bikeID: bike.id}, function () {
+                if(state == 0) {
+                    alert("订购车成功")
+                }else{
+                    alert("订购车失败")
+                }            })
+            location.href = "bikeInfo.html" + bike.id
             $event.preventDefault();
         },
 

@@ -51,6 +51,10 @@ class UserDao(IMysqlDao):
         sql = "update sys_user set balance=%s+balance where user_id = %s"
         return self.db.update(sql,rechargeNum,userid)
 
+    def callTest(self):
+        sql = "call order_bike(1000103,123)"
+        return self.db.query(sql)
+
 if __name__ == '__main__':
     dao = UserDao();
     user = User();

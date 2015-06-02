@@ -52,6 +52,8 @@ class ZebraApplicatoin(tornado.web.Application):
             (r"/wx/b/info", DefaultHandler),
             (r"/wx/b/ctrl/(\w*)", BikeCtrlHandler),
             (r"/wx/b/nearBike", NearBikeHandler),
+            (r"/wx/b/order", OrderBikeHandler),
+            (r"/wx/b/unorder", OrderBikeHandler),
 
 
             # 用户信息管理
