@@ -15,6 +15,7 @@ app.controller("panelController", function ($scope, userService, wxService, bike
     $scope.bikeOrder = bikeService.bikeOrder
 
     $scope.user_load_ok = false
+    $scope.distance = 500
 
     userService.getUserInfo(function (status, user) {
         if (status === 0) {
@@ -36,7 +37,7 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         }
         $scope.user_load_ok = true
         $scope.touchon()
-        bikeService.getNearBike($scope.lng, $scope.lat, function (status, bikes) {
+        bikeService.getNearBike($scope.lng, $scope.lat, $scope.distance,function (status, bikes) {
             if (status == 0) {
                 $scope.nearCars = bikes
                 $scope.bike_load_ok = true

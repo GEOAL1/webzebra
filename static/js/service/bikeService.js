@@ -59,11 +59,11 @@ app.service('bikeService', function ($rootScope, $http) {
             $event.preventDefault();
         },
 
-        getNearBike: function (lng, lat, callback) {
+        getNearBike: function (lng, lat, distance,callback) {
             $http({
                 method: "GET",
                 url: '/wx/b/nearBike',
-                params: {"lng": lng, "lat": lat},
+                params: {"lng": lng, "lat": lat,"distance":distance},
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 timeout: 3000
             }).success(function (data, status, headers, config) {

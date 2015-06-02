@@ -3,6 +3,7 @@
 #Createtime 2015/5/25
 import tornado
 from tornado.web import RequestHandler
+from service.bikeService import BikeService
 
 from service.userService import UserService
 from utils import session
@@ -15,6 +16,7 @@ class BaseHandler(tornado.web.RequestHandler):
         super(BaseHandler, self).__init__(*argc, **argkw)
         self.session = session.Session(self.application.session_manager, self)
         self.userService = UserService();
+        self.bikeService = BikeService();
         # self.userService = self.application.userService
         self.weixinManager = WeixinMananger()
         # self.weixinManager = self.application.weixinManager

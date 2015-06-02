@@ -12,7 +12,10 @@ class NearBikeHandler(BaseHandler):
         try:
             lng = float(self.get_argument("lng"))
             lat = float(self.get_argument("lat"))
-            print(lng)
+            distance = int(self.get_argument("distance"))
+
+            #bikeList = self.bikeService.getNearBIke(lng,lat,distance)
+
             body = [
                 {'id': "06580", 'price': 12, 'distance': 222, 'remainPower': 50, 'reserveKm': 5000,
                  'lng': lng + random.uniform(0.001, 0.000),
@@ -45,6 +48,7 @@ class NearBikeHandler(BaseHandler):
                  'lng': lng + random.uniform(0.001, 0.000),
                  'lat': lat + random.uniform(0.001, 0.000)},
             ]
+
             self.write(JsonTemplate.newJsonRes().setBody(body).toJson())
         except Exception as e:
             self.write(JsonTemplate.newErrorJsonRes().setBody("error argument").toJson())

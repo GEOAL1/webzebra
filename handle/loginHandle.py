@@ -24,6 +24,7 @@ class LoginHandler(BaseHandler):
         self.write(result)
         self.finish()
 
+
     @tornado.gen.coroutine
     def validateUser(self):
         try:
@@ -39,5 +40,6 @@ class LoginHandler(BaseHandler):
             else:
                 ret = JsonTemplate.newJsonRes().setErrorCode(ErrorCode.error).setErrMsg("用户名或密码不正确").toJson()
         except Exception as e:
+            print e
             ret = JsonTemplate.newErrorJsonRes().setErrMsg("unknow error").toJson();
         raise gen.Return(ret)

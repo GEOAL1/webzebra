@@ -26,7 +26,6 @@ class UserDao(IMysqlDao):
     def selectByUP(self, phone, password):
         cond = "phone_num=%s and password=%s";
         sql = self.defaultSelectSql % (cond)
-#         return self.db.query(sql, username, password);
         b = self.db.get(sql, phone, password);
         return b
 
@@ -55,7 +54,7 @@ if __name__ == '__main__':
     user.username = "13112121212"
     user.password = "qqqq"
 #     dao.add(user.__dict__)
-    #print dao.selectAll()
+    print dao.selectAll()
     print dao.selectByUP("15652750943", "15652750943")
     print dao.selectByPhone("15652750943")
     #print dao.selectByUsername("shuai1")
