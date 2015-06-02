@@ -7,3 +7,6 @@ class BikeService(IService):
 
     def  getNearBIke(self,lng,lat,distance):
         return self.bikeDao.getRangeeDyByLoLa(lng,lat,distance)
+
+    def getNearIdleBIke(self,lng,lat,distance):
+        return self.bikeDao.getIdleRangeeDyByLoLa(lng,lat,distance)

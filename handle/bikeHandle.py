@@ -40,7 +40,7 @@ class NearBikeHandler(BaseHandler):
             lng = float(self.get_argument("lng"))
             lat = float(self.get_argument("lat"))
             distance = int(self.get_argument("distance"))
-            bikeList = self.bikeService.getNearBIke(lng,lat,distance)
+            bikeList = self.bikeService.getNearIdleBIke(lng,lat,distance)
             self.write(JsonTemplate.newJsonRes().setBody(bikeList).toJson())
         except Exception as e:
             self.write(JsonTemplate.newErrorJsonRes().setBody("error argument").toJson())
