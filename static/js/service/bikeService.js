@@ -22,7 +22,7 @@ app.service('bikeService', function ($rootScope, $http) {
 
     var service = {
         bikeVoice: function (bike, $event) {
-            SendCmd('/wx/b/ctrl/' +"voice", {bikeID: bike.id}, function (state,data) {
+            SendCmd('/wx/b/ctrl/' +"voice", {bikeID: bike.bike_id}, function (state,data) {
                 if(state == 0) {
                     alert("响铃发送成功")
                 }else{
@@ -33,7 +33,7 @@ app.service('bikeService', function ($rootScope, $http) {
         },
 
         bikeLight: function (bike, $event) {
-            SendCmd('/wx/b/ctrl/' +"light", {bikeID: bike.id}, function () {
+            SendCmd('/wx/b/ctrl/' +"light", {bikeID: bike.bike_id}, function (state,data) {
                 if(state == 0) {
                     alert("灯光发送成功")
                 }else{
@@ -43,13 +43,16 @@ app.service('bikeService', function ($rootScope, $http) {
         },
 
         bikeOrder: function (bike, $event) {
-            SendCmd('/wx/b/' + "order", {bikeID: bike.id}, function () {
+            SendCmd('/wx/b/order', {bikeID: bike.bike_id}, function (state,data) {
                 if(state == 0) {
                     alert("订购车成功")
+                    location.href = "bikeInfo.html?bike_id=" + bike.bike_id
+
                 }else{
                     alert("订购车失败")
-                }            })
-            location.href = "bikeInfo.html" + bike.id
+                }
+
+            })
             $event.preventDefault();
         },
 

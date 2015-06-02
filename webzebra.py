@@ -13,6 +13,7 @@ from handle.bikeHandle import NearBikeHandler, BikeCtrlHandler
 from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
+from handle.orderBIkeHandle import OrderBikeHandler
 from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
 from handle.userHandler import UserInfoHandler
 from handle.weixinServiceHandle import WeixinServiceHandle

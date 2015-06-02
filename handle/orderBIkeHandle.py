@@ -10,13 +10,15 @@ class OrderBikeHandler(BaseHandler):
     # @tornado.web.asynchronous
     # @tornado.gen.engine
     @authenticated
-    def post(self):
+    def get(self):
         result = ""
         user_id = self.session[SessionUserID]
         try:
-            bike_id = self.get_argument("bike_id")
-            self.orderService.orderBike(user_id,bike_id)
-            result = JsonTemplate.newJsonRes().toJson()
+            bike_id = self.get_argument("bikeID")
+            if(self.orderService.orderBike(user_id,bike_id) > 0):
+                result = JsonTemplate.newJsonRes().toJson()
+            else:
+                result = JsonTemplate.newErrorJsonRes().toJson()
         except Exception as e :
             print e
             JsonTemplate.newErrorJsonRes().toJson()
