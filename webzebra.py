@@ -8,19 +8,18 @@ import tornado.web
 import tornado.options
 from tornado.options import define, options
 from handle.amountHandle import RechargeHandler
-from handle.bikeHandle import NearBikeHandler, BikeCtrlHandler
+from handle.bikeHandle import NearBikeHandler, BikeCtrlHandler, BikeInfoHandler
 
 from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
-from handle.orderBIkeHandle import OrderBikeHandler
+from handle.orderHandle import GetOrderHandler, OrderBikeHandler, FinishOrderHandler
 from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
 from handle.userHandler import UserInfoHandler
 from handle.weixinServiceHandle import WeixinServiceHandle
 from service.userService import UserService
 from utils import session
 from utils.WeixinUtils import WeixinMananger
-from handle.orderBIkeHandle import OrderBikeHandler
 
 define("port", default=8001, help="run on the given port", type=int)
 
@@ -51,11 +50,14 @@ class ZebraApplicatoin(tornado.web.Application):
 
             # 车辆管理OrderBikeHandler
             (r"/wx/b/list", DefaultHandler),
-            (r"/wx/b/info", DefaultHandler),
+            (r"/wx/b/info", BikeInfoHandler),
             (r"/wx/b/ctrl/(\w*)", BikeCtrlHandler),
             (r"/wx/b/nearBike", NearBikeHandler),
-            (r"/wx/b/order", OrderBikeHandler),
-            (r"/wx/b/unorder", OrderBikeHandler),
+
+            #订单管理
+            (r"/wx/o/order", OrderBikeHandler),
+            (r"/wx/o/get"  , GetOrderHandler),
+            (r"/wx/o/finish", FinishOrderHandler),
 
 
             # 用户信息管理
@@ -68,6 +70,7 @@ class ZebraApplicatoin(tornado.web.Application):
 
             # 第三方服务
             (r"/wx/send/phoneCode", SendPhoneCodeHandle),
+
             # 微信服务
             (r"/wx/service/(.*)", WeixinServiceHandle)
 

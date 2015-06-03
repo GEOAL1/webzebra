@@ -14,7 +14,7 @@ import tornado.httpclient
 from error.zebraError import ZebraError
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
-from utils.Constants import SessionPhone
+from utils.Constants import SessionPhone, SessionConfirmCode, SessionUserID
 
 
 class RegHandler(BaseHandler):
@@ -43,9 +43,13 @@ class RegHandler(BaseHandler):
                     rcds = self.userService.getByPhone(phone)
                     if rcds == None:
                         res = self.userService.add({"phone": phone, "password": password})
-                        result = JsonTemplate.newJsonRes().toJson()
-                        self.session[SessionPhone] = phone
-                        self.session.save();
+                        if(res == None):
+                            result = JsonTemplate.newErrorJsonRes().setErrMsg("注册失败").toJson()
+                        else:
+                            result = JsonTemplate.newJsonRes().toJson()
+                            self.session[SessionPhone] = phone
+                            self.session[SessionUserID] = str(res["id"])
+                            self.session.save();
                     else:
                         result = JsonTemplate.newErrorJsonRes().setErrMsg("用户名已存在或格式不正确").toJson()
                 else:

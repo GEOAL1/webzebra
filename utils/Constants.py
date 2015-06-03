@@ -4,3 +4,5 @@
 SessionPhone = "p"
 SessionUserID = "u"
 SessionConfirmCode = "comfirmCode"
+CookieLastOrderID = "lord"
+CookieLastCtrlBIke = "bid"

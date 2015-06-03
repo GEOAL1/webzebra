@@ -9,7 +9,7 @@ app.service('bikeService', function ($rootScope, $http) {
         }).success(function (data, status, headers, config) {
             if (data.errorCode === 0) {
                 callback(data.errorCode,data)
-                console.log("bike ctrl " + cmd + " success")
+                console.log(url + " success")
             } else {
                 callback(data.errorCode,"")
                 console.log(data.errMsg)
@@ -22,7 +22,7 @@ app.service('bikeService', function ($rootScope, $http) {
 
     var service = {
         bikeVoice: function (bike, $event) {
-            SendCmd('/wx/b/ctrl/' +"voice", {bikeID: bike.bike_id}, function (state,data) {
+            SendCmd('/wx/b/ctrl/voice', {bikeID: bike.bike_id}, function (state,data) {
                 if(state == 0) {
                     alert("响铃发送成功")
                 }else{
@@ -33,7 +33,7 @@ app.service('bikeService', function ($rootScope, $http) {
         },
 
         bikeLight: function (bike, $event) {
-            SendCmd('/wx/b/ctrl/' +"light", {bikeID: bike.bike_id}, function (state,data) {
+            SendCmd('/wx/b/ctrl/light', {bikeID: bike.bike_id}, function (state,data) {
                 if(state == 0) {
                     alert("灯光发送成功")
                 }else{
@@ -43,17 +43,34 @@ app.service('bikeService', function ($rootScope, $http) {
         },
 
         bikeOrder: function (bike, $event) {
-            SendCmd('/wx/b/order', {bikeID: bike.bike_id}, function (state,data) {
+            SendCmd('/wx/o/order', {bikeID: bike.bike_id}, function (state,data) {
                 if(state == 0) {
                     alert("订购车成功")
-                    location.href = "bikeInfo.html?bike_id=" + bike.bike_id
-
+                    location.href = "/"
                 }else{
                     alert("订购车失败")
                 }
 
             })
             $event.preventDefault();
+        },
+
+        finishOrder: function(orderid,callback) {
+            SendCmd('/wx/o/finish', {order_id: orderid}, function (state,data) {
+                if(state == 0){
+                    alert("完成订单成功")
+                    window.location.href="/"
+                }else{
+                    alert("取消失败")
+                }
+            })
+        },
+
+
+        getOrderByOrderID: function (orderID,callback) {
+            SendCmd('/wx/o/get', {order_id:orderID}, function (state,data) {
+                callback(state,data.body)
+            })
         },
 
         bikeNavigate: function (bike, $event) {
@@ -90,6 +107,8 @@ app.service('bikeService', function ($rootScope, $http) {
             })
         },
 
+
+
         getBikeInfo: function (bikeId, callback) {
             $http({
                 method: "GET",
@@ -109,6 +128,7 @@ app.service('bikeService', function ($rootScope, $http) {
                 alert("连接服务器失败")
             })
         },
+
     }
     return service
 })

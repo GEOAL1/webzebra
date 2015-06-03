@@ -39,8 +39,8 @@
 
     <ul class="nav navbar-nav" style="display:none;" id="sub-menu">
         <li><a href="/static/recharge.html">充值</a></li>
-        <li><a href="/static/panel.html">地图订车</a></li>
         <li><a href="/static/panel.html">列表订车</a></li>
+        <li><a href="/">当前订购的车</a></li>
     </ul>
 
 </nav>
@@ -60,7 +60,7 @@
             </div>
             <div class="detail-info">
                 <div><span>余额</span><span>{{user.balance}}</span></div>
-                <div><span>里程: 128 公里</span><span>时间： 12小时</span></div>
+                <div><span>里程: 128 公里</span><span>可用时间： {{user.balance}} </span></div>
             </div>
         </div>
     </div>

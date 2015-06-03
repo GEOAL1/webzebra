@@ -37,9 +37,9 @@ class BikeDao(IMysqlDao):
         self.db.execute(sql)
     
     def getBikeDyInfoByid(self,bikeId):
-        cond = "bike_id = %d" % bikeId
+        cond = "bike_id = %s"
         sql = self.defaultDynamicSelectSql % (cond)
-        ret = self.db.query(sql)
+        ret = self.db.get(sql,bikeId)
         return ret
 
 

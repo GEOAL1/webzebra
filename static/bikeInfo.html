@@ -26,8 +26,19 @@
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="top-nav">
-    控制面板
-</nav>
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="top-nav">
+        控制面板
+        <div class="menu glyphicon glyphicon-list">
+
+        </div>
+
+        <ul class="nav navbar-nav" style="display:none;" id="sub-menu">
+            <li><a href="/static/recharge.html">充值</a></li>
+            <li><a href="/static/panel.html">列表订车</a></li>
+            <li><a href="/">当前订购的车</a></li>
+        </ul>
+
+    </nav></nav>
 <div class="main" ng-controller="bikeInfoController">
     <div class="d_panel">
         <div class="img-area">
@@ -35,20 +46,20 @@
         </div>
         <div>
             <div style="font-size: 16px;font-weight: bold;padding-bottom:5px">
-                车号: {{bike.id}} 状态 锁车
+                车号: {{order.bike_id}}
             </div>
             <div class="detail-info">
-                <div><span>距离</span><span>{{bike.distance}}米</span></div>
-                <div><span>{{bike.location}}</span></div>
+                <div><span>车辆状态</span><span>已锁</span></div>
+                <div><span>电量 {{bike.cur_power}}%</span></div>
             </div>
             <div class="detail-info">
-                <div><span>电量</span><span>{{bike.remainPower}}%</span></div>
-                <div><span>已行驶：15公里</span><span>耗时：1：20：30</span></div>
+                <div><span>预记花费</span><span>{{order.cost_time}} 斑马币</span></div>
+                <div><span>已行驶：{{order.mileage}}</span><span>耗时：{{order.cost_time}}分钟</span></div>
             </div>
         </div>
     </div>
     <div class="article">
-        <div><span class="one" ng-click="orderBike(bike,$event)">快速{{bike.nextOrderState}}</span></div>
+        <div><span class="one" ng-click="finishOrderBike($event)">快速还车</span></div>
         <div><span class="one" ng-click="lockBike(bike,$event)">快速{{bike.nextLockState}}</span></div>
     </div>
     <div class="article">

@@ -35,15 +35,12 @@ class UserDao(IMysqlDao):
         return self.db.get(sql, username)
 
     def selecDInfoByUserID(self,user_id):
-        sql ="SELECT\
-                a.phone_num,\
-                a.balance,\
-                a.integral,\
+        sql ="select  a.phone_num,a.balance,a.integral,\
                 a.occupation,\
                 a.user_id,\
                 sum(b.costTime) AS costTime,\
-                sum(b.mileage)  AS mileage\
-                FROM sys_user a LEFT JOIN u_d_history b ON a.user_id = %s AND a.user_id = b.user_id"
+                sum(b.mileage)  AS mileage from u_d_history b RIGHT JOIN (\
+                SELECT * FROM sys_user WHERE user_id = %s) a ON a.user_id = b.user_id"
 
         return self.db.get(sql, user_id)
 

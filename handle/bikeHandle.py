@@ -45,3 +45,19 @@ class NearBikeHandler(BaseHandler):
         except Exception as e:
             self.write(JsonTemplate.newErrorJsonRes().setBody("error argument").toJson())
         pass
+
+class BikeInfoHandler(BaseHandler):
+    def get(self):
+        try:
+            bike_id = self.get_argument("bikeID")
+            bike = self.bikeService.getBikeDetailInfo(bike_id)
+            if(bike == None):
+                result = JsonTemplate.newErrorJsonRes().setBody("没有找到该车").toJson()
+            else:
+                result = JsonTemplate.newJsonRes().setBody(bike).toJson()
+        except Exception as e:
+            result = JsonTemplate.newErrorJsonRes().setBody("error argument").toJson()
+        self.write(result)
+
+
+
