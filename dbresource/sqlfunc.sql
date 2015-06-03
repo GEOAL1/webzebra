@@ -1,13 +1,6 @@
--- Dump completed on 2015-06-02  0:08:40
-DROP FUNCTION IF EXISTS fun_distance;
-
-CREATE FUNCTION `fun_distance`(lat1 float,lng1 float,lat2 float,lng2 float) RETURNS float
-  BEGIN
-    set @num=2 * 6378.137*ASIN(SQRT(POW(SIN(PI()*(lat1-(lat2))/360),2)+ COS(PI()*lat1/180)*COS(lat2*PI()/180)*POW(SIN(PI()*(lng1-(lng2))/360),2)));
-    RETURN @num;
-END;
-
-
+DELIMITER $$
+use zebra$$
+DROP PROCEDURE IF EXISTS order_bike;
 create procedure order_bike(bikeid INT,userid int)
   begin
     DECLARE order_bike_id int;
@@ -39,9 +32,9 @@ create procedure order_bike(bikeid INT,userid int)
     ELSE
       ROLLBACK;
     END IF ;
-  end;
+  end$$
 
-
+DROP PROCEDURE IF EXISTS cancel_order;
 CREATE PROCEDURE cancel_order(orderid int)
   BEGIN
 
@@ -90,9 +83,16 @@ CREATE PROCEDURE cancel_order(orderid int)
       SELECT 0 as state,"success" as message;
       COMMIT;
     END IF ;
-  END;
+  END$$
 
-call order_bike(1000103,100000000);
-call  cancel_order(100010)
+DROP FUNCTION IF EXISTS fun_distance;
+
+CREATE FUNCTION fun_distance(lat1 float,lng1 float,lat2 float,lng2 float) RETURNS float
+  BEGIN
+    set @num=2 * 6378.137*ASIN(SQRT(POW(SIN(PI()*(lat1-(lat2))/360),2)+ COS(PI()*lat1/180)*COS(lat2*PI()/180)*POW(SIN(PI()*(lng1-(lng2))/360),2)));
+    RETURN @num;
+  END$$
+
+DELIMITER ;
 
 
