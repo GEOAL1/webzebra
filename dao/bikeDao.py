@@ -66,7 +66,11 @@ class BikeDao(IMysqlDao):
         ret = self.db.query(sql)
         return ret
     
-
+    def selectCommonTimeAll(self,timeStr):
+        crutime = time.mktime(time.strptime(timeStr,'%Y-%m-%d %H:%M:%S'))
+        cond = "register_time > %s"
+        sql = self.defaultCommonSelectSql % (cond)
+        return self.db.query(sql,crutime)
     
 if __name__ == '__main__':
     dao = BikeDao();
