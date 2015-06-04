@@ -84,7 +84,7 @@ class BikeInfoHandler(BaseHandler):
             except Exception as e :
                 raise InputArgsError()
 
-            bike = self.bikeService.getBikeDetailInfo(bike_id)
+            bike = self.bikeService.getBikeInfo(bike_id)
             if(bike == None):
                 raise BikeNotFoundError()
             ret = JsonTemplate.newJsonRes().setBody(bike)
