@@ -14,7 +14,7 @@ class RechargeHandler(BaseHandler):
     @tornado.web.asynchronous
     @tornado.gen.coroutine
     def post(self):
-        result = yield self.validateUser()
+        result = yield self.get_result()
         self.write(result)
         self.finish()
 
