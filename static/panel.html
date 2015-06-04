@@ -2,8 +2,6 @@
 <html ng-app="app">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>xxxx</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -32,17 +30,42 @@
 </head>
 <body ng-controller="panelController" >
 <nav class="navbar navbar-inverse navbar-fixed-top" id="top-nav">
-    主面板
-    <div class="menu glyphicon glyphicon-list">
+    附近的车
 
+    <div class="menu">
+        <div class="glyphicon glyphicon-search"
+             style="margin-right: 15px" onclick="$('#search-menu').slideToggle()"></div>
+        <div class="more-menu glyphicon glyphicon-list"
+             onclick="$('#sub-menu').slideToggle()"></div>
     </div>
 
+    <ul class="nav navbar-nav" style="display:none;" id="search-menu">
+
+        <div class="form-group input-group-sm" style="margin: 0 30px">
+            <form id="signup_form" class="form-signin" name="signup_form" ng-submit="searchBike()">
+
+                <div class="form-group input-group-md">
+
+                <label for="bike_id" class="sr-only">车号</label>
+                <input type="text" id="bike_id" name="bike_id" ng-model="search.bike_id" class="form-control"
+                   placeholder="请输入车号"/>
+                    </div>
+                <div class="form-group input-group-md">
+
+                <label for="balance" class="sr-only">距离</label>
+                <input type="text" id="balance" name="balance"  ng-model="search.distance" class="form-control" placeholder="距离" />
+                    </div>
+                <button type="submit" class="btn btn-success fr">搜索</button>
+            </form>
+        </div>
+
+    </ul>
     <ul class="nav navbar-nav" style="display:none;" id="sub-menu">
         <li><a href="/static/recharge.html">充值</a></li>
         <li><a href="/static/panel.html">列表订车</a></li>
-        <li><a href="/">当前订购的车</a></li>
+        <li><a href="/static/panel.html">扫一扫</a></li>
+        <li><a href="/static/bikeInfo.html">我的车</a></li>
     </ul>
-
 </nav>
 <div style="height:132px;"></div>
 <div id="fixed-pos">
@@ -66,9 +89,9 @@
     </div>
 </div>
 <div id="detail_info">
-    <a href="#" ng-repeat="bike in nearCars">
+    <a href="#" ng-repeat="bike in nearCars|orderBy:'distance'">
         <div>
-            <img src="img/car3.jpg" height="80" width="100">
+            <img src="img/bike2.jpg" height="80" width="100">
         </div>
         <div>
             <div class="clear"><span class="fl">车号：{{bike.bike_id}}</span><span class="fr">{{bike.price}} /分钟</span></div>
@@ -77,12 +100,16 @@
             <div class="clear"><span class="fl">剩余电量 {{bike.cur_power}}%</span><span class="fr">可续航里程: 12 公里</span>
             </div>
             <div class="btn-area">
-                <input type="button" ng-click="openOrderModal(bike,$event)" value="预订" id="order"/>
-                <input type="button" ng-click="openBikeLV(bike,$event)" value="回应" id="lv"/>
-                <input type="button" ng-click="bikeNavigate(bike,$event)" value="导航" id="navigate"/>
+                <input type="button" ng-click="openOrderModal(bike)" value="预订" id="order"/>
+                <input type="button" ng-click="openBikeLV(bike)" value="回应" id="lv"/>
+                <input type="button" ng-click="bikeNavigate(bike)" value="导航" id="navigate"/>
             </div>
         </div>
     </a>
+</div>
+
+<div id="map_list">
+
 </div>
 
 
@@ -113,12 +140,42 @@
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-success" ng-click="bikeOrder(selectBike,$event)">
+                <button type="button" class="btn btn-success" ng-click="bikeOrder(selectBike)">
                     确认预订
                 </button>
             </div>
         </div>
     </div>
     </div>
+
+
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    请输入过滤条件
+                </h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-success" ng-click="bikeOrder(selectBike)">
+                    确认预订
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

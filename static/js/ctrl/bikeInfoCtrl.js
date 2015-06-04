@@ -1,9 +1,8 @@
 app.controller("bikeInfoController", function ($scope, $http, userService, wxService, bikeService, geoService) {
-
     $scope.getBikeInfo = function (bike_id) {
         bikeService.getBikeInfo(bike_id,function(state,data){
             if(state == 0) {
-                $scope.bike = data;
+                $scope.bike = data.body;
                 if($scope.bike.lock_state==0) {
                     $scope.bike.nextLockState = "锁车"
                     $scope.bike.curLockState="未锁"
@@ -15,47 +14,57 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
         })
     }
 
-    $scope.findBike = function (bike, $event) {
-        bikeService.bikeLight(bike, $event)
-        bikeService.bikeVoice(bike, $event)
+    $scope.findBike = function (bike) {
+        bikeService.bikeLight(bike)
+        bikeService.bikeVoice(bike)
     }
 
 
-    $scope.changeBattle = function (bike, $evnet) {
-        alert("changBattle")
+    $scope.lockBike = function (bike) {
+        bikeService.lockBike(bike)
     }
 
-
-    $scope.lockBike = function (bike, $evnet) {
-        alert("lockBike")
-    }
-
-    $scope.callUs = function (bike, $evnet) {
+    $scope.callUs = function (bike) {
         alert("callUs")
     }
 
-    $scope.navigate = function (bike, $evnet) {
+    $scope.navigate = function (bike) {
         alert("navigate")
-    }
-
-    $scope.orderID = GetQueryString("order_id")
-    if($scope.orderID == null) {
-        alert("无效的订单")
-        window.location.href = "/static/panel.html"
-    }else{
-        bikeService.getOrderByOrderID($scope.orderID,function(state,data){
-            if(state == 0) {
-                $scope.order = data
-                $scope.getBikeInfo(data.bike_id)
-            }else{
-                alert("出错了")
-            }
-        })
     }
 
     $scope.finishOrderBike = function () {
         bikeService.finishOrder($scope.orderID,function(state,data){
 
+        })
+    }
+
+
+    $scope.orderID = GetQueryString("order_id")
+    if($scope.orderID == null) {
+        userService.getUserOrder(function(statue,data){
+            if(statue == 0) {
+                bikeService.getOrderByOrderID($scope.orderID,function(state,data){
+                    if(state == 0) {
+                        $scope.order = data.body
+                        $scope.getBikeInfo($scope.order.bike_id)
+                    }else{
+                        alert("你还没订车")
+                    }
+                })
+            }
+            else{
+                alert("你还没订车,快去选车吧")
+                window.location.href = "/static/panel.html"
+            }
+        })
+    }else{
+        bikeService.getOrderByOrderID($scope.orderID,function(state,data){
+            if(state == 0) {
+                $scope.order = data.body
+                $scope.getBikeInfo($scope.order.bike_id)
+            }else{
+                alert("你还没订车")
+            }
         })
     }
 })

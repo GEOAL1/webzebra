@@ -1,6 +1,14 @@
 app.controller("panelController", function ($scope, userService, wxService, bikeService, geoService) {
+    $scope.search={
+        distance : 5000,
+        bike_id : ""
+        }
 
-    $scope.touchon = function () {
+    $scope.searchBike = function() {
+        $scope.getNearBike()
+        $('#search-menu').slideToggle()
+    }
+   $scope.touchon = function () {
         $(document).on('touchmove', function (e) {
             e.preventDefault();
         });
@@ -10,35 +18,58 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         $(document).off('touchmove');
     }
 
-    $scope.openBikeLV = function (bike, $event) {
-        bikeService.bikeLight(bike, $event)
-        bikeService.bikeVoice(bike, $event)
+    $scope.openBikeLV = function (bike) {
+        bikeService.bikeLight(bike)
+        bikeService.bikeVoice(bike)
     }
 
     $scope.bikeNavigate = bikeService.bikeNavigate
     $scope.bikeOrder = bikeService.bikeOrder
 
-
-    $scope.openOrderModal = function(bike,$event) {
+    $scope.openOrderModal = function(bike) {
         $('#myModal').modal('show')
         $scope.selectBike = bike;
         $event.preventDefault()
     }
 
-    $scope.user_load_ok = false
-    $scope.distance = 5000
 
-    userService.getUserInfo(function (status, user) {
+    userService.getUserInfo(function (status, data) {
         if (status === 0) {
-            $scope.user = user;
-            $scope.user_load_ok = true
+            $scope.user = data.body;
         } else {
             alert("获得用户信息失败，正在重新加载")
             window.location.href = "/"
         }
     })
 
-    getGeo(function (status, lng, lat) {
+    $scope.getNearBike = function(){
+        $scope.touchon()
+        $scope.user_load_ok = false
+
+        bikeService.getNearBike($scope.lng, $scope.lat, $scope.search,function (status, data) {
+            if (status == 0) {
+                $scope.nearCars = data.body
+                $scope.nearCars.forEach(function (bike) {
+                    geoService.getAddress(bike.longitude, bike.latitude, function (t, address) {
+                        bike.address = address
+                        console.log(address)
+                        $scope.$digest()
+
+                    })
+                })
+
+            }
+            else {
+                alert("获得附近的车失败")
+            }
+            $scope.touchoff()
+            $scope.user_load_ok = true
+
+
+        })
+    }
+
+    geoService.getGeo(function (status, lng, lat) {
         if (status == 0) {
             $scope.lng = lng;
             $scope.lat = lat;
@@ -46,31 +77,13 @@ app.controller("panelController", function ($scope, userService, wxService, bike
             $scope.lng = 116.397128
             $scope.lat = 39.916527
         }
-        $scope.user_load_ok = true
-        $scope.touchon()
-        bikeService.getNearBike($scope.lng, $scope.lat, $scope.distance,function (status, bikes) {
-            if (status == 0) {
-                $scope.nearCars = bikes
-                $scope.bike_load_ok = true
-                $scope.touchoff()
-                bikes.forEach(function (bike) {
-                    geoService.getAddress(bike.longitude, bike.latitude, function (t, address) {
-                        bike.address = address
-                        console.log(address)
-                        $scope.$digest()
-                    })
-                })
-            }
-            else {
-                alert("获得附近的车失败")
-            }
+
+        $scope.getNearBike()
 
 
-        })
-        /*  }else{
-         alert("获得用户坐标失败")
-         }*/
     });
+
+
 
 })
 

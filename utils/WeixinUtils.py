@@ -57,8 +57,7 @@ class WeixinMananger:
         data["nonceStr"] = noncestr
         data["appId"] = self.appid
         data["signature"] = self.wechat.generate_jsapi_signature(timestamp, noncestr, url, jsApiToken)
-        data["jsApiList"] = ["openLocation", "getLocation", "hideOptionMenu", "showOptionMenu", "hideMenuItems",
-                             "showMenuItems"]
+        data["jsApiList"] = ["openLocation", "getLocation", "scanQRCode","showMenuItems"]
         data["debug"] = True
         return data
 

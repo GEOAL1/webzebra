@@ -1,19 +1,33 @@
 #/usr/bin/python
 #coding: utf-8
 #Createtime 2015/5/25
+import tornado
 from tornado.web import authenticated;
 
 from handle.baseHandle import BaseHandler
 from utils.Constants import SessionUserID
 from utils.session import Session
-
+from tornado import  gen
 
 class MainHandler(BaseHandler):
-    @authenticated
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
     def get(self):
-        user_id = self.session[SessionUserID]
-        order = self.orderService.getUserOrderByUserID(user_id);
-        if(order != None):
-            self.redirect("/static/bikeInfo.html?order_id=%s" % (order["order_id"]))
-        else:
-            self.redirect("/static/panel.html");
+        url = yield self.get_result()
+        self.redirect(url)
+
+
+    @tornado.gen.coroutine
+    def get_result(self):
+        try:
+            url = "/static/login.html"
+            user_id = self.session[SessionUserID]
+            url = "/static/panel.html"
+            order = self.orderService.getUserOrderByUserID(user_id)
+            if order != None:
+                url = "/static/bikeInfo.html?order_id=%d" % order["order_id"]
+        except Exception as e:
+            pass
+        finally:
+            raise gen.Return(url)
+

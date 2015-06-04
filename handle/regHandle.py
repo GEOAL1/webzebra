@@ -3,18 +3,16 @@
 # Createtime 2015/5/25
 import json
 import random
-import urllib
 
 import tornado
-from tornado.web import authenticated;
-
-from tornado import gen
 import tornado.httpclient
-
-from error.zebraError import ZebraError
+from tornado.web import authenticated;
+from tornado import gen
+from error.zebraError import *
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
-from utils.Constants import SessionPhone, SessionConfirmCode, SessionUserID
+from utils.Constants import SessionUserID
+from utils.messageUtils import MessageUtile
 
 
 class RegHandler(BaseHandler):
@@ -22,83 +20,81 @@ class RegHandler(BaseHandler):
     @tornado.web.asynchronous
     @tornado.gen.coroutine
     def post(self):
-        x = self.get_result()
+        x = yield self.get_result()
         self.write(x)
         self.finish()
 
-    #@tornado.gen.coroutine
+    @tornado.gen.coroutine
     def get_result(self):
         result = ""
         try:
-            password = self.get_argument("password")
-            retryPassword = self.get_argument("confirmPassword")
-            phone = self.get_argument("ph")
-            #mcode1 = self.get_argument("confirmCode")
-            #mcode2 = self.session["confirmCode"]
-            mcode1 = 123456;
-            mcode2 = 123456;
+            try:
+                password = self.get_argument("password")
+                retryPassword = self.get_argument("confirmPassword")
+                phone = self.get_argument("ph")
+                #mcode1 = self.get_argument("confirmCode")
+                #mcode2 = self.session["confirmCode"]
+                mcode1 = 123456;
+                mcode2 = 123456;
+            except:
+                raise InputArgsError()
 
-            if mcode2 is not None and mcode1 == mcode2:
-                if password == retryPassword:
-                    rcds = self.userService.getByPhone(phone)
-                    if rcds == None:
-                        res = self.userService.add({"phone": phone, "password": password})
-                        if(res == None):
-                            result = JsonTemplate.newErrorJsonRes().setErrMsg("注册失败").toJson()
-                        else:
-                            result = JsonTemplate.newJsonRes().toJson()
-                            self.session[SessionPhone] = phone
-                            self.session[SessionUserID] = str(res["id"])
-                            self.session.save();
-                    else:
-                        result = JsonTemplate.newErrorJsonRes().setErrMsg("用户名已存在或格式不正确").toJson()
-                else:
-                    result = JsonTemplate.newErrorJsonRes().setErrMsg("密码不相同或格式不正确").toJson()
-            else:
-                result = JsonTemplate.newErrorJsonRes().setErrMsg("验证码不正确或没有验证码").toJson()
+            if mcode2 is None or mcode1 != mcode2:
+                raise ValidateCodeError()
+
+            if password != retryPassword:
+                raise SamePasswordError()
+
+            rcds = self.userService.getByPhone(phone)
+            if rcds is not None:
+                raise ExistedPhoneError()
+
+            res = self.userService.add({"phone": phone, "password": password})
+
+            if res is None:
+                raise RegInerError()
+
+            result = JsonTemplate.newJsonRes()
+            self.session[SessionUserID] = str(res["id"])
+            self.session.save();
+
         except ZebraError as e:
-            result = JsonTemplate.newErrorJsonRes().setErrMsg(e).toJson()
+            result = JsonTemplate.newZebraErrorRes(e)
         except Exception as e:
-            result = JsonTemplate.newErrorJsonRes().setErrMsg("unknow error").toJson()
+            result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
         finally:
-            return result
-            raise gen.Return(result)
+            raise gen.Return(result.toJson())
 
 class SendPhoneCodeHandle(BaseHandler):
-
     @tornado.web.asynchronous
     @tornado.gen.coroutine
     def get(self):
-        result = JsonTemplate.newJsonRes().setErrMsg("success").toJson()
+        x = yield self.get_result()
+        self.write(x)
+        self.finish()
+
+    def get_result(self):
         try:
-            key = "a899cda8e885b07a7b4615011780d2a4"
-            phone = self.get_argument("ph")
-            template = "3030"
+            try:
+                phone = self.get_argument("ph")
+            except Exception as e:
+                raise InputArgsError()
             code = random.randrange(100000, 999999)
             code = 123456
-            client = tornado.httpclient.AsyncHTTPClient()
-
-            args = urllib.urlencode(
-                {'mobile': phone, 'tpl_id': template, 'tpl_value': "#code#=%s" % (code), 'key': key})
-
-            url = "http://v.juhe.cn/sms/send?%s" % args
-            resp = yield client.fetch(url)
+            resp = MessageUtile.sendValidCode(phone,code)
             body = json.loads(resp.body)
+
             if (body["error_code"] > 0):
-                result = JsonTemplate.newErrorJsonRes().setErrMsg("call api failed").toJson()
-            else:
-                self.session["confirmCode"] = '%s' % code
-                self.session.save();
+                raise SendMessageApiError()
             self.session["confirmCode"] = '%s' % code
             self.session.save();
-
+            result = JsonTemplate.newJsonRes()
+        except ZebraError as e:
+            result = JsonTemplate.newZebraErrorRes(e)
         except Exception as e:
-            print e
-            result = JsonTemplate.newErrorJsonRes().setErrMsg("unknow error").toJson()
+            result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
         finally:
-            self.write(result)
-            self.finish()
-            pass
+            raise gen.Return(result.toJson())
 
 class CheckPhoneHandle(BaseHandler):
     @tornado.web.asynchronous
@@ -110,17 +106,17 @@ class CheckPhoneHandle(BaseHandler):
 
     @tornado.gen.coroutine
     def check_phone(self,phone):
-        result = ""
-
         try:
             rcds = self.userService.getByPhone(phone)
-            if rcds == None:
-                result = JsonTemplate.newJsonRes().setErrMsg("success").toJson()
-            else:
-                result = JsonTemplate.newErrorJsonRes().setErrMsg("用户已存在").toJson()
 
+            if rcds is not None:
+                raise ExistedPhoneError()
+
+            result = JsonTemplate.newJsonRes()
+
+        except ZebraError as e:
+            result = JsonTemplate.newZebraErrorRes(e)
         except Exception as e:
-                result = JsonTemplate.newErrorJsonRes().setErrMsg("call api failed").toJson()
-
-        raise gen.Return(result)
-
+            result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
+        finally:
+            raise gen.Return(result.toJson())

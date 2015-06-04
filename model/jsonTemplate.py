@@ -6,6 +6,7 @@ import json
 from decimal import Decimal
 
 from enum import Enum
+from error.zebraError import ZebraError
 
 
 class ErrorCode(Enum):
@@ -30,7 +31,7 @@ class JsonTemplate:
         pass
 
     errorCode = ErrorCode.success
-    errorMeg = ""
+    e = ""
     body = None;
 
     @staticmethod
@@ -40,6 +41,10 @@ class JsonTemplate:
     @staticmethod
     def newErrorJsonRes():
         return JsonTemplate().setErrorCode(ErrorCode.error)
+
+    @staticmethod
+    def newZebraErrorRes(zebError):
+        return JsonTemplate().setErrorCode(zebError.errCode).setErrMsg(zebError.errMsg)
 
     def setBody(self, body):
         self.body = body
@@ -55,4 +60,5 @@ class JsonTemplate:
 
     def toJson(self):
         return json.dumps(self.__dict__,default=_default)
+
 

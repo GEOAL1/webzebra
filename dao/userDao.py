@@ -1,7 +1,7 @@
 # /usr/bin/python
 # coding: utf-8
 from dao.IMysqlDao import IMysqlDao
-from error.zebraError import SqlError
+from error.zebraError import *
 from model.User import User
 
 
@@ -21,7 +21,7 @@ class UserDao(IMysqlDao):
         if xid > 0:
             return user;
         else:
-            raise SqlError("新建用户失败")
+            raise CreateUserError()
 
     def selectByUP(self, phone, password):
         cond = "phone_num=%s and password=%s";

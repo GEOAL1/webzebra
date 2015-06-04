@@ -13,7 +13,7 @@ from handle.bikeHandle import NearBikeHandler, BikeCtrlHandler, BikeInfoHandler
 from handle.defaultHandle import DefaultHandler
 from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
-from handle.orderHandle import GetOrderHandler, OrderBikeHandler, FinishOrderHandler
+from handle.orderHandle import GetOrderHandler, OrderBikeHandler, FinishOrderHandler, GetOrderByUserIDHandler
 from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
 from handle.userHandler import UserInfoHandler
 from handle.weixinServiceHandle import WeixinServiceHandle
@@ -38,7 +38,7 @@ class ZebraApplicatoin(tornado.web.Application):
             },
 
             debug=True,
-            login_url="/wx/login",
+            login_url="/wx/u/login",
             template_path=os.path.join(os.path.dirname(__file__), "t"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
 
@@ -46,13 +46,13 @@ class ZebraApplicatoin(tornado.web.Application):
         handlers = [
             (r"/", MainHandler),
             (r"", MainHandler),
-            (r"/wx/login", LoginHandler),
+            (r"/wx/u/login", LoginHandler),
 
             # 车辆管理OrderBikeHandler
             (r"/wx/b/list", DefaultHandler),
             (r"/wx/b/info", BikeInfoHandler),
             (r"/wx/b/ctrl/(\w*)", BikeCtrlHandler),
-            (r"/wx/b/nearBike", NearBikeHandler),
+            (r"/wx/b/search", NearBikeHandler),
 
             #订单管理
             (r"/wx/o/order", OrderBikeHandler),
@@ -64,6 +64,7 @@ class ZebraApplicatoin(tornado.web.Application):
             (r"/wx/u/reg", RegHandler),
             (r"/wx/u/checkPhone/(\d{11})", CheckPhoneHandle),
             (r"/wx/u/info", UserInfoHandler),
+            (r"/wx/u/order", GetOrderByUserIDHandler),
 
             #帐户管理
             (r"/wx/a/recharge", RechargeHandler),
