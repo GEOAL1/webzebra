@@ -33,7 +33,7 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
     }
 
     $scope.finishOrderBike = function () {
-        bikeService.finishOrder($scope.orderID,function(state,data){
+        bikeService.finishOrder($scope.orderID, function (state, data) {
 
         })
     }
@@ -41,18 +41,18 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
 
     $scope.orderID = GetQueryString("order_id")
     if($scope.orderID == null) {
-        userService.getUserOrder(function(statue,data){
-            if(statue == 0) {
-                bikeService.getOrderByOrderID($scope.orderID,function(state,data){
-                    if(state == 0) {
+        userService.getUserOrder(function (statue, data) {
+            if (statue == 0) {
+                bikeService.getOrderByOrderID($scope.orderID, function (state, data) {
+                    if (state == 0) {
                         $scope.order = data.body
                         $scope.getBikeInfo($scope.order.bike_id)
-                    }else{
+                    } else {
                         alert("你还没订车")
                     }
                 })
             }
-            else{
+            else {
                 alert("你还没订车,快去选车吧")
                 window.location.href = "/static/panel.html"
             }

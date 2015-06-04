@@ -3,11 +3,11 @@
 #Createtime 2015/5/25
 import tornado
 from tornado.web import authenticated;
+from tornado import gen
 
 from handle.baseHandle import BaseHandler
 from utils.Constants import SessionUserID
-from utils.session import Session
-from tornado import  gen
+
 
 class MainHandler(BaseHandler):
     @tornado.web.asynchronous
@@ -15,7 +15,6 @@ class MainHandler(BaseHandler):
     def get(self):
         url = yield self.get_result()
         self.redirect(url)
-
 
     @tornado.gen.coroutine
     def get_result(self):
@@ -30,4 +29,3 @@ class MainHandler(BaseHandler):
             pass
         finally:
             raise gen.Return(url)
-

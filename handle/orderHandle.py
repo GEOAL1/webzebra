@@ -2,11 +2,13 @@
 #coding: utf-8
 import tornado
 from tornado.web import authenticated
+from tornado import gen
+
 from error.zebraError import *
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
 from utils.Constants import SessionUserID
-from tornado import gen
+
 
 class OrderBikeHandler(BaseHandler):
     @tornado.web.asynchronous
@@ -46,11 +48,12 @@ class GetOrderHandler(BaseHandler):
         x = yield self.get_result()
         self.write(x)
         self.finish()
+
     @tornado.gen.coroutine
     def get_result(self):
         try:
             try:
-                order_id=self.get_argument("order_id")
+                order_id = self.get_argument("order_id")
             except Exception as e:
                 raise InputArgsError()
 
@@ -70,7 +73,6 @@ class GetOrderHandler(BaseHandler):
         pass
 
 class FinishOrderHandler(BaseHandler):
-
     @tornado.web.asynchronous
     @tornado.gen.coroutine
     @authenticated
@@ -83,7 +85,7 @@ class FinishOrderHandler(BaseHandler):
     def get_result(self):
         try:
             try:
-                order_id=self.get_argument("order_id")
+                order_id = self.get_argument("order_id")
             except Exception as e:
                 raise InputArgsError()
 
@@ -99,8 +101,8 @@ class FinishOrderHandler(BaseHandler):
             raise gen.Return(result.toJson())
         pass
 
-class GetOrderByUserIDHandler(BaseHandler):
 
+class GetOrderByUserIDHandler(BaseHandler):
     @tornado.web.asynchronous
     @tornado.gen.coroutine
     @authenticated
@@ -113,15 +115,15 @@ class GetOrderByUserIDHandler(BaseHandler):
     def get_result(self):
         try:
             try:
-                user_id=self.get_argument("user_id")
+                user_id = self.get_argument("user_id")
             except Exception as e:
                 raise InputArgsError()
 
             order = self.orderService.getUserOrderByUserID(user_id)
 
-            if(order is None):
+            if (order is None):
                 raise UserOrderNotFoundError()
-            body = {"order_id":order["order_id"]}
+            body = {"order_id": order["order_id"]}
             result = JsonTemplate.newJsonRes().setBody(body)
 
         except ZebraError as e:
@@ -131,6 +133,3 @@ class GetOrderByUserIDHandler(BaseHandler):
         finally:
             raise gen.Return(result.toJson())
         pass
-
-
-

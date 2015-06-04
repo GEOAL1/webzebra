@@ -2,16 +2,18 @@
 # coding: utf-8
 import tornado
 from tornado.web import authenticated
+from tornado import gen
+
 from error.zebraError import InputArgsError, ZebraError
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
-from tornado import gen
+
 
 class WeixinServiceHandle(BaseHandler):
     @authenticated
     @tornado.web.asynchronous
     @tornado.gen.coroutine
-    def get(self,cmd):
+    def get(self, cmd):
         x = yield self.get_result(cmd)
         self.write(x)
         self.finish()
@@ -31,7 +33,7 @@ class WeixinServiceHandle(BaseHandler):
 
             try:
                 result = JsonTemplate.newJsonRes().setBody(
-                self.weixinManager.getJsJDK(self.request.headers["Referer"]))
+                    self.weixinManager.getJsJDK(self.request.headers["Referer"]))
             except ZebraError as e:
                 result = JsonTemplate.newZebraErrorRes(e)
             except Exception as e:

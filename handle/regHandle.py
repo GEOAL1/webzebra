@@ -6,8 +6,11 @@ import random
 
 import tornado
 import tornado.httpclient
+
 from tornado.web import authenticated;
+
 from tornado import gen
+
 from error.zebraError import *
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
@@ -32,8 +35,8 @@ class RegHandler(BaseHandler):
                 password = self.get_argument("password")
                 retryPassword = self.get_argument("confirmPassword")
                 phone = self.get_argument("ph")
-                #mcode1 = self.get_argument("confirmCode")
-                #mcode2 = self.session["confirmCode"]
+                # mcode1 = self.get_argument("confirmCode")
+                # mcode2 = self.session["confirmCode"]
                 mcode1 = 123456;
                 mcode2 = 123456;
             except:
@@ -81,7 +84,7 @@ class SendPhoneCodeHandle(BaseHandler):
                 raise InputArgsError()
             code = random.randrange(100000, 999999)
             code = 123456
-            resp = MessageUtile.sendValidCode(phone,code)
+            resp = MessageUtile.sendValidCode(phone, code)
             body = json.loads(resp.body)
 
             if (body["error_code"] > 0):

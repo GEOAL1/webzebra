@@ -4,13 +4,18 @@
 # /usr/bin/python
 # coding: utf-8
 # Createtime 2015/5/25
-import random
 import tornado
 from tornado.web import authenticated
+from tornado import gen
+
 from error.zebraError import *
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
-from tornado import gen
+
+
+
+
+
 
 # /wx/b/ctrl/cmd
 class BikeCtrlHandler(BaseHandler):
@@ -52,13 +57,13 @@ class NearBikeHandler(BaseHandler):
                 lng = float(self.get_argument("lng"))
                 lat = float(self.get_argument("lat"))
                 distance = int(self.get_argument("distance"))
-            except Exception as e :
+            except Exception as e:
                 raise InputArgsError()
 
             if bike_id != None and len(bike_id) > 5:
-                bikeList = self.bikeService.getBikeDetailInfo(lng,lat,bike_id)
+                bikeList = self.bikeService.getBikeDetailInfo(lng, lat, bike_id)
             else:
-                bikeList = self.bikeService.getNearIdleBIke(lng,lat,distance)
+                bikeList = self.bikeService.getNearIdleBIke(lng, lat, distance)
             ret = JsonTemplate.newJsonRes().setBody(bikeList)
         except ZebraError as e:
             ret = JsonTemplate.newZebraErrorRes(e)
@@ -75,17 +80,16 @@ class BikeInfoHandler(BaseHandler):
         self.write(result)
         self.finish()
 
-
     @tornado.gen.coroutine
     def get_result(self):
         try:
             try:
                 bike_id = self.get_argument("bikeID")
-            except Exception as e :
+            except Exception as e:
                 raise InputArgsError()
 
             bike = self.bikeService.getBikeInfo(bike_id)
-            if(bike == None):
+            if (bike == None):
                 raise BikeNotFoundError()
             ret = JsonTemplate.newJsonRes().setBody(bike)
         except ZebraError as e:
@@ -93,6 +97,3 @@ class BikeInfoHandler(BaseHandler):
         except Exception as e:
             ret = JsonTemplate.newErrorJsonRes().setErrMsg(e.message);
         raise gen.Return(ret.toJson())
-
-
-

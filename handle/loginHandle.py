@@ -4,11 +4,11 @@
 import tornado
 from tornado import  gen
 from tornado.web import authenticated
-from error.zebraError import ZebraError, InputArgsError, UnameOrPasswordError
 
+from error.zebraError import ZebraError, InputArgsError, UnameOrPasswordError
 from handle.baseHandle import BaseHandler
-from model.jsonTemplate import JsonTemplate, ErrorCode
-from utils.Constants import SessionPhone, SessionUserID
+from model.jsonTemplate import JsonTemplate
+from utils.Constants import SessionUserID
 
 
 class LoginHandler(BaseHandler):

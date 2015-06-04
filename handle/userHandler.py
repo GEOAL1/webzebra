@@ -1,12 +1,10 @@
 # /usr/bin/python
 # coding: utf-8
-from datetime import datetime
-import json
 import tornado
 from tornado.web import authenticated
-from error.zebraError import *
 from tornado import gen
 
+from error.zebraError import *
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
 from utils.Constants import SessionUserID
@@ -28,7 +26,7 @@ class UserInfoHandler(BaseHandler):
         try:
             user_id = self.session[SessionUserID]
             body = self.userService.selecDInfoByUserID(user_id)
-            if(body == None):
+            if (body == None):
                 raise UserIsNotFoundedError()
             body["password"] = ""
             result = JsonTemplate.newJsonRes().setBody(body)
@@ -38,6 +36,3 @@ class UserInfoHandler(BaseHandler):
             result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
         finally:
             raise gen.Return(result.toJson())
-
-
-

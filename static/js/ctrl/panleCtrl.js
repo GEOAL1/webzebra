@@ -1,14 +1,14 @@
 app.controller("panelController", function ($scope, userService, wxService, bikeService, geoService) {
-    $scope.search={
-        distance : 5000,
-        bike_id : ""
-        }
+    $scope.search = {
+        distance: 5000,
+        bike_id: ""
+    }
 
-    $scope.searchBike = function() {
+    $scope.searchBike = function () {
         $scope.getNearBike()
         $('#search-menu').slideToggle()
     }
-   $scope.touchon = function () {
+    $scope.touchon = function () {
         $(document).on('touchmove', function (e) {
             e.preventDefault();
         });
@@ -26,7 +26,7 @@ app.controller("panelController", function ($scope, userService, wxService, bike
     $scope.bikeNavigate = bikeService.bikeNavigate
     $scope.bikeOrder = bikeService.bikeOrder
 
-    $scope.openOrderModal = function(bike) {
+    $scope.openOrderModal = function (bike) {
         $('#myModal').modal('show')
         $scope.selectBike = bike;
         $event.preventDefault()
@@ -42,11 +42,11 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         }
     })
 
-    $scope.getNearBike = function(){
+    $scope.getNearBike = function () {
         $scope.touchon()
         $scope.user_load_ok = false
 
-        bikeService.getNearBike($scope.lng, $scope.lat, $scope.search,function (status, data) {
+        bikeService.getNearBike($scope.lng, $scope.lat, $scope.search, function (status, data) {
             if (status == 0) {
                 $scope.nearCars = data.body
                 $scope.nearCars.forEach(function (bike) {
@@ -82,7 +82,6 @@ app.controller("panelController", function ($scope, userService, wxService, bike
 
 
     });
-
 
 
 })

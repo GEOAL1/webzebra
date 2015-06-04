@@ -41,12 +41,11 @@ app.directive('uniquePhone', function ($http) {
 })
 
 
-
 app.directive('zebraNavitem', function () {
-    return{
+    return {
         restrict: "A",
-        replace:true,
-        template:'\
+        replace: true,
+        template: '\
        <ul class="nav navbar-nav" style="display:none;" id="sub-menu">\
        <li><a href="/static/panel.html">发现</a></li>\
        <li><a href="/static/bikeInfo.html">我的车</a></li>\
@@ -60,10 +59,10 @@ app.directive('zebraNavitem', function () {
 $(function () {
     ;
     (function ($) {
-        var menuBtn = $('.more-menu');
+ var menuBtn = $('.more-menu');
         var subMenu = $('#sub-menu');
         $(menuBtn).click(function () {
             $(subMenu).slideToggle();
         });
     })(jQuery);
-});*/
+ });*/

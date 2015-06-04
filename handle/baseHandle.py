@@ -3,13 +3,13 @@
 #Createtime 2015/5/25
 import tornado
 from tornado.web import RequestHandler
+
 from service.amountService import AmountService
 from service.bikeService import BikeService
 from service.orderService import OrderService
-
 from service.userService import UserService
 from utils import session
-from utils.Constants import SessionPhone, SessionUserID
+from utils.Constants import SessionUserID
 from utils.WeixinUtils import WeixinMananger
 
 
@@ -29,5 +29,3 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def get_result(self):
         pass
-
-

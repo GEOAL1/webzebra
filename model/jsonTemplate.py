@@ -6,7 +6,6 @@ import json
 from decimal import Decimal
 
 from enum import Enum
-from error.zebraError import ZebraError
 
 
 class ErrorCode(Enum):
@@ -60,5 +59,3 @@ class JsonTemplate:
 
     def toJson(self):
         return json.dumps(self.__dict__,default=_default)
-
-
