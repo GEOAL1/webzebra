@@ -13,9 +13,7 @@ class BikeService(IService):
 
     def getBikeDetailInfo(self,bike_id):
         return self.bikeDao.getBikeDyInfoByid(bike_id)
-		
-	def selectCommonAll(self):
+    def selectCommonAll(self):
         return self.bikeDao.selectCommonAll()
-    
     def selectCommonTimeAll(self,time):
         return self.bikeDao.selectCommonTimeAll(time)
