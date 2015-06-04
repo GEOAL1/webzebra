@@ -1,23 +1,36 @@
 #/usr/bin/python
 #coding: utf-8
+import tornado
 from tornado.web import authenticated
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
 from utils.Constants import SessionUserID
-
+from tornado import gen
+from error.zebraError import *
 
 class RechargeHandler(BaseHandler):
+
     @authenticated
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
     def post(self):
-        result = ""
+        result = yield self.get_result()
+        self.write(result)
+        self.finish()
+
+    @tornado.gen.coroutine
+    def get_result(self):
         try:
-            rechargeNum = float(self.get_argument("rechargeNum"))
+            try:
+                rechargeNum = float(self.get_argument("rechargeNum"))
+            except Exception as e:
+                raise InputArgsError()
+
             user_id = self.session[SessionUserID]
             if self.amountService.recharge(user_id,rechargeNum) > 0:
-                result = JsonTemplate.newJsonRes().setErrMsg("success").toJson()
-        except Exception as e :
-            print e
-            result = JsonTemplate.newErrorJsonRes().setErrMsg("充值失败").toJson()
-            pass
-        self.write(result)
-        pass
+                ret = JsonTemplate.newJsonRes();
+        except ZebraError as e:
+            ret = JsonTemplate.newZebraErrorRes(e)
+        except Exception as e:
+            ret = JsonTemplate.newErrorJsonRes().setErrMsg(e.message);
+        raise gen.Return(ret.toJson())

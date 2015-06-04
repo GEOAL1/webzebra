@@ -1,79 +1,96 @@
 app.service('userService', function ($rootScope, $http) {
-    var service = {
-        getUserInfo: function (cb) {
-            $http({
+    var sendCmd = function (url,method,data,callback) {
+        var http_config = {};
+        if (method == "GET") {
+            http_config = {
                 method: "GET",
-                url: '/wx/u/info',
+                url: url,
+                params: data,
+                timeout: 5000,
+            }
+        }else {
+            http_config = {
+                method: "POST",
+                url: url,
+                data: $.param(data),
+                timeout: 5000,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                timeout: 3000
-            }).success(function (data, status, headers, config) {
-
-                if (data.errorCode === 0) {
-                    cb(0, data.body)
-                } else {
-                    cb(1, "")
-                }
-            }).error(function (data, status, headers, config) {
-                console.log("获取用户信息失败")
-                cb(1, "")
-            })
-        },
-        login: function (phone, password) {
-            $.ajax({
-                type: "POST",
-                url: "/wx/login",
-                data: $.param({"un": phone, "pw": password}),
-
-                success: function (data1, status, headers, config) {
-                    data = JSON.parse(data1)
-                    if (data.errorCode === 0) {
-                        window.location.href = "/"
-                    } else {
-                        alert("用户名密码错误")
-                    }
-
-                },
-                error: function (data, status, headers, config) {
-                    alert(data + status);
-                }
-
-            })
-        },
-        register: function (regObject) {
-            $http({
-                method: "POST",
-                url: "/wx/u/reg",
-                data: $.param(regObject),  // pass in data as strings
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).success(function (data) {
-                if (data.errorCode === 0) {
-                    alert("注册成功")
-                    window.location.replace("/")
-                } else {
-                    alert("注册失败：" + data.errMsg)
-                }
-            }).error(function () {
-                alert("请求服务器失败")
-            })
-        },
-        recharge: function(rechargeNum,cb) {
-            $http({
-                method: "POST",
-                url: "/wx/a/recharge",
-                data: $.param({rechargeNum:rechargeNum}),  // pass in data as strings
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).success(function (data) {
-                if (data.errorCode === 0) {
-                    cb(0)
-                } else {
-                    cb(-1)
-                }
-            }).error(function () {
-                    cb(-2)
-                alert("请求服务器失败")
-            })
+            }
         }
 
+        $http(http_config).success(function (data, status, headers, config) {
+            if (data.errorCode != 0) {
+                console.log(data.errorCode + " : " + data.errorMeg)
+            }
+            callback(data.errorCode,data)
+        }).error(function (data, status, headers, config) {
+            alert(status)
+
+            if(status  == 403) {
+                window.location.href = "/static/login.html"
+            }
+
+            callback(-1,{errorCode:-1,errorMeg:status})
+        });
+    };
+
+    var service = {
+        getUserInfo: function (cb) {
+            sendCmd("/wx/u/info","GET",{},function(state,data) {
+                if(cb != undefined){
+                    cb(state,data)
+                }
+            })
+        },
+
+        login: function (phone, password,cb) {
+            data = {"un": phone, "pw": password}
+            sendCmd("/wx/u/login","POST",data,function(statue,data) {
+                if(statue == 0) {
+                    window.location.href = "/";
+                }else{
+                    alert(data.errorMeg);
+                }
+
+                if(cb != undefined){
+                    cb(state,data)
+                }
+            })
+        },
+
+        register: function (regObject,cb) {
+            sendCmd("/wx/u/reg","POST",regObject,function(statue,data) {
+                if(statue == 0) {
+                    alert("注册成功");
+                    window.location.href="/";
+                }else{
+                    alert("注册失败：" + data.errMsg);
+                }
+
+                if(cb != undefined){
+                    cb(state,data)
+                }
+            })
+        },
+        getUserOrder:function(callback) {
+            sendCmd('/wx/u/order', "GET",{}, function (state,data) {
+                callback(state,data)
+            })
+        },
+
+        recharge: function(rechargeNum,cb) {
+            sendCmd("/wx/a/recharge","POST",{rechargeNum:rechargeNum},function(statue,data) {
+                if(statue == 0) {
+                    alert("充值成功，跳转到主页")
+                    window.location.href = "/";
+                }else{
+                    alert("充值失败：" + data.errMsg);
+                }
+                if(cb != undefined){
+                    cb(state,data)
+                }
+            })
+        }
     }
     return service
 })

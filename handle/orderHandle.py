@@ -1,64 +1,136 @@
 #/usr/bin/python
 #coding: utf-8
+import tornado
 from tornado.web import authenticated
+from error.zebraError import *
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
-from utils.Constants import SessionUserID, CookieLastOrderID, CookieLastCtrlBIke
-
+from utils.Constants import SessionUserID
+from tornado import gen
 
 class OrderBikeHandler(BaseHandler):
-    # @tornado.web.asynchronous
-    # @tornado.gen.engine
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
     @authenticated
     def get(self):
-        result = ""
-        user_id = self.session[SessionUserID]
+        x = yield self.get_result()
+        self.write(x)
+        self.finish()
+
+    @tornado.gen.coroutine
+    def get_result(self):
         try:
-            bike_id = self.get_argument("bikeID")
-            print(bike_id)
+            try:
+                user_id = self.session[SessionUserID]
+                bike_id = self.get_argument("bikeID")
+            except Exception as e:
+                raise InputArgsError()
+
             order_id = self.orderService.orderBike(user_id,bike_id)
-            if(order_id != None):
-                result = JsonTemplate.newJsonRes().toJson()
-            else:
-                result = JsonTemplate.newErrorJsonRes().toJson()
-        except Exception as e :
-            print e
-            self.redirect("/")
-            JsonTemplate.newErrorJsonRes().setErrMsg("请刷新后重试").toJson()
-            return
-        self.write(result)
-        pass
+            if order_id is None:
+                raise GenOrderError()
+            result = JsonTemplate.newJsonRes().setBody(order_id)
+
+        except ZebraError as e:
+            result = JsonTemplate.newZebraErrorRes(e)
+        except Exception as e:
+            result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
+        finally:
+            raise gen.Return(result.toJson())
 
 class GetOrderHandler(BaseHandler):
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
     @authenticated
     def get(self):
+        x = yield self.get_result()
+        self.write(x)
+        self.finish()
+    @tornado.gen.coroutine
+    def get_result(self):
         try:
-            order_id=self.get_argument("order_id")
-            order = self.orderService.getUserOrderByOrderID(order_id)
-            if(order == None) :
-                result = JsonTemplate.newErrorJsonRes().setErrMsg("没有找到该订单").setErrorCode(-1)
-            else:
-                if order["user_id"] != long(self.session[SessionUserID]):
-                    result = JsonTemplate.newErrorJsonRes().setErrMsg("该订单不是该用户的").setErrorCode(-1)
-                else:
-                    result = JsonTemplate.newJsonRes().setBody(order)
-        except Exception as e:
-            result = JsonTemplate.newErrorJsonRes().setErrMsg("无效的SQL语句或错误的参数").setErrorCode(-1)
-        self.write(result.toJson())
-        pass
-class FinishOrderHandler(BaseHandler):
-    @authenticated
-    def get(self):
-        try:
-            order_id=self.get_argument("order_id");
-            if(self.orderService.finishOrder(order_id)<=0):
-                result = JsonTemplate.newErrorJsonRes().setErrMsg("取消订单失败")
-            else:
-                result = JsonTemplate.newJsonRes().setErrMsg("取消订单成功")
-        except Exception as e:
-            result = JsonTemplate.newErrorJsonRes().setErrMsg("取消订单失败")
+            try:
+                order_id=self.get_argument("order_id")
+            except Exception as e:
+                raise InputArgsError()
 
-        self.write(result.toJson())
+            order = self.orderService.getUserOrderByOrderID(order_id)
+
+            if order is None:
+                raise OrderNotFoundError()
+            if order["user_id"] != long(self.session[SessionUserID]):
+                raise OrderOwnerError()
+            result = JsonTemplate.newJsonRes().setBody(order)
+        except ZebraError as e:
+            result = JsonTemplate.newZebraErrorRes(e)
+        except Exception as e:
+            result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
+        finally:
+            raise gen.Return(result.toJson())
+        pass
+
+class FinishOrderHandler(BaseHandler):
+
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    @authenticated
+    def get(self):
+        x = yield self.get_result()
+        self.write(x)
+        self.finish()
+
+    @tornado.gen.coroutine
+    def get_result(self):
+        try:
+            try:
+                order_id=self.get_argument("order_id")
+            except Exception as e:
+                raise InputArgsError()
+
+            if self.orderService.finishOrder(order_id) <= 0:
+                raise FinishOrderError()
+
+            result = JsonTemplate.newJsonRes().setErrMsg("取消订单成功")
+        except ZebraError as e:
+            result = JsonTemplate.newZebraErrorRes(e)
+        except Exception as e:
+            result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
+        finally:
+            raise gen.Return(result.toJson())
+        pass
+
+class GetOrderByUserIDHandler(BaseHandler):
+
+    @tornado.web.asynchronous
+    @tornado.gen.coroutine
+    @authenticated
+    def get(self):
+        x = yield self.get_result()
+        self.write(x)
+        self.finish()
+
+    @tornado.gen.coroutine
+    def get_result(self):
+        try:
+            try:
+                user_id=self.get_argument("user_id")
+            except Exception as e:
+                raise InputArgsError()
+
+            order = self.orderService.getUserOrderByUserID(user_id)
+
+            if(order is None):
+                raise UserOrderNotFoundError()
+            body = {"order_id":order["order_id"]}
+            result = JsonTemplate.newJsonRes().setBody(body)
+
+        except ZebraError as e:
+            result = JsonTemplate.newZebraErrorRes(e)
+        except Exception as e:
+            result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
+        finally:
+            raise gen.Return(result.toJson())
+        pass
 
 
 

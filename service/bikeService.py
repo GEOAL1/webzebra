@@ -10,8 +10,9 @@ class BikeService(IService):
 
     def getNearIdleBIke(self,lng,lat,distance):
         return self.bikeDao.getIdleRangeeDyByLoLa(lng,lat,distance)
-
-    def getBikeDetailInfo(self,bike_id):
+    def getBikeDetailInfo(self,lng,lat,bike_id):
+        return self.bikeDao.getBikeDetailInfoByID(lng,lat,bike_id)
+    def getBikeInfo(self,bike_id):
         return self.bikeDao.getBikeDyInfoByid(bike_id)
     def selectCommonAll(self):
         return self.bikeDao.selectCommonAll()
