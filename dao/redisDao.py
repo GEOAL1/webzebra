@@ -1,4 +1,5 @@
 import redis
+from time import sleep
 
 
 class RedisDBConfig:  
@@ -75,9 +76,21 @@ class RedisCache(object):
     
     def getInstance(self):
         return self._connection
+    
+    @operator_status
+    def listBlpop(self,name):
+        return self._connection.blpop(name, 0)
+    
+    @operator_status
+    def listRpush(self,name,value):
+        return self._connection.rpush(name, value)
   
 if __name__ == '__main__':  
-    print RedisCache().set_data('Testkey', "Simple Test")  
-    print RedisCache().get_data('Testkey')  
-    print RedisCache().del_data('Testkey')  
-    print RedisCache().get_data('Testkey')  
+#     print RedisCache().set_data('Testkey', "Simple Test")  
+#     print RedisCache().get_data('Testkey')  
+#     print RedisCache().del_data('Testkey')  
+#     print RedisCache().get_data('Testkey')  
+    RedisCache().listRpush("keys", "xxxxxxxxxxxxxxxxxxxxxxxxxx")
+    while(1):
+       b = RedisCache().listBlpop("keys")
+       print(b)
