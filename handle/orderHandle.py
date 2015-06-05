@@ -114,10 +114,7 @@ class GetOrderByUserIDHandler(BaseHandler):
     @tornado.gen.coroutine
     def get_result(self):
         try:
-            try:
-                user_id = self.get_argument("user_id")
-            except Exception as e:
-                raise InputArgsError()
+            user_id = self.session[SessionUserID]
 
             order = self.orderService.getUserOrderByUserID(user_id)
 
