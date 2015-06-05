@@ -14,8 +14,12 @@ class BaseHandler(tornado.web.RequestHandler):
     def __init__(self, *argc, **argkw):
         super(BaseHandler, self).__init__(*argc, **argkw)
         self.session = session.Session(self.application.session_manager, self)
-        if (int(time.time()) - self.session["create_time"] > 30):
+        try:
+            if (int(time.time()) - self.session["create_time"] > 30):
+                self.session.save()
+        except:
             self.session.save()
+            pass
 
         """
         self.userService = UserService();
