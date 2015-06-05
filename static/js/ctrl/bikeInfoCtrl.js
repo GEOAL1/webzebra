@@ -14,10 +14,8 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
         })
     }
 
-    $scope.findBike = function (bike) {
-        bikeService.bikeLight(bike)
-        bikeService.bikeVoice(bike)
-    }
+    $scope.bikeLight = bikeService.bikeLight
+    $scope.bikeVoice = bikeService.bikeVoice
 
 
     $scope.lockBike = function (bike) {
@@ -29,7 +27,7 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
     }
 
     $scope.navigate = function (bike) {
-        alert("navigate")
+        bikeService.bikeNavigate(bike)
     }
 
     $scope.finishOrderBike = function () {
@@ -43,6 +41,7 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
     if($scope.orderID == null) {
         userService.getUserOrder(function (statue, data) {
             if (statue == 0) {
+                $scope.orderID = data.body.order_id
                 bikeService.getOrderByOrderID($scope.orderID, function (state, data) {
                     if (state == 0) {
                         $scope.order = data.body

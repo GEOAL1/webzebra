@@ -17,6 +17,9 @@ from handle.orderHandle import GetOrderHandler, OrderBikeHandler, FinishOrderHan
 from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
 from handle.userHandler import UserInfoHandler
 from handle.weixinServiceHandle import WeixinServiceHandle
+from service.amountService import AmountService
+from service.bikeService import BikeService
+from service.orderService import OrderService
 from service.userService import UserService
 from utils import session
 from utils.WeixinUtils import WeixinMananger
@@ -81,7 +84,10 @@ class ZebraApplicatoin(tornado.web.Application):
         self.session_manager = session.SessionManager(settings["session_secret"], settings["store_options"],
                                                       settings["session_timeout"])
         self.userService = UserService()
-        self.weixinManager = WeixinMananger();
+        self.bikeService = BikeService();
+        self.weixinManager = WeixinMananger()
+        self.amountService = AmountService()
+        self.orderService = OrderService()
 
         # xsrf_cookies=True,
 
