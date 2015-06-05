@@ -26,9 +26,10 @@ app.service('bikeService', function ($rootScope, $http) {
             callback(data.errorCode, data)
         }).error(function (data, status, headers, config) {
             if (status == 403) {
+                alert("登录超时，请重新登录")
                 window.location.href = "/static/login.html"
             }
-            alert(status + ":" + "连接服务器失败");
+            //alert(status + ":" + "连接服务器失败");
             callback(-1, {errorCode: -1, errorMeg: status, body: ""});
         });
     };

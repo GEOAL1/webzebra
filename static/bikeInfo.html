@@ -10,6 +10,8 @@
     <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&libraries=convertor"></script>
+
 
     <script src="js/angular.min.js"></script>
     <script src="js/utile/commonUtils.js"></script>
@@ -28,12 +30,15 @@
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" id="top-nav">
         控制面板
-    <div class="more-menu glyphicon glyphicon-list">
 
-        </div>
+    <div class="menu">
+        <div class="more-menu glyphicon glyphicon-list"
+             onclick="$('#sub-menu').slideToggle()"></div>
+    </div>
+
 
     <ul zebra-navitem>
-        </ul>
+    </ul>
 
 </nav>
 
@@ -61,7 +66,7 @@
         <div><span class="one" ng-click="lockBike(bike)">快速{{bike.nextLockState}}</span></div>
     </div>
     <div class="article">
-        <div><span class="one" ng-click="findVoice(bike)">鸣铃寻车</span></div>
+        <div><span class="one" ng-click="bikeVoice(bike)">鸣铃寻车</span></div>
         <div><span class="one" ng-click="bikeLight(bike)">闪灯寻车</span></div>
     </div>
     <div class="article">

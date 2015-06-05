@@ -44,7 +44,7 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
         $scope.clock = new Date();
         $timeout(function () {
             $scope.refreshInfo()
-        }, 3000);
+        }, 30000);
     };
 
 
@@ -54,7 +54,7 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
                 $scope.order = data.body
                 $scope.getBikeInfo($scope.order.bike_id)
             } else {
-                alert("你还没订车")
+                $scope.refreshInfo()
             }
         })
     }

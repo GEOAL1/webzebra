@@ -24,11 +24,12 @@ app.service('userService', function ($rootScope, $http) {
             }
             callback(data.errorCode, data)
         }).error(function (data, status, headers, config) {
-            alert(status)
 
             if (status == 403) {
+                alert("登录超时，请重新登录")
                 window.location.href = "/static/login.html"
             }
+            alert(status)
 
             callback(-1, {errorCode: -1, errorMeg: status})
         });
