@@ -77,8 +77,8 @@ app.service('bikeService', function ($rootScope, $http) {
             });
         },
 
-        bikeOrder: function (bike, callback) {
-            sendCmd('/wx/o/order', "GET", {bikeID: bike.bike_id}, function (state, data) {
+        bikeOrder: function (bike_id, callback) {
+            sendCmd('/wx/o/order', "GET", {bikeID: bike_id}, function (state, data) {
                 if (state == 0) {
                     alert("订购车成功")
                     location.href = "/"

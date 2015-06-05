@@ -64,7 +64,7 @@
     <ul class="nav navbar-nav" style="display:none;" id="sub-menu">
         <li><a href="/static/recharge.html">充值</a></li>
         <li><a href="/static/panel.html">列表订车</a></li>
-        <li><a href="/static/panel.html">扫一扫</a></li>
+        <li><a href="#" ng-click="QRScanOrder()">扫一扫</a></li>
         <li><a href="/static/bikeInfo.html">我的车</a></li>
     </ul>
 </nav>
@@ -141,7 +141,7 @@
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-success" ng-click="bikeOrder(selectBike)">
+                <button type="button" class="btn btn-success" ng-click="bikeOrder(selectBike.bike_id)">
                     确认预订
                 </button>
             </div>

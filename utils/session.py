@@ -28,7 +28,7 @@ class Session(SessionData):
         self.hmac_key = current_session.hmac_key
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
     def save(self):
-        self.last_save_time = int(time.time())
+        self["create_time"] = int(time.time())
         self.session_manager.set(self.request_handler, self)
 class SessionManager(object):
     def __init__(self, secret, store_options, session_timeout):
@@ -74,9 +74,9 @@ class SessionManager(object):
         session = SessionData(session_id, hmac_key)
         if session_exists:
             session_data = self._fetch(session_id)
+
             for key, data in session_data.iteritems():
                 session[key] = data
-
         return session
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
     def set(self, request_handler, session):

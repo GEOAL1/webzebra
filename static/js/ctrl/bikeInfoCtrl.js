@@ -1,4 +1,4 @@
-app.controller("bikeInfoController", function ($scope, $http, userService, wxService, bikeService, geoService) {
+app.controller("bikeInfoController", function ($timeout, $scope, $http, userService, wxService, bikeService, geoService) {
     $scope.getBikeInfo = function (bike_id) {
         bikeService.getBikeInfo(bike_id,function(state,data){
             if(state == 0) {
@@ -12,6 +12,7 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
                 }
             }
         })
+        updateClock();
     }
 
     $scope.bikeLight = bikeService.bikeLight
@@ -36,20 +37,35 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
         })
     }
 
-
     $scope.orderID = GetQueryString("order_id")
+
+
+    var updateClock = function () {
+        $scope.clock = new Date();
+        $timeout(function () {
+            $scope.refreshInfo()
+        }, 3000);
+    };
+
+
+    $scope.refreshInfo = function () {
+        bikeService.getOrderByOrderID($scope.orderID, function (state, data) {
+            if (state == 0) {
+                $scope.order = data.body
+                $scope.getBikeInfo($scope.order.bike_id)
+            } else {
+                alert("你还没订车")
+            }
+        })
+    }
+
+
     if($scope.orderID == null) {
         userService.getUserOrder(function (statue, data) {
             if (statue == 0) {
                 $scope.orderID = data.body.order_id
-                bikeService.getOrderByOrderID($scope.orderID, function (state, data) {
-                    if (state == 0) {
-                        $scope.order = data.body
-                        $scope.getBikeInfo($scope.order.bike_id)
-                    } else {
-                        alert("你还没订车")
-                    }
-                })
+                $scope.refreshInfo()
+                updateClock()
             }
             else {
                 alert("你还没订车,快去选车吧")
@@ -57,13 +73,7 @@ app.controller("bikeInfoController", function ($scope, $http, userService, wxSer
             }
         })
     }else{
-        bikeService.getOrderByOrderID($scope.orderID,function(state,data){
-            if(state == 0) {
-                $scope.order = data.body
-                $scope.getBikeInfo($scope.order.bike_id)
-            }else{
-                alert("你还没订车")
-            }
-        })
+        $scope.refreshInfo()
+        updateClock()
     }
 })
