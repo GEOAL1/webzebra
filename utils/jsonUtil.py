@@ -17,7 +17,7 @@ class JsonBikeDy():
     __longitude = None
     __latitude = None
     __speed = None
-    __requestCode = None
+    __requestCode = "bikeDyInfo"
     __timeSamp = None
     __uuid = None
 
@@ -142,7 +142,7 @@ class JsonBikeCtl():
     __lockBike = None
     __indicatorLight = None
     __horn = None
-    __requestCode = None
+    __requestCode = "bikeController"
     __timeSamp = None
     __uuid = None
     

@@ -127,18 +127,19 @@ class BikeDao(IMysqlDao):
 if __name__ == '__main__':
     
     dao = BikeDao();
-    FORMAT_TIME = "%Y-%m-%d %H:%M:%S"
-    info = BikeDynamicInfo()
-    info.bike_id = 10000001
-    info.cur_power = 50
-    info.throttle_state = "1"
-    info.brake_state = "1"
-    info.motor_state = "1"
-    info.lock_state = "1"
-    info.indicator_state = "1"
-    info.longitude = 145.3333
-    info.latitude = 35.333
-    info.speed = 0
-    info.timesamp =  time.strftime( FORMAT_TIME, time.localtime())
-
-    print dao.getRangeeDyByLoLa(116.440255, 39.947385,5000.0)
+    print(dao.selectCommonTimeAll("2015-06-04 16:00:00"))
+#     FORMAT_TIME = "%Y-%m-%d %H:%M:%S"
+#     info = BikeDynamicInfo()
+#     info.bike_id = 10000001
+#     info.cur_power = 50
+#     info.throttle_state = "1"
+#     info.brake_state = "1"
+#     info.motor_state = "1"
+#     info.lock_state = "1"
+#     info.indicator_state = "1"
+#     info.longitude = 145.3333
+#     info.latitude = 35.333
+#     info.speed = 0
+#     info.timesamp =  time.strftime( FORMAT_TIME, time.localtime())
+# 
+#     print dao.getRangeeDyByLoLa(116.440255, 39.947385,5000.0)
