@@ -1,4 +1,7 @@
 app.controller("bikeInfoController", function ($timeout, $scope, $http, userService, wxService, bikeService, geoService) {
+
+    $scope.user_load_ok = false
+
     $scope.getBikeInfo = function (bike_id) {
         bikeService.getBikeInfo(bike_id,function(state,data){
             if(state == 0) {
@@ -11,6 +14,7 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
                     $scope.bike.curLockState="已锁"
                 }
             }
+            $scope.user_load_ok=true
         })
         updateClock();
     }
@@ -49,6 +53,7 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
 
 
     $scope.refreshInfo = function () {
+
         bikeService.getOrderByOrderID($scope.orderID, function (state, data) {
             if (state == 0) {
                 $scope.order = data.body

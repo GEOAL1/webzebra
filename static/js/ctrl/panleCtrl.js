@@ -6,7 +6,7 @@ app.controller("panelController", function ($scope, userService, wxService, bike
 
     $scope.searchBike = function () {
         $scope.getNearBike()
-        $('#search-menu').slideToggle()
+        $('.searchModal').fadeOut('fast')
     }
     $scope.touchon = function () {
         $(document).on('touchmove', function (e) {
@@ -38,13 +38,15 @@ app.controller("panelController", function ($scope, userService, wxService, bike
     $scope.bikeOrder = bikeService.bikeOrder
 
     $scope.openOrderModal = function (bike) {
-        $('#myModal').modal('show')
+        $('.orderModal').fadeIn("fast")
         $scope.selectBike = bike;
         $event.preventDefault()
     }
 
 
     userService.getUserInfo(function (status, data) {
+        $scope.user_load_ok = true
+
         if (status === 0) {
             $scope.user = data.body;
         } else {
