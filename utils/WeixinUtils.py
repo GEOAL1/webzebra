@@ -58,9 +58,8 @@ class WeixinMananger:
         data["appId"] = self.appid
         data["signature"] = self.wechat.generate_jsapi_signature(timestamp, noncestr, url, jsApiToken)
         data["jsApiList"] = ["openLocation", "getLocation", "scanQRCode", "showMenuItems"]
-        data["debug"] = True
+        data["debug"] = False
         return data
-
 
 if __name__ == '__main__':
     wxm = WeixinMananger();

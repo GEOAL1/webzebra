@@ -93,7 +93,6 @@ a.link{color:#fff; text-decoration:none;}
 
 #bottom-nav {
     min-height:70px;
-    height:130px;
     background-color: #FFF;
     border-top:1px;
     border-top-style:solid;
@@ -106,21 +105,21 @@ a.link{color:#fff; text-decoration:none;}
     z-index: 1030;
     margin:0 auto;
     border-width: 1px 0 0;
-
 }
 
 #bottom-nav>.row{
     padding-top: 20px;
     padding-bottom: 5px;
-    display:-webkit-box;
-    -webkit-box-orient: horizontal;
+  /*  display:-webkit-box;
+    -webkit-box-orient: horizontal;*/
 }
 
 #bottom-nav>.row>div {
    /* border-left:1px;
     border-left-style:solid;*/
+    /*
     -webkit-box-flex:1;
-
+    */
     text-align:center;
     border-color: #CCC;
     background-color: #FFF;
@@ -129,8 +128,6 @@ a.link{color:#fff; text-decoration:none;}
 
 #bottom-nav a {
     color: #999999;
-
-
 }
 
 .bottom-nav-title {

@@ -61,6 +61,7 @@
             <div class="list_div02"></div>
             <!---自行车列表╭(′▽`)╭(′▽`)╯---->
 
+
             <div class="list_div01" ng-repeat="bike in nearCars|orderBy:'distance'">
                 <div class="list_lr"></div>
                 <div class="list01">
@@ -81,11 +82,13 @@
                       </div>
                     </div>
                     </a>
+
                     <div class="list02_right" ng-click="openOrderModal(bike)">预订</div>
               </div>
                 <div class="list_lr"></div>
-
             </div>
+
+
         </div>
     </div>
     <!--loading 折照区-->
@@ -98,22 +101,22 @@
         <div style="height: 140px"></div>
         <nav id="bottom-nav" >
             <div class="row" >
-                <div >
+                <div  class="col-xs-3 col-sm-3">
                     <a href="javascript:;" ng-click="QRScanOrder()"><span class="bottom-nav-img glyphicon glyphicon-qrcode"></span>
                                             <span class="bottom-nav-title" >扫一扫</span></a>
                 </div>
 
-                <div >
+                <div  class="col-xs-3 col-sm-3">
                     <a href="javascript:;" onclick="$('.searchModal').fadeIn(500)"><span class="bottom-nav-img glyphicon glyphicon-search"></span>
                         <span class="bottom-nav-title"  >搜索</span></a>
                 </div>
 
-                <div >
+                <div  class="col-xs-3 col-sm-3">
                     <a href="recharge.html"><span class="bottom-nav-img glyphicon glyphicon-star"></span>
                         <span class="bottom-nav-title" >充值</span></a>
                 </div>
 
-                <div>
+                <div  class="col-xs-3 col-sm-3">
                     <a href="bikeInfo.html"><span class="bottom-nav-img glyphicon glyphicon-ok"></span>
                         <span class="bottom-nav-title" >我的车</span></a>
                 </div>
