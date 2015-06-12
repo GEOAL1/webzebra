@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<style>
+	body {font-family:Verdana; padding:20px; color:#555;}
+	a {color:#fff;text-decoration:none;}
+	a:hover {text-decoration:underline;}
+	div input {width:400px; padding:2px; color:#1c86d1}
+	div span {font-size:12px;}
+</style>
+<script type="text/javascript" src="md5.js"></script>
+<script type="text/javascript" src="sha1.js"></script>
+<script type="text/javascript" src="aes.js"></script>
+<!-- 以下为 base64 -->
+<script type="text/javascript" src="core-min.js"></script>
+<script type="text/javascript" src="enc-base64-min.js"></script>
+<script>
+	function crypt(){
+		var string = document.getElementById("text").value;
+		document.getElementById("result1").value = CryptoJS.MD5(string); 	// MD5
+		document.getElementById("result2").value = CryptoJS.SHA1(string);	// SHA-1
+		
+		// AES
+		
+		var hash = CryptoJS.AES.encrypt(string,"ping.bao");		// AES Encrypt
+		var decrypted = CryptoJS.AES.decrypt(hash,"ping.bao");	// AES Decrypt
+		
+		document.getElementById("result3").value = hash;
+		document.getElementById("result4").value = decrypted.toString(CryptoJS.enc.Utf8);
+	
+		// base-64
+		
+		var temp = CryptoJS.enc.Utf8.parse(string);				// 将字符转换成 WordArray
+		var base64 = CryptoJS.enc.Base64.stringify(temp);		// 将 WordArray 用 Base64 加密
+		document.getElementById("result5").value = base64;		// 显示加密后的字符串
+		
+		var words  = CryptoJS.enc.Base64.parse(base64); 		// 解密
+		document.getElementById("result6").value = words.toString(CryptoJS.enc.Utf8);
+	}
+	// onsubmit="pwd.value =hex_md5(pwd.value)"
+</script>
+<title> JavaScript EnCrypt</title>
+</head>
+<body>
+	<div style="font-size:32px; background-color:#1c86d1; padding:10px;">
+		<a target="_blank" href="http://code.google.com/p/crypto-js/">Crypto-js</a>
+	</div>
+	<div style="margin:20px 0 20px 0; line-height:200%;">
+		<div> <input type="text" id="text" style="width:300; color:#333;" value="12345678"/> <span>：INPUT</span> </div>
+		<div> <input type="text" id="result1"/> <span>：MD5</span> </div>
+		<div> <input type="text" id="result2"/> <span>：SHA-1</span> </div>
+		<div> <input type="text" id="result3"/> <span>：AES Encrypt</span> </div>
+		<div> <input type="text" id="result4"/> <span>：AES Decrypt</span> </div>
+		<div> <input type="text" id="result5"/> <span>：BASE64 Encrypt</span> </div>
+		<div> <input type="text" id="result6"/> <span>：BASE64 Decrypt</span> </div>
+	</div>
+	<input type="button" value="Encrypt" onclick="crypt()"/>
+</body>
+</html>

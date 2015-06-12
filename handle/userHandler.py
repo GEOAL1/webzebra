@@ -25,7 +25,7 @@ class UserInfoHandler(BaseHandler):
         result = ""
         try:
             user_id = self.session[SessionUserID]
-            body = self.userService.selecDInfoByUserID(user_id)
+            body = self.userService.selecUserInfoByUid(user_id)
             if (body == None):
                 raise UserIsNotFoundedError()
             body["password"] = ""

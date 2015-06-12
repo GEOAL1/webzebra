@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>地图模式</title>
+    <link href="css/css.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?ak=awQeB69UUOgVIhOHvloqpR7g&v=2.0"></script>
+    <script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"/>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body style="width: 100%;height: 100%">
+
+<div id="map_canvas" class="content" style="position: absolute;width: 100%;height:90%" ng-controller='mapController'>
+
+</div>
+
+<nav id="bottom-nav" style="height: 10%;">
+    <div class="row" >
+        <div class="col-xs-3 col-sm-3">
+            <a href="javascript:;" ng-click="QRScanOrder()"><span class="bottom-nav-img glyphicon glyphicon-qrcode"></span>
+                <span class="bottom-nav-title" >扫一扫</span></a>
+        </div>
+
+        <div class="col-xs-3 col-sm-3">
+            <a href="javascript:;" onclick="$('.searchModal').fadeIn(500)"><span class="bottom-nav-img glyphicon glyphicon-search"></span>
+                <span class="bottom-nav-title"  >搜索</span></a>
+        </div>
+
+        <div class="col-xs-3 col-sm-3">
+            <a href="recharge.html"><span class="bottom-nav-img glyphicon glyphicon-star"></span>
+                <span class="bottom-nav-title" >充值</span></a>
+        </div>
+
+        <div class="col-xs-3 col-sm-3">
+            <a href="bikeInfo.html"><span class="bottom-nav-img glyphicon glyphicon-ok"></span>
+                <span class="bottom-nav-title" >我的车</span></a>
+        </div>
+
+    </div>
+</nav>
+
+
+
+</body>
+
+
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/lib/angular/angular.min.js"></script>
+
+<script src="js/utile/commonUtils.js"></script>
+<script src="js/utile/mapUtile.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/service/bikeService.js"></script>
+<script src="js/service/userService.js"></script>
+<script src="js/service/geoService.js"></script>
+<script src="js/service/wxService.js"></script>
+<script src="js/ctrl/mapCtrl.js"></script>
+
+</html>

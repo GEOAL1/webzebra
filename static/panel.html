@@ -18,7 +18,6 @@
 
 <body ng-controller="panelController">
     <div class="box">
-        <div class="top">自行车租赁系统</div>
         <div class="top_info">
 			<div class="head_img"><img src="img/head.png"/></div>
             <div class="head_phone">{{user.phone_num}}</div>
@@ -32,10 +31,10 @@
                     <div class="list01_mid">
                         <div class="mid_title">积分</div>
                         <div class="mid_cent">
-                            <div class="mid_cent_up">已骑行{{user.mileage}}公里</div>
-                            <div class="mid_cent_down">已使用{{user.costTime/60.0|number : 2}}小时</div>
+                            <div class="mid_cent_up">已骑行{{user.total_mileage}}公里</div>
+                            <div class="mid_cent_down">已使用{{user.total_time/60.0/60.0|number : 3}}小时</div>
                         </div>
-                        <div class="mid_nub">{{user.integral}}</div>
+                        <div class="mid_nub">{{user.points}}</div>
                     </div>
                     <div class="list01_right"></div>
                 </div>

@@ -16,11 +16,11 @@ create procedure order_bike(bikeid INT,userid int)
     SELECT user_id into order_user_id from t_order where t_order.user_id = userid;
 
     SELECT bike_id into order_bike_id
-    FROM b_bike_dynamic
+    FROM t_bike_dynamic
     WHERE order_state=0 and bike_id=bikeid FOR UPDATE ;
 
     if(order_bike_id is not Null and order_user_id is Null) THEN
-      update b_bike_dynamic set order_state=1 WHERE bike_id = order_bike_id;
+      update t_bike_dynamic set order_state=1 WHERE bike_id = order_bike_id;
       INSERT INTO t_order(bike_id, user_id)  VALUES(order_bike_id,userid);
 
       IF(txn_error) THEN
@@ -52,7 +52,7 @@ CREATE PROCEDURE cancel_order(orderid int)
     DECLARE  order_cursor CURSOR FOR
       SELECT
       MINUTE(TIMEDIFF(NOW(),order_time)) as cost,
-      user_id,bike_id,order_time,mileage
+      user_id,bike_id,order_time,cur_mileage
     from t_order WHERE order_id=orderid;
 
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION BEGIN
@@ -65,17 +65,17 @@ CREATE PROCEDURE cancel_order(orderid int)
 
     START TRANSACTION;
     #更新帐户
-    UPDATE sys_user set balance=(balance - (f_cost+1)) WHERE  f_userid = user_id;
+    UPDATE t_user set balance=(balance - (f_cost+1)) WHERE  f_userid = user_id;
 
     #将本次消费记录 放入历史表
-    INSERT INTO u_d_history(order_id,user_id, bike_id, mileage, costTime, start_time, end_time,cost)
+    INSERT INTO t_order_history(order_id,user_id, bike_id, mileage, costTime, start_time, end_time,cost)
       VALUES (orderid,f_userid,f_bikeid,f_mileage,f_cost,f_ordertime,now(),f_cost+1);
 
     #删除此订单信息
     DELETE  from t_order where orderid = order_id;
 
     #恢复车辆状态
-    UPDATE b_bike_dynamic SET order_state = 0;
+    UPDATE t_bike_dynamic SET order_state = 0;
 
     if(txn_error) THEN
       ROLLBACK;

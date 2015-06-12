@@ -1,6 +1,7 @@
 # /usr/bin/python
 # coding: utf-8
 # Createtime 2015/5/25
+import base64
 import json
 import random
 
@@ -31,26 +32,9 @@ class RegHandler(BaseHandler):
     def get_result(self):
         result = ""
         try:
-            try:
-                password = self.get_argument("password")
-                retryPassword = self.get_argument("confirmPassword")
-                phone = self.get_argument("ph")
-                # mcode1 = self.get_argument("confirmCode")
-                # mcode2 = self.session["confirmCode"]
-                mcode1 = 123456;
-                mcode2 = 123456;
-            except:
-                raise InputArgsError()
+            phone, password = self.argCheck()
 
-            if mcode2 is None or mcode1 != mcode2:
-                raise ValidateCodeError()
-
-            if password != retryPassword:
-                raise SamePasswordError()
-
-            rcds = self.userService.getByPhone(phone)
-            if rcds is not None:
-                raise ExistedPhoneError()
+            self.userService.getByPhone(phone)
 
             res = self.userService.add({"phone": phone, "password": password})
 
@@ -67,6 +51,26 @@ class RegHandler(BaseHandler):
             result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
         finally:
             raise gen.Return(result.toJson())
+
+    def argCheck(self):
+        try:
+            password = self.get_argument("password")
+            retryPassword = self.get_argument("confirmPassword")
+            phone = self.get_argument("ph")
+            # mcode1 = self.get_argument("confirmCode")
+            # mcode2 = self.session["confirmCode"]
+            mcode1 = 123456;
+            mcode2 = 123456;
+        except:
+            raise InputArgsError()
+
+        if mcode2 is None or mcode1 != mcode2:
+            raise ValidateCodeError()
+
+        if password != retryPassword:
+            raise SamePasswordError()
+        phone = base64.decodestring(phone)
+        return phone, password
 
 class SendPhoneCodeHandle(BaseHandler):
     @tornado.web.asynchronous
@@ -110,10 +114,7 @@ class CheckPhoneHandle(BaseHandler):
     @tornado.gen.coroutine
     def check_phone(self,phone):
         try:
-            rcds = self.userService.getByPhone(phone)
-
-            if rcds is not None:
-                raise ExistedPhoneError()
+            self.userService.getByPhone(phone)
 
             result = JsonTemplate.newJsonRes()
 

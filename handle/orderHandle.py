@@ -28,15 +28,14 @@ class OrderBikeHandler(BaseHandler):
             except Exception as e:
                 raise InputArgsError()
 
-            order_id = self.orderService.orderBike(user_id,bike_id)
-            if order_id is None:
-                raise GenOrderError()
-            result = JsonTemplate.newJsonRes().setBody(order_id)
+            self.orderService.orderBike(user_id,bike_id)
+
+            result = JsonTemplate.newJsonRes().setBody("下单成功")
 
         except ZebraError as e:
             result = JsonTemplate.newZebraErrorRes(e)
         except Exception as e:
-            result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
+            result = JsonTemplate.newErrorJsonRes().setErrMsg("您已经订车，或刷新后再试")
         finally:
             raise gen.Return(result.toJson())
 
@@ -86,16 +85,17 @@ class FinishOrderHandler(BaseHandler):
         try:
             try:
                 order_id = self.get_argument("order_id")
+                user_id = self.session[SessionUserID]
             except Exception as e:
                 raise InputArgsError()
 
-            if self.orderService.finishOrder(order_id) <= 0:
-                raise FinishOrderError()
+            self.orderService.finishOrder(order_id,user_id)
 
             result = JsonTemplate.newJsonRes().setErrMsg("取消订单成功")
         except ZebraError as e:
             result = JsonTemplate.newZebraErrorRes(e)
         except Exception as e:
+            print e
             result = JsonTemplate.newErrorJsonRes().setErrMsg(e.message)
         finally:
             raise gen.Return(result.toJson())

@@ -21,7 +21,7 @@ USE `zebra`;
 -- Table structure for table `b_bike_common`
 --
 
-DROP TABLE IF EXISTS `b_bike_common`;
+DROP TABLE IF EXISTS t_bike_common;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `b_bike_common` (
@@ -41,17 +41,17 @@ CREATE TABLE `b_bike_common` (
 -- Dumping data for table `b_bike_common`
 --
 
-LOCK TABLES `b_bike_common` WRITE;
-/*!40000 ALTER TABLE `b_bike_common` DISABLE KEYS */;
-INSERT INTO `b_bike_common` VALUES (1000100,'222',333,'2015-06-04 15:32:04','1','2','http://www.minitcp.com/ddd',NULL),(1000101,'222',333,'2015-06-04 07:32:04','1','2','http://www.minitcp.com/ddd',NULL),(1000102,'222',333,'2015-06-04 07:32:04','1','2','http://www.minitcp.com/ddd',NULL),(1000103,'222',333,'2015-06-04 07:32:04','1','2','http://www.minitcp.com/ddd',NULL),(1000104,'222',333,'2015-06-04 07:32:04','1','2','http://www.minitcp.com/ddd',NULL);
-/*!40000 ALTER TABLE `b_bike_common` ENABLE KEYS */;
+LOCK TABLES t_bike_common WRITE;
+/*!40000 ALTER TABLE t_bike_common DISABLE KEYS */;
+INSERT INTO t_bike_common VALUES (1000100,'222',333,'2015-06-04 15:32:04','1','2','http://www.minitcp.com/ddd',NULL),(1000101,'222',333,'2015-06-04 07:32:04','1','2','http://www.minitcp.com/ddd',NULL),(1000102,'222',333,'2015-06-04 07:32:04','1','2','http://www.minitcp.com/ddd',NULL),(1000103,'222',333,'2015-06-04 07:32:04','1','2','http://www.minitcp.com/ddd',NULL),(1000104,'222',333,'2015-06-04 07:32:04','1','2','http://www.minitcp.com/ddd',NULL);
+/*!40000 ALTER TABLE t_bike_common ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Table structure for table `b_bike_dynamic`
 --
 
-DROP TABLE IF EXISTS `b_bike_dynamic`;
+DROP TABLE IF EXISTS t_bike_dynamic;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `b_bike_dynamic` (
@@ -75,10 +75,10 @@ CREATE TABLE `b_bike_dynamic` (
 -- Dumping data for table `b_bike_dynamic`
 --
 
-LOCK TABLES `b_bike_dynamic` WRITE;
-/*!40000 ALTER TABLE `b_bike_dynamic` DISABLE KEYS */;
-INSERT INTO `b_bike_dynamic` VALUES (1000100,50,1,1,1,1,1,116.3974543,39.9180140,50,'2015-06-03 03:57:33',0),(1000101,50,1,1,1,1,1,116.3954543,39.9170140,50,'2015-06-03 03:58:36',0),(1000102,50,1,1,1,1,1,116.3964543,39.9270140,50,'2015-06-03 00:03:54',0),(1000103,50,1,1,1,1,1,116.3984543,39.9130140,50,'2015-06-03 00:08:13',0),(1000104,50,1,1,1,1,1,116.3975543,39.9178140,50,'2015-06-02 00:11:06',0);
-/*!40000 ALTER TABLE `b_bike_dynamic` ENABLE KEYS */;
+LOCK TABLES t_bike_dynamic WRITE;
+/*!40000 ALTER TABLE t_bike_dynamic DISABLE KEYS */;
+INSERT INTO t_bike_dynamic VALUES (1000100,50,1,1,1,1,1,116.3974543,39.9180140,50,'2015-06-03 03:57:33',0),(1000101,50,1,1,1,1,1,116.3954543,39.9170140,50,'2015-06-03 03:58:36',0),(1000102,50,1,1,1,1,1,116.3964543,39.9270140,50,'2015-06-03 00:03:54',0),(1000103,50,1,1,1,1,1,116.3984543,39.9130140,50,'2015-06-03 00:08:13',0),(1000104,50,1,1,1,1,1,116.3975543,39.9178140,50,'2015-06-02 00:11:06',0);
+/*!40000 ALTER TABLE t_bike_dynamic ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -162,7 +162,7 @@ UNLOCK TABLES;
 -- Table structure for table `sys_user`
 --
 
-DROP TABLE IF EXISTS `sys_user`;
+DROP TABLE IF EXISTS t_user;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_user` (
@@ -185,10 +185,10 @@ CREATE TABLE `sys_user` (
 -- Dumping data for table `sys_user`
 --
 
-LOCK TABLES `sys_user` WRITE;
-/*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` VALUES (100000000,'15652750943','15652750943','eric',4305,20,'1',15,NULL,'2015-06-03 03:58:36','0000-00-00 00:00:00');
-/*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
+LOCK TABLES t_user WRITE;
+/*!40000 ALTER TABLE t_user DISABLE KEYS */;
+INSERT INTO t_user VALUES (100000000,'15652750943','15652750943','eric',4305,20,'1',15,NULL,'2015-06-03 03:58:36','0000-00-00 00:00:00');
+/*!40000 ALTER TABLE t_user ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -221,7 +221,7 @@ UNLOCK TABLES;
 -- Table structure for table `u_d_history`
 --
 
-DROP TABLE IF EXISTS `u_d_history`;
+DROP TABLE IF EXISTS t_order_history;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `u_d_history` (
@@ -242,10 +242,10 @@ CREATE TABLE `u_d_history` (
 -- Dumping data for table `u_d_history`
 --
 
-LOCK TABLES `u_d_history` WRITE;
-/*!40000 ALTER TABLE `u_d_history` DISABLE KEYS */;
-INSERT INTO `u_d_history` VALUES (1,100000000,1000100,12,15,'2015-06-01 15:33:03','2015-06-01 15:40:13',0,0),(2,100000000,1000100,12,15,'2015-06-01 15:33:03','2015-06-01 15:33:03',0,0),(3,100000000,1000103,0,5,'2015-06-02 13:56:28','2015-06-02 14:02:04',100004,5),(4,123,1000103,0,0,'2015-06-02 14:02:45','2015-06-02 14:03:36',100005,1),(5,123,1000103,0,0,'2015-06-02 14:04:28','2015-06-02 14:04:32',100006,1),(6,123,1000103,0,0,'2015-06-02 14:05:22','2015-06-02 14:05:26',100007,1),(7,123,1000103,0,0,'2015-06-02 14:06:59','2015-06-02 14:07:42',100008,1),(8,100000000,1000103,0,0,'2015-06-02 14:07:44','2015-06-02 14:07:48',100009,1),(9,100000000,1000100,0,4,'2015-06-02 14:30:11','2015-06-02 14:35:04',100010,5),(10,100000000,1000100,0,14,'2015-06-02 14:42:28','2015-06-02 14:57:09',100011,15),(11,100000000,1000100,0,1,'2015-06-02 14:57:45','2015-06-02 14:59:36',100012,2),(12,100000000,1000100,0,1,'2015-06-02 15:00:51','2015-06-02 15:02:35',100013,2),(13,100000000,1000100,0,14,'2015-06-02 15:03:26','2015-06-02 15:17:27',100014,15),(14,100000000,1000100,0,0,'2015-06-02 15:17:44','2015-06-02 15:17:58',100015,1),(15,100000000,1000100,0,1,'2015-06-02 15:19:31','2015-06-02 15:20:41',100016,2),(16,100000000,1000100,0,41,'2015-06-02 15:20:50','2015-06-03 00:02:40',100017,42),(17,100000000,1000102,0,1,'2015-06-03 00:02:43','2015-06-03 00:03:54',100018,2),(18,100000000,1000100,0,1,'2015-06-03 00:04:08','2015-06-03 00:05:39',100019,2),(19,100000000,1000103,0,0,'2015-06-03 00:07:30','2015-06-03 00:08:13',100020,1),(20,100000000,1000100,0,33,'2015-06-03 00:09:52','2015-06-03 03:43:47',100021,34),(21,100000000,1000100,0,1,'2015-06-03 03:45:02','2015-06-03 03:46:38',100022,2),(22,100000000,1000100,0,0,'2015-06-03 03:46:49','2015-06-03 03:46:54',100023,1),(23,100000000,1000100,0,0,'2015-06-03 03:47:52','2015-06-03 03:48:01',100024,1),(24,100000000,1000100,0,1,'2015-06-03 03:49:11','2015-06-03 03:50:33',100025,2),(25,100000000,1000100,0,4,'2015-06-03 03:50:45','2015-06-03 03:54:47',100026,5),(26,100000000,1000100,0,1,'2015-06-03 03:56:13','2015-06-03 03:57:33',100027,2),(27,100000000,1000101,0,0,'2015-06-03 03:57:43','2015-06-03 03:58:36',100028,1);
-/*!40000 ALTER TABLE `u_d_history` ENABLE KEYS */;
+LOCK TABLES t_order_history WRITE;
+/*!40000 ALTER TABLE t_order_history DISABLE KEYS */;
+INSERT INTO t_order_history VALUES (1,100000000,1000100,12,15,'2015-06-01 15:33:03','2015-06-01 15:40:13',0,0),(2,100000000,1000100,12,15,'2015-06-01 15:33:03','2015-06-01 15:33:03',0,0),(3,100000000,1000103,0,5,'2015-06-02 13:56:28','2015-06-02 14:02:04',100004,5),(4,123,1000103,0,0,'2015-06-02 14:02:45','2015-06-02 14:03:36',100005,1),(5,123,1000103,0,0,'2015-06-02 14:04:28','2015-06-02 14:04:32',100006,1),(6,123,1000103,0,0,'2015-06-02 14:05:22','2015-06-02 14:05:26',100007,1),(7,123,1000103,0,0,'2015-06-02 14:06:59','2015-06-02 14:07:42',100008,1),(8,100000000,1000103,0,0,'2015-06-02 14:07:44','2015-06-02 14:07:48',100009,1),(9,100000000,1000100,0,4,'2015-06-02 14:30:11','2015-06-02 14:35:04',100010,5),(10,100000000,1000100,0,14,'2015-06-02 14:42:28','2015-06-02 14:57:09',100011,15),(11,100000000,1000100,0,1,'2015-06-02 14:57:45','2015-06-02 14:59:36',100012,2),(12,100000000,1000100,0,1,'2015-06-02 15:00:51','2015-06-02 15:02:35',100013,2),(13,100000000,1000100,0,14,'2015-06-02 15:03:26','2015-06-02 15:17:27',100014,15),(14,100000000,1000100,0,0,'2015-06-02 15:17:44','2015-06-02 15:17:58',100015,1),(15,100000000,1000100,0,1,'2015-06-02 15:19:31','2015-06-02 15:20:41',100016,2),(16,100000000,1000100,0,41,'2015-06-02 15:20:50','2015-06-03 00:02:40',100017,42),(17,100000000,1000102,0,1,'2015-06-03 00:02:43','2015-06-03 00:03:54',100018,2),(18,100000000,1000100,0,1,'2015-06-03 00:04:08','2015-06-03 00:05:39',100019,2),(19,100000000,1000103,0,0,'2015-06-03 00:07:30','2015-06-03 00:08:13',100020,1),(20,100000000,1000100,0,33,'2015-06-03 00:09:52','2015-06-03 03:43:47',100021,34),(21,100000000,1000100,0,1,'2015-06-03 03:45:02','2015-06-03 03:46:38',100022,2),(22,100000000,1000100,0,0,'2015-06-03 03:46:49','2015-06-03 03:46:54',100023,1),(23,100000000,1000100,0,0,'2015-06-03 03:47:52','2015-06-03 03:48:01',100024,1),(24,100000000,1000100,0,1,'2015-06-03 03:49:11','2015-06-03 03:50:33',100025,2),(25,100000000,1000100,0,4,'2015-06-03 03:50:45','2015-06-03 03:54:47',100026,5),(26,100000000,1000100,0,1,'2015-06-03 03:56:13','2015-06-03 03:57:33',100027,2),(27,100000000,1000101,0,0,'2015-06-03 03:57:43','2015-06-03 03:58:36',100028,1);
+/*!40000 ALTER TABLE t_order_history ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -363,17 +363,17 @@ BEGIN
 
     START TRANSACTION;
     
-    UPDATE sys_user set balance=(balance - (f_cost+1)) WHERE  f_userid = user_id;
+    UPDATE t_user set balance=(balance - (f_cost+1)) WHERE  f_userid = user_id;
 
     
-    INSERT INTO u_d_history(order_id,user_id, bike_id, mileage, costTime, start_time, end_time,cost)
+    INSERT INTO t_order_history(order_id,user_id, bike_id, mileage, costTime, start_time, end_time,cost)
       VALUES (orderid,f_userid,f_bikeid,f_mileage,f_cost,f_ordertime,now(),f_cost+1);
 
     
     DELETE  from t_order where orderid = order_id;
 
     
-    UPDATE b_bike_dynamic SET order_state = 0;
+    UPDATE t_bike_dynamic SET order_state = 0;
 
     if(txn_error) THEN
       ROLLBACK;
@@ -412,11 +412,11 @@ begin
     SELECT user_id into order_user_id from t_order where t_order.user_id = userid;
 
     SELECT bike_id into order_bike_id
-    FROM b_bike_dynamic
+    FROM t_bike_dynamic
     WHERE order_state=0 and bike_id=bikeid FOR UPDATE ;
 
     if(order_bike_id is not Null and order_user_id is Null) THEN
-      update b_bike_dynamic set order_state=1 WHERE bike_id = order_bike_id;
+      update t_bike_dynamic set order_state=1 WHERE bike_id = order_bike_id;
       INSERT INTO t_order(bike_id, user_id)  VALUES(order_bike_id,userid);
 
       IF(txn_error) THEN

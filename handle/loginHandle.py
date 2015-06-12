@@ -1,6 +1,7 @@
 #/usr/bin/python
 #coding: utf-8
 #Createtime 2015/5/25
+import base64
 import tornado
 from tornado import  gen
 from tornado.web import authenticated
@@ -8,7 +9,7 @@ from tornado.web import authenticated
 from error.zebraError import ZebraError, InputArgsError, UnameOrPasswordError
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
-from utils.Constants import SessionUserID
+from utils.Constants import SessionUserID, SessionPhone
 
 
 class LoginHandler(BaseHandler):
@@ -32,6 +33,7 @@ class LoginHandler(BaseHandler):
             try:
                 phone = self.get_argument("un");
                 password = self.get_argument("pw");
+                phone = base64.decodestring(phone)
             except Exception as e:
                 raise InputArgsError();
 
@@ -39,6 +41,7 @@ class LoginHandler(BaseHandler):
 
             if (user  != None):
                 self.session[SessionUserID] = user["user_id"];
+                self.session[SessionPhone] = phone
                 self.session.save()
                 ret = JsonTemplate.newJsonRes()
             else:

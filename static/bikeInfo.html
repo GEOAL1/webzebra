@@ -8,10 +8,9 @@
 
 <body ng-controller="bikeInfoController">
     <div class="box">
-        <div class="top">自行车租赁系统</div>
         <div class="top_info">
 			<div class="head_img"><img src="img/head.png"/></div>
-            <div class="head_phone">18356325263</div>
+            <div class="head_phone">{{user.phone_num}}</div>
         </div>
         <div class="list_div">
         	<!---费用Σ( ° △ °|||)︴---->
@@ -25,7 +24,7 @@
                             <div class="mid_cent_up">已骑行{{order.mileage}}公里</div>
                             <div class="mid_cent_down">已使用（{{order.cost_time/60|number:2}}）小时</div>
                         </div>
-                        <div class="mid_nub">{{order.cost_time}}</div>
+                        <div class="mid_nub">{{order.price}}</div>
                     </div>
                     <div class="list01_right"></div>
                 </div>
@@ -39,17 +38,18 @@
                     <div class="list03_mid">
                     	<div class="list03_up">
                         	<div class="list03_div mt10">剩余电量</div>
-                            <div class="list03_div mt10"></div>
-                            <div class="list03_div mt10"></div>
-                            <div class="list03_div mt10 boder_right"></div>
+                            <div class="list03_div mt10">消费后余额</div>
+                            <div class="list03_div mt10">可获得积分</div>
+                            <div class="list03_div mt10 boder_right">车辆状态</div>
                         </div>
                         <div class="list03_down">
                         	<div class="list03_div">{{bike.cur_power}}%</div>
-                            <div class="list03_div"></div>
-                            <div class="list03_div"></div>
-                            <div class="list03_div boder_right"></div>
+                            <div class="list03_div">{{user.balance - order.price}}</div>
+                            <div class="list03_div">{{order.price}}</div>
+                            <div class="list03_div boder_right">良好</div>
                         </div>
                     </div>
+
                     <div class="list03_right"></div>
                 </div>
                 <div class="list_lr"></div>
@@ -63,7 +63,7 @@
                     	<div class="list04_but_lf"></div>
                           <div class="list04_but_mid">
                                 <div class="list04_but_icon"><img src="img/icon02.png" /></div>
-                                <div class="list04_but_title">解锁</div>
+                                <div class="list04_but_title">{{bike.nextLockState}}</div>
                           </div>
                         <div class="list04_but_rt"></div>
                     </div>
@@ -116,7 +116,7 @@
         <div class="row" >
 
             <div class="col-xs-4 col-sm-4">
-                <a href="nearList.html"><span class="bottom-nav-img glyphicon glyphicon-globe"></span>
+                <a href="panel.html"><span class="bottom-nav-img glyphicon glyphicon-globe"></span>
                     <span class="bottom-nav-title" >寻车</span></a>
             </div>
 
@@ -130,6 +130,7 @@
                 <a href="bikeInfo.html"><span class="bottom-nav-img glyphicon glyphicon-ok"></span>
                     <span class="bottom-nav-title" >我的车</span></a>
             </div>
+
         </div>
     </nav>
 </body>
@@ -138,7 +139,7 @@
 <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&libraries=convertor"></script>
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="http://cdn .bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/utile/commonUtils.js"></script>
 <script src="js/app.js"></script>

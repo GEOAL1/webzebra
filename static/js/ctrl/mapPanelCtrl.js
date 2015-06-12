@@ -1,4 +1,4 @@
-app.controller("panelController", function ($scope, userService, wxService, bikeService, geoService) {
+app.controller("mapController", function ($scope, userService, wxService, bikeService, geoService) {
     $scope.search = {
         distance: 5000,
         bike_id: ""
@@ -8,6 +8,7 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         $scope.getNearBike()
         $('.searchModal').fadeOut('fast')
     }
+
     $scope.touchon = function () {
         $(document).on('touchmove', function (e) {
             e.preventDefault();
@@ -29,11 +30,6 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         $(document).off('touchmove');
     }
 
-    $scope.openBikeLV = function (bike) {
-        bikeService.bikeLight(bike)
-        bikeService.bikeVoice(bike)
-    }
-
     $scope.bikeNavigate = bikeService.bikeNavigate
     $scope.bikeOrder = bikeService.bikeOrder
 
@@ -43,20 +39,6 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         $event.preventDefault()
     }
 
-
-    userService.getUserInfo(function (status, data) {
-        $scope.user_load_ok = true
-
-        if (status === 0) {
-            $scope.user = data.body;
-            $scope.user.valibleMileage = bikeService.valibleMileage( $scope.user.balance)
-            $scope.user.valibleTime = bikeService.valibleTime($scope.user.balance)
-
-        } else {
-            alert("获得用户信息失败，正在重新加载")
-            window.location.href = "/"
-        }
-    })
 
     $scope.getNearBike = function () {
         $scope.touchon()
@@ -72,7 +54,6 @@ app.controller("panelController", function ($scope, userService, wxService, bike
                         $scope.$digest()
                     })
                 })
-
             }
             else {
                 alert("获得附近的车失败")
@@ -94,8 +75,6 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         }
 
         $scope.getNearBike()
-
-
     });
 
 

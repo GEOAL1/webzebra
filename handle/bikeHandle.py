@@ -16,9 +16,6 @@ from dao.redisDao import RedisCache
 
 
 
-
-
-
 # /wx/b/ctrl/cmd
 class BikeCtrlHandler(BaseHandler):
     def get(self, cmd):
@@ -71,17 +68,14 @@ class NearBikeHandler(BaseHandler):
     def get_result(self):
         try:
             try:
-                bike_id = self.get_argument("bike_id");
                 lng = float(self.get_argument("lng"))
                 lat = float(self.get_argument("lat"))
                 distance = int(self.get_argument("distance"))
+
             except Exception as e:
                 raise InputArgsError()
 
-            if bike_id != None and len(bike_id) > 5:
-                bikeList = self.bikeService.getBikeDetailInfo(lng, lat, bike_id)
-            else:
-                bikeList = self.bikeService.getNearIdleBIke(lng, lat, distance)
+            bikeList = self.bikeService.getNearIdleBIke(lng, lat, distance)
             ret = JsonTemplate.newJsonRes().setBody(bikeList)
         except ZebraError as e:
             ret = JsonTemplate.newZebraErrorRes(e)

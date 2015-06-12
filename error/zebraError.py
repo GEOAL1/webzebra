@@ -152,5 +152,18 @@ class UserOrderNotFoundError(ZebraError):
         self.errMsg = "没有找到该用户的ID"
         pass
 
-
+class BalanceIsNoEngoughError(ZebraError):
+    def __init__(self):
+        self.errCode = -1015
+        self.errMsg = "余额不足，请充值"
+        pass
 pass
+
+
+class BikeIsOnServiceError(ZebraError):
+    def __init__(self):
+        self.errCode = -1015
+        self.errMsg = "车辆正在服务中"
+        pass
+pass
+

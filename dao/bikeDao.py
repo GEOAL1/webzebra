@@ -3,7 +3,9 @@
 import time
 
 from dao.IMysqlDao import IMysqlDao
+from dao.redisDao import RedisCache
 from model.BikeDynamic import BikeDynamicInfo
+from utils.jsonUtil import JsonBikeCtl
 
 
 class BikeDao(IMysqlDao):
@@ -12,9 +14,9 @@ class BikeDao(IMysqlDao):
     def __init__(self):
         pass
     
-    defaultDynamicSelectSql = "select * from b_bike_dynamic where %s"
-    defaultCommonSelectSql = "select * from b_bike_common where %s"
-    defautlDyUpdateSql = "update b_bike_dynamic set"
+    defaultDynamicSelectSql = "select * from t_bike_dynamic where %s"
+    defaultCommonSelectSql = "select * from t_bike_common where %s"
+    defautlDyUpdateSql = "update t_bike_dynamic set"
     '''
         动态表操作
     '''
@@ -22,25 +24,25 @@ class BikeDao(IMysqlDao):
         return self.db.query(self.defaultDynamicSelectSql % "1");
 
     def getRangeeDyByLoLa(self,centerLo,centerLa,scopeRange):
-        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from b_bike_dynamic a  join  b_bike_common b  on " \
+        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on " \
               " a.bike_id = b.bike_id  and fun_distance(%s,%s,a.latitude,a.longitude) < %s "
         ret = self.db.query(sql, centerLa, centerLo,centerLa, centerLo,scopeRange/1000.0);
         return ret
 
     def getIdleRangeeDyByLoLa(self,centerLo,centerLa,scopeRange):
-        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from b_bike_dynamic a  join  b_bike_common b  on " \
+        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on " \
               " a.bike_id = b.bike_id and a.order_state = 0 and fun_distance(%s,%s,a.latitude,a.longitude) < %s "
         ret = self.db.query(sql, centerLa, centerLo,centerLa, centerLo,scopeRange/1000.0);
         return ret
 
 
     def getBikeDetailInfoByID(self, centerLo, centerLa, bike_id):
-        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from b_bike_dynamic a  join  b_bike_common b  on  a.bike_id=%s and b.bike_id=%s"
+        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on  a.bike_id=%s and b.bike_id=%s"
         ret = self.db.query(sql, centerLa, centerLo, bike_id, bike_id);
         return ret
 
     def setBikeeDyInfoById(self,bikeDynamicInfo):                                                              
-        sql = "update b_bike_dynamic set cur_power = %d ,throttle_state = %d,brake_state = %d,motor_state = %d,lock_state = %d,indicator_state = %d,longitude = %f,latitude = %f,speed = %f , time_samp = '%s' where bike_id = %d" % (bikeDynamicInfo["cur_power"],bikeDynamicInfo["throttle_state"],bikeDynamicInfo["brake_state"],bikeDynamicInfo["motor_state"],bikeDynamicInfo["lock_state"],bikeDynamicInfo["indicator_state"],bikeDynamicInfo["longitude"],bikeDynamicInfo["latitude"],bikeDynamicInfo["speed"],bikeDynamicInfo["timesamp"],bikeDynamicInfo["bike_id"])
+        sql = "update t_bike_dynamic set cur_power = %d ,throttle_state = %d,brake_state = %d,motor_state = %d,lock_state = %d,indicator_state = %d,longitude = %f,latitude = %f,speed = %f , time_samp = '%s' where bike_id = %d" % (bikeDynamicInfo["cur_power"],bikeDynamicInfo["throttle_state"],bikeDynamicInfo["brake_state"],bikeDynamicInfo["motor_state"],bikeDynamicInfo["lock_state"],bikeDynamicInfo["indicator_state"],bikeDynamicInfo["longitude"],bikeDynamicInfo["latitude"],bikeDynamicInfo["speed"],bikeDynamicInfo["timesamp"],bikeDynamicInfo["bike_id"])
         self.db.execute(sql)
 
     def getBikeDyInfoByid(self,bikeId):
@@ -123,6 +125,14 @@ class BikeDao(IMysqlDao):
         cond = "register_time > %s"
         sql = self.defaultCommonSelectSql % (cond)
         return self.db.query(sql,crutime)
+
+
+    def lockBike(self,bikeID):
+        ctrl = JsonBikeCtl()
+        ctrl.setBikeID(bikeID)
+        ctrl.setLockBike(1)
+        ctrlRet = ctrl.tojsonStr()
+        RedisCache().listRpush("bikeCtrlTopic", ctrlRet)
     
 if __name__ == '__main__':
     

@@ -84,7 +84,7 @@ app.service('bikeService', function ($rootScope, $http) {
                     alert("订购车成功")
                     location.href = "/"
                 }else{
-                    alert("订购车失败")
+                    alert(data.errorMeg)
                 }
 
                 if (cb != undefined) {
@@ -147,6 +147,25 @@ app.service('bikeService', function ($rootScope, $http) {
                 callback(state, data)
             })
         },
+
+        calPrice:function(mileage,costTime) {
+            var timePrice = costTime * 1
+            var mileagePrice = 0.8 * (mileage / 1000.0) * 10
+            if(timePrice < mileagePrice)
+                cost = mileagePrice
+            else
+                cost = timePrice
+            return cost
+        },
+
+        calValiableMileage:function(balance) {
+            return balance
+        },
+
+        calValableTime:function(balance){
+            return balance / 10.0 / 0.8 * 1000
+        }
+
 
     }
     return service
