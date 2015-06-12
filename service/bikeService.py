@@ -1,6 +1,10 @@
 #/usr/bin/python
 #coding: utf-8
+from dao.redisDao import RedisCache
+from error.zebraError import InvaildBikeCtrlCmdError
 from service.IService import IService
+from utils.jsonUtil import JsonBikeCtl
+
 
 
 class BikeService(IService):
@@ -46,4 +50,25 @@ class BikeService(IService):
         self.bikeDao.setLoLa(longitude,latitude,bikeID)
     
     def setSpeed(self,speed,bikeID):
-        self.bikeDao.setSpeed(speed,bikeID)  
+        self.bikeDao.setSpeed(speed,bikeID)
+
+    def sendCtrlCmd(self,bikeID,user_id,cmd):
+        ctrl = JsonBikeCtl()
+        ctrl.setBikeID(bikeID)
+
+        if cmd == "voice":
+            ctrl.setHorn(1)
+        elif cmd == "light":
+            ctrl.setIndicatorLight(1)
+        elif cmd == "lock":
+            ctrl.setLockBike(1)
+        elif cmd == "unlock":
+            ctrl.setLockBike(0)
+        else:
+            raise InvaildBikeCtrlCmdError()
+
+        ctrlRet = ctrl.tojsonStr()
+
+        RedisCache().listRpush("bikeCtrlTopic", ctrlRet)
+
+

@@ -162,8 +162,15 @@ pass
 
 class BikeIsOnServiceError(ZebraError):
     def __init__(self):
-        self.errCode = -1015
+        self.errCode = -1016
         self.errMsg = "车辆正在服务中"
+        pass
+pass
+
+class InvaildBikeCtrlCmdError(ZebraError):
+    def __init__(self):
+        self.errCode = -1017
+        self.errMsg = "无效的车辆控制命令"
         pass
 pass
 

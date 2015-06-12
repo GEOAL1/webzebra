@@ -57,8 +57,10 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
     $scope.finishOrderBike = function () {
         bikeService.finishOrder($scope.orderID, function (state, data) {
 
+
         })
     }
+
 
     $scope.orderID = GetQueryString("order_id")
 

@@ -98,7 +98,8 @@ app.service('bikeService', function ($rootScope, $http) {
         finishOrder: function(orderid,callback) {
             sendCmd('/wx/o/finish', "GET", {order_id: orderid}, function (state, data) {
                 if(state == 0){
-                    alert("完成订单成功")
+                    alert(data.errorMeg)
+
                     window.location.href="/"
                 }else{
                     alert("取消失败")

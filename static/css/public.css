@@ -1,0 +1,174 @@
+@charset "utf-8";
+/* CSS Document */
+@charset "UTF-8";
+/*重置*/
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+textarea,
+select,
+button {
+  font-weight: normal;
+}
+ul,
+ol {
+  list-style-type: none;
+  list-style-image: none;
+}
+li {
+  list-style: none;
+}
+html,
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+body {
+  overflow: hidden;
+}
+a,
+img {
+  -webkit-touch-callout: none;
+}
+a {
+  text-decoration: none;
+  color: #333333;
+}
+a:active,
+a:hover {
+  outline: 0 none;
+}
+a:focus {
+  outerline: 1px dotted;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+body,
+button,
+input,
+select,
+textarea {
+  font-family: 'Microsoft YaHei', 'helvetica neue', tahoma, 'hiragino sans gb', stheiti, 'wenquanyi micro hei', '\5FAE\8F6F\96C5\9ED1', '\5B8B\4F53', sans-serif;
+}
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  resize: vertical;
+}
+section,
+article,
+aside,
+header,
+footer,
+nav,
+figure,
+menu {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+html,
+body,
+form,
+fieldset,
+p,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  -webkit-text-size-adjust: none;
+}
+input,
+button,
+select,
+textarea {
+  outline: none;
+  -webkit-appearance: none;
+}
+input {
+  border: none;
+}
+input:focus::-webkit-input-placeholder {
+  color: #efefef;
+}
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 20px;
+}
+body {
+  font-size: 20px;
+  line-height: 1.5;
+}
+article,
+aside,
+figcaption,
+figure,
+footer,
+header,
+nav,
+section,
+summary {
+  display: block;
+}
+

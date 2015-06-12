@@ -11,6 +11,7 @@ from tornado import gen
 from error.zebraError import *
 from handle.baseHandle import BaseHandler
 from model.jsonTemplate import JsonTemplate
+from utils.Constants import SessionUserID
 from utils.jsonUtil import JsonBikeCtl
 from dao.redisDao import RedisCache
 
@@ -20,35 +21,10 @@ from dao.redisDao import RedisCache
 class BikeCtrlHandler(BaseHandler):
     def get(self, cmd):
         try:
+            user_id = self.session[SessionUserID]
             bikeID = self.get_argument("bikeID")
-            if cmd == "voice":
-                ctrl = JsonBikeCtl()
-                ctrl.setBikeID(bikeID)
-                ctrl.setHorn(1)
-                ctrlRet = ctrl.tojsonStr()
-                RedisCache().listRpush("bikeCtrlTopic", ctrlRet)
-                result = JsonTemplate.newJsonRes().setErrMsg("OK").toJson()
-            if cmd == "light":
-                ctrl = JsonBikeCtl()
-                ctrl.setBikeID(bikeID)
-                ctrl.setIndicatorLight(1)
-                ctrlRet = ctrl.tojsonStr()
-                RedisCache().listRpush("bikeCtrlTopic", ctrlRet)
-                result = JsonTemplate.newJsonRes().setErrMsg("OK").toJson()
-            if cmd == "lock":
-                ctrl = JsonBikeCtl()
-                ctrl.setBikeID(bikeID)
-                ctrl.setLockBike(1)
-                ctrlRet = ctrl.tojsonStr()
-                RedisCache().listRpush("bikeCtrlTopic", ctrlRet)
-                result = JsonTemplate.newJsonRes().setErrMsg("OK").toJson()
-            if cmd == "unlock":
-                ctrl = JsonBikeCtl()
-                ctrl.setBikeID(bikeID)
-                ctrl.setLockBike(0)
-                ctrlRet = ctrl.tojsonStr()
-                RedisCache().listRpush("bikeCtrlTopic", ctrlRet)
-                result = JsonTemplate.newJsonRes().setErrMsg("OK").toJson()
+            self.bikeService.sendCtrlCmd(bikeID,user_id)
+            result = JsonTemplate.newJsonRes().setErrMsg("OK").toJson()
         except Exception as e:
             print e
             result = JsonTemplate.newErrorJsonRes().setBody("error argument").toJson()

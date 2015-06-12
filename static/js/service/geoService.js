@@ -1,6 +1,30 @@
 app.service('geoService', function ($rootScope, $http) {
 
     var service = {
+        addMark:function(map,lng,lat,imgAddr,callback) {
+            qq.maps.convertor.translate(new qq.maps.LatLng(lat, lng), 1, function (res) {
+                var latLng = new soso.maps.LatLng(res[0].lat, res[0].lng);
+
+                marker = new qq.maps.Marker({
+                    position: latLng,
+                    map: map,
+                });
+
+                if(imgAddr != null){
+                    var anchor = new qq.maps.Point(0, 39),
+                        size = new qq.maps.Size(64, 64),
+                        origin = new qq.maps.Point(0, 0),
+                        markerIcon = new qq.maps.MarkerImage(
+                            imgAddr,
+                            size,
+                            origin,
+                            anchor
+                        );
+                    marker.setIcon(markerIcon);
+                }
+                callback(marker)
+            });
+        },
 
         getAddress: function (lng, lat, callback) {
 
@@ -44,7 +68,7 @@ app.service('geoService', function ($rootScope, $http) {
                     })
                 })
             } else {
-                var config = {enableHighAccuracy: true, timeout: 5000, maximumAge: 10000};
+                var config = {enableHighAccuracy: true, timeout: 1000, maximumAge: 10000};
                 navigator.geolocation.getCurrentPosition(function (position) {
                     var lng = position.coords.longitude;
                     var lat = position.coords.latitude;

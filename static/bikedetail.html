@@ -1,0 +1,94 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,width=device-width">
+    <title>无标题文档</title>
+    <link rel="stylesheet" type="text/css" href="css/public.css">
+    <link rel="stylesheet" type="text/css" href="css/carinfo.css">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+
+<body ng-controller="detailController">
+
+<div id="main">
+    <div class="section0" id="mapContainer">
+
+    </div>
+	<div class="section1">
+    	<div>
+            <span>
+                电量
+            </span>
+        	<span>
+                {{bike.cur_power}}%
+            </span>
+        </div>
+        <div>
+              <span>
+                距离
+            </span>
+        	<span>
+                {{bike.distance|number:0}}米
+            </span>
+        </div>
+        <div>
+             <span>
+                状态
+            </span>
+        	<span>
+                {{bike.state}}
+            </span>
+        </div>
+    </div>
+    <div class="section2">
+    	<p>地址：{{bike.address}}号</p>
+    </div>
+    <div class="section3">
+    	<div>
+        	<div ng-click="bikeOrder(bike.bike_id)"><span>订车</span></div>
+        	<div ng-click="bikeVoice(bike)"><span>鸣笛</span></div>
+        </div>
+        <div>
+        	<div ng-click="bikeLight(bike)"><span>亮灯</span></div>
+        	<div ng-click="bikeNavigate(bike)"><span>导航</span></div>
+        </div>
+    </div>
+</div>
+
+<nav id="bottom-nav" >
+    <div class="row" >
+        <div>
+            <a href="javascript:;" ng-click="QRScanOrder()"><span class="bottom-nav-img glyphicon glyphicon-qrcode"></span>
+                <span class="bottom-nav-title" >扫一扫</span></a>
+        </div>
+
+        <div>
+            <a href="recharge.html"><span class="bottom-nav-img glyphicon glyphicon-star"></span>
+                <span class="bottom-nav-title" >充值</span></a>
+        </div>
+
+        <div>
+            <a href="bikeInfo.html"><span class="bottom-nav-img glyphicon glyphicon-ok"></span>
+                <span class="bottom-nav-title" >我的车</span></a>
+        </div>
+
+    </div>
+</nav>
+
+
+
+</body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp&libraries=convertor"></script>
+<script src="js/lib/angular/angular.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/utile/commonUtils.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/service/bikeService.js"></script>
+<script src="js/service/userService.js"></script>
+<script src="js/service/geoService.js"></script>
+<script src="js/service/wxService.js"></script>
+<script src="js/ctrl/detailCtrl.js"></script>
+</html>
