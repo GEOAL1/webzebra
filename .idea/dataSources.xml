@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2397491208">
+  <component name="DataSourceManagerImpl" format="xml" hash="3533480861">
     <data-source source="LOCAL" name="MySQL - zebra@localhost [2]" uuid="83c6e939-6741-4899-8230-cef832481e3c">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>

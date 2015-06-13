@@ -89,9 +89,8 @@ class FinishOrderHandler(BaseHandler):
             except Exception as e:
                 raise InputArgsError()
 
-            self.orderService.finishOrder(order_id,user_id)
-
-            result = JsonTemplate.newJsonRes().setErrMsg("取消订单成功")
+            price = self.orderService.finishOrder(order_id,user_id)
+            result = JsonTemplate.newJsonRes().setErrMsg("订单成功，消费金额 %d 币" % (price) )
         except ZebraError as e:
             result = JsonTemplate.newZebraErrorRes(e)
         except Exception as e:

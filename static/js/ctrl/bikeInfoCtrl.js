@@ -6,12 +6,14 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
         bikeService.getBikeInfo(bike_id,function(state,data){
             if(state == 0) {
                 $scope.bike = data.body;
-                if($scope.bike.lock_state==0) {
+                if($scope.bike.lock_state==1) {
                     $scope.bike.nextLockState = "锁车"
                     $scope.bike.curLockState="未锁"
+                    $scope.lock_img = "img/lock.png"
                 }else{
                     $scope.bike.nextLockState = "解锁"
                     $scope.bike.curLockState="已锁"
+                    $scope.lock_img = "img/unlock.png"
                 }
                 $scope.order.mileage= $scope.bike.mileage - $scope.order.begin_mileage
                 $scope.order.cost = bikeService.calPrice($scope.order.mileage,$scope.order.cost_time)
@@ -35,7 +37,6 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
             }
             $scope.user_load_ok=true
         })
-        updateClock();
     }
 
     $scope.bikeLight = bikeService.bikeLight
@@ -43,7 +44,10 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
 
 
     $scope.lockBike = function (bike) {
-        bikeService.lockBike(bike)
+        bikeService.lockBike(bike,function(state,data){
+            if(state == 0)
+                $scope.refreshInfo()
+        })
     }
 
     $scope.callUs = function (bike) {
@@ -57,13 +61,11 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
     $scope.finishOrderBike = function () {
         bikeService.finishOrder($scope.orderID, function (state, data) {
 
-
         })
     }
 
 
     $scope.orderID = GetQueryString("order_id")
-
 
     var updateClock = function () {
         $scope.clock = new Date();

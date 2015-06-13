@@ -48,7 +48,7 @@ class OrderService(IService):
         user = self.userDao.selecUserInfoByUid(user_id)
         order = self.getUserOrderByOrderID(order_id)
 
-        if(order.user_id != user_id):
+        if(order.user_id != int(user_id)):
             raise OrderOwnerError()
 
         bike  = self.bikeDao.getBikeDyInfoByid(order.bike_id)
@@ -65,5 +65,5 @@ class OrderService(IService):
         result = self.orderDao.finishOrder(order,costTime,mileage,price,startTime,finishTime)
         self.bikeDao.lockBike(order.bike_id)
 
-        return result
+        return price
         #lockBike

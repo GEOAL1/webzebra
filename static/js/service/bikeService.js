@@ -17,7 +17,6 @@ app.service('bikeService', function ($rootScope, $http) {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             }
         }
-
         $http(http_config).success(function (data, status, headers, config) {
             if (data.errorCode != 0) {
                 console.log(data.errorCode + " : " + data.errorMeg);
@@ -66,9 +65,9 @@ app.service('bikeService', function ($rootScope, $http) {
         lockBike: function (bike, cb) {
             var cmd;
             if (bike.lock_state == 0) {
-                cmd = "lock";
+                cmd = "unlock";
             } else {
-                cmd = "unlock"
+                cmd = "lock"
             }
 
             sendCmd('/wx/b/ctrl/' + cmd, "GET", {bikeID: bike.bike_id}, function (state, data) {
@@ -99,7 +98,6 @@ app.service('bikeService', function ($rootScope, $http) {
             sendCmd('/wx/o/finish', "GET", {order_id: orderid}, function (state, data) {
                 if(state == 0){
                     alert(data.errorMeg)
-
                     window.location.href="/"
                 }else{
                     alert("取消失败")
