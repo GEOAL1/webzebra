@@ -48,8 +48,8 @@
                     <div class="list01_mid">
                         <div class="mid_title">余额</div>
                         <div class="mid_cent">
-                            <div class="mid_cent_up">可骑行{{user.valibleMileage}}公里</div>
-                            <div class="mid_cent_down">可使用{{user.valibleTime}}分钟</div>
+                            <div class="mid_cent_up">可骑行{{user.valibleMileage|number:2}}公里</div>
+                            <div class="mid_cent_down">可使用{{user.valibleTime/60.0|number:3}}小时</div>
                         </div>
                         <div class="mid_nub">{{user.balance}}</div>
                     </div>
