@@ -42,7 +42,7 @@ class RegHandler(BaseHandler):
                 raise RegInerError()
 
             result = JsonTemplate.newJsonRes()
-            self.session[SessionUserID] = str(res["id"])
+            self.session[SessionUserID] = res["id"]
             self.session.save();
 
         except ZebraError as e:
