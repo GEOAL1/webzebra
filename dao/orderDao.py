@@ -33,9 +33,9 @@ class OrderDao(IMysqlDao):
         return result
 
     def getUserOrderByUserID(self,user_id):
-        sql = "select * from t_order where user_id = %s";
+        sql = "select *,TIMESTAMPDIFF(MINUTE,order_time,NOW()) as cost_time from t_order where user_id = %s";
         return self.db.get(sql,user_id)
 
     def getUserOrderByOrderID(self,order_id):
-        sql = "select *,MINUTE(TIMEDIFF(NOW(),order_time)) as cost_time  from t_order where order_id = %s";
+        sql = "select *,TIMESTAMPDIFF(MINUTE,order_time,NOW()) as cost_time  from t_order where order_id = %s";
         return self.db.get(sql,order_id)

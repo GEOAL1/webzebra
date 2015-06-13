@@ -23,7 +23,7 @@ class BikeCtrlHandler(BaseHandler):
         try:
             user_id = self.session[SessionUserID]
             bikeID = self.get_argument("bikeID")
-            self.bikeService.sendCtrlCmd(bikeID,user_id)
+            self.bikeService.sendCtrlCmd(bikeID,user_id,cmd)
             result = JsonTemplate.newJsonRes().setErrMsg("OK").toJson()
         except Exception as e:
             print e

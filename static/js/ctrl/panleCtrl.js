@@ -49,8 +49,8 @@ app.controller("panelController", function ($scope, userService, wxService, bike
 
         if (status === 0) {
             $scope.user = data.body;
-            $scope.user.valibleMileage = bikeService.valibleMileage( $scope.user.balance)
-            $scope.user.valibleTime = bikeService.valibleTime($scope.user.balance)
+            $scope.user.valibleMileage = bikeService.calValiableMileage( $scope.user.balance)
+            $scope.user.valibleTime = bikeService.calValibleTime($scope.user.balance)
 
         } else {
             alert("获得用户信息失败，正在重新加载")
@@ -84,19 +84,27 @@ app.controller("panelController", function ($scope, userService, wxService, bike
         })
     }
 
-    geoService.getGeo(function (status, lng, lat) {
-        if (status == 0) {
-            $scope.lng = lng;
-            $scope.lat = lat;
-        } else {
-            $scope.lng = 116.397128
-            $scope.lat = 39.916527
-        }
+    retryGeoNum = 0;
+    $scope.init =  function() {
+        geoService.getGeo(function (status, lng, lat) {
+            if (status == 0) {
+                $scope.lng = lng;
+                $scope.lat = lat;
+            } else {
+                if(retryGeoNum < 1) {
+                    $scope.init()
+                    retryGeoNum++
+                }
+                $scope.lng = 116.397128
+                $scope.lat = 39.916527
+            }
+            $scope.getNearBike()
 
-        $scope.getNearBike()
+        });
+    }
 
+    $scope.init()
 
-    });
 
 
 })

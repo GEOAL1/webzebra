@@ -16,7 +16,7 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
                 $scope.order.mileage= $scope.bike.mileage - $scope.order.begin_mileage
                 $scope.order.cost = bikeService.calPrice($scope.order.mileage,$scope.order.cost_time)
 
-                $scope.order.price =  $scope.order.cost
+               $scope.order.price =  $scope.order.cost
                 if($scope.order.cost < 10)
                     $scope.order.price = 10
 

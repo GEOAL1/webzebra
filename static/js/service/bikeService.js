@@ -160,11 +160,17 @@ app.service('bikeService', function ($rootScope, $http) {
         },
 
         calValiableMileage:function(balance) {
-            return balance
+            ret = balance / 10.0 / 0.8;
+            if(ret < 0 )
+                ret = 0
+            return ret
         },
 
-        calValableTime:function(balance){
-            return balance / 10.0 / 0.8 * 1000
+        calValibleTime:function(balance){
+            ret = balance;
+            if(ret < 0 )
+                ret = 0
+            return ret
         }
 
 
