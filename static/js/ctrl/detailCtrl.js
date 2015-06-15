@@ -66,7 +66,7 @@ app.controller("detailController", function ($timeout, $scope, $http, userServic
                     scaleControl: true,
                     scaleControlOptions: {
                         //设置控件位置相对右下角对齐，向左排列
-                        position: qq.maps.ControlPosition.BOTTOM_RIGHT
+                        position: qq.maps.ControlPosition.TOP_LEFT
                     }
                 })
 
