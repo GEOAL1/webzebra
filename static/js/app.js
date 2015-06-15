@@ -55,14 +55,3 @@ app.directive('zebraNavitem', function () {
     };
 });
 
-/*
-$(function () {
-    ;
-    (function ($) {
- var menuBtn = $('.more-menu');
-        var subMenu = $('#sub-menu');
-        $(menuBtn).click(function () {
-            $(subMenu).slideToggle();
-        });
-    })(jQuery);
- });*/

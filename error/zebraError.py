@@ -174,3 +174,11 @@ class InvaildBikeCtrlCmdError(ZebraError):
         pass
 pass
 
+
+class NotExistedPhoneOrSamePasswordError(ZebraError):
+    def __init__(self):
+        self.errCode = -1005
+        self.errMsg = "不存在的手机号或密码与原来一样"
+        pass
+    pass
+

@@ -1,7 +1,3 @@
-/**
- * Created by eric on 6/2/15.
- */
-
 app.controller("rechargeController", function ($scope, $http, userService) {
 
         $scope.recharge  = function(rechargeAmount,$event) {

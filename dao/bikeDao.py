@@ -129,7 +129,7 @@ class BikeDao(IMysqlDao):
 
     def lockBike(self,bikeID):
         ctrl = JsonBikeCtl()
-        ctrl.setBikeID(bikeID)
+        ctrl.setBikeID(str(bikeID))
         ctrl.setLockBike(1)
         ctrlRet = ctrl.tojsonStr()
         RedisCache().listRpush("bikeCtrlTopic", ctrlRet)

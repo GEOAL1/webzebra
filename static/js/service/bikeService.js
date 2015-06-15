@@ -116,7 +116,6 @@ app.service('bikeService', function ($rootScope, $http) {
             })
         },
 
-
         bikeNavigate: function (bike) {
             qq.maps.convertor.translate(new qq.maps.LatLng(bike.latitude, bike.longitude), 1, function (res) {
                         wx.openLocation({

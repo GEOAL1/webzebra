@@ -28,3 +28,6 @@ class UserService(IService):
     def selecUserInfoByUid(self,userid):
         return self.userDao.selecUserInfoByUid(userid)
 
+    def updatePasswordByPhone(self,phone,password):
+        self.userDao.updatePassowordByPhone(phone,password)
+

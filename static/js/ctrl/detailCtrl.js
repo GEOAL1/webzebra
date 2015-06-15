@@ -89,11 +89,6 @@ app.controller("detailController", function ($timeout, $scope, $http, userServic
             }else{
                 $scope.bike.state = "可订"
             }
-
-
-/*
-                alert(parseInt($scope.map.getDistance(mypoint,bikepoint))+"米")
-*/
         });
     }
 
@@ -104,7 +99,6 @@ app.controller("detailController", function ($timeout, $scope, $http, userServic
         alert("不合法的车辆编号")
         window.location.href = "/"
     }
-
 
     geoService.getGeo(function (status, lng, lat) {
         if (status == 0) {

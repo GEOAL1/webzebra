@@ -6,7 +6,7 @@ app.controller("bikeInfoController", function ($timeout, $scope, $http, userServ
         bikeService.getBikeInfo(bike_id,function(state,data){
             if(state == 0) {
                 $scope.bike = data.body;
-                if($scope.bike.lock_state==1) {
+                if($scope.bike.lock_state==0) {
                     $scope.bike.nextLockState = "锁车"
                     $scope.bike.curLockState="未锁"
                     $scope.lock_img = "img/lock.png"

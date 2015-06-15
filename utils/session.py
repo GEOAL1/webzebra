@@ -30,6 +30,11 @@ class Session(SessionData):
     def save(self):
         self["create_time"] = int(time.time())
         self.session_manager.set(self.request_handler, self)
+
+    def clear(self):
+        self.session_manager.clr(self.request_handler,self)
+
+
 class SessionManager(object):
     def __init__(self, secret, store_options, session_timeout):
         self.secret = secret
@@ -45,9 +50,9 @@ class SessionManager(object):
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
     def _fetch(self, session_id):
         try:
-            session_data = raw_data = self.redis.get(session_id)
+            session_data = raw_data = self.redis.get("session_"+session_id)
             if raw_data != None:
-                self.redis.setex(session_id, self.session_timeout, raw_data)
+                self.redis.setex("session_"+session_id, self.session_timeout, raw_data)
                 session_data = json.loads(raw_data)
             if type(session_data) == type({}):
                 return session_data
@@ -83,7 +88,10 @@ class SessionManager(object):
         request_handler.set_secure_cookie("session_id", session.session_id)
         request_handler.set_secure_cookie("verification", session.hmac_key)
         session_data = json.dumps(dict(session.items()))
-        self.redis.setex(session.session_id, self.session_timeout, session_data)
+        self.redis.setex("session_"+session.session_id, self.session_timeout, session_data)
+
+    def clr(self,request_handler, session):
+        pass
     def _generate_id(self):
         new_id = hashlib.sha256(self.secret + str(uuid.uuid4()))
         return new_id.hexdigest()
@@ -91,3 +99,9 @@ class SessionManager(object):
         return hmac.new(session_id, self.secret, hashlib.sha256).hexdigest()
 class InvalidSessionException(Exception):
     pass
+
+
+if __name__ == '__main__':
+   cli = redis.StrictRedis()
+   for key in cli.scan_iter("session_*"):
+    print key

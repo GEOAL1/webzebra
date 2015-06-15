@@ -11,11 +11,11 @@ from tornado.options import define, options
 from handle.amountHandle import RechargeHandler
 from handle.bikeHandle import NearBikeHandler, BikeCtrlHandler, BikeInfoHandler
 from handle.defaultHandle import DefaultHandler
-from handle.loginHandle import LoginHandler
 from handle.mainHandle import MainHandler
-from handle.orderHandle import GetOrderHandler, OrderBikeHandler, FinishOrderHandler, GetOrderByUserIDHandler
-from handle.regHandle import RegHandler, SendPhoneCodeHandle, CheckPhoneHandle
-from handle.userHandler import UserInfoHandler
+from handle.orderHandle import OrderBikeHandler, GetOrderHandler, FinishOrderHandler, GetOrderByUserIDHandler
+
+from handle.userHandler import UserInfoHandler, LoginHandler, RegHandler, CheckPhoneHandle, SendPhoneCodeHandle, \
+    FindPasswordHandle
 from handle.weixinServiceHandle import WeixinServiceHandle
 from service.amountService import AmountService
 from service.bikeService import BikeService
@@ -32,7 +32,7 @@ class ZebraApplicatoin(tornado.web.Application):
         settings = dict(
             cookie_secret="e446976943b4e8442f099fed1f3fea28462d5832f483a0ed9a3d5d3859f==78d",
             session_secret="3cdcb1f00803b6e78ab50b466a40b9977db396840c28307f428b25e2277f1bcc",
-            session_timeout=12000,
+            session_timeout=6000,
 
             store_options={
                 'redis_host': 'localhost',
@@ -61,13 +61,14 @@ class ZebraApplicatoin(tornado.web.Application):
             (r"/wx/o/order", OrderBikeHandler),
             (r"/wx/o/get"  , GetOrderHandler),
             (r"/wx/o/finish", FinishOrderHandler),
+            (r"/wx/u/order", GetOrderByUserIDHandler),
 
 
             # 用户信息管理
             (r"/wx/u/reg", RegHandler),
             (r"/wx/u/checkPhone/(\d{11})", CheckPhoneHandle),
             (r"/wx/u/info", UserInfoHandler),
-            (r"/wx/u/order", GetOrderByUserIDHandler),
+            (r"/wx/u/findPassword", FindPasswordHandle),
 
             #帐户管理
             (r"/wx/a/recharge", RechargeHandler),

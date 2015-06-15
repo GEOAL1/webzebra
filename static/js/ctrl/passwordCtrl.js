@@ -1,4 +1,4 @@
-app.controller("registerController", function ($scope, $http, userService) {
+app.controller("passwordController", function ($scope, $http, userService) {
     $scope.countdown = 0
     $scope.sendCode_show=true
 
@@ -29,9 +29,6 @@ app.controller("registerController", function ($scope, $http, userService) {
         })
     }
 
-    $scope.signupForm = userService.register
+    $scope.findpassword = userService.findPassword
 
 })
-
-
-

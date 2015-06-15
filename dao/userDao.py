@@ -40,10 +40,14 @@ class UserDao(IMysqlDao):
         return self.db.get(sql, username)
 
 
+    def updatePassowordByPhone(self,phone,password):
+        sql = "update t_user set password = %s where phone_num=%s"
+        if self.db.execute_rowcount(sql,password,phone) <= 0:
+            raise NotExistedPhoneOrSamePasswordError()
 
     def recharge(self,userid,rechargeNum):
         sql = "" \
-"update t_user set balance=%s+balance where user_id = %s"
+            "update t_user set balance=%s+balance where user_id = %s"
         return self.db.update(sql,rechargeNum,userid)
 
     def callTest(self):

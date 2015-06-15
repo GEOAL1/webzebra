@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
     <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
     <script src="js/angular.min.js"></script>
+
     <script src="js/lib/crypto/sha1.js"></script>
     <script src="js/lib/crypto/core-min.js"></script>
     <script src="js/lib/crypto/enc-base64-min.js"></script>
@@ -30,7 +32,7 @@
 <div class="container">
     <div class="content">
         <!---->
-        <form id="signup_form" class="form-signin" name="signup_form" ng-submit="signupForm(signup)">
+        <form id="signup_form"  name="signup_form" ng-submit="signupForm(signup)">
 
             <!--手机号-->
             <div class="form-group input-group-lg">
@@ -97,7 +99,6 @@
                 <div ng-show="signup_form.confirmCode.$dirty && signup_form.confirmCode.$invalid">
                     验证码不正确
                 </div>
-
             </div>
         </form>
     </div>

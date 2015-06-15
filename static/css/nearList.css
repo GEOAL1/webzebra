@@ -4,13 +4,12 @@
 
 #detail_info a {
     display: block;
-
 }
 
 #detail_info > a {
     display: -moz-box;
-    -moz-box-orient: horizontal;
     display: -webkit-box;
+    -moz-box-orient: horizontal;
     -webkit-box-orient: horizontal;
     font-size: 12px;
     padding: 10px 5px;

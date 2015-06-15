@@ -3,3 +3,11 @@
     margin-top: 17px;
     display: block;
 }
+
+.a-findp {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+    font-size: 12px;
+    color: #999;
+}

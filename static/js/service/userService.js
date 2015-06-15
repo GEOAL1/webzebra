@@ -29,8 +29,6 @@ app.service('userService', function ($rootScope, $http) {
                 alert("登录超时，请重新登录")
                 window.location.href = "/static/login.html"
             }
-            alert(status)
-
             callback(-1, {errorCode: -1, errorMeg: status})
         });
     };
@@ -102,6 +100,24 @@ app.service('userService', function ($rootScope, $http) {
                 } else {
                     alert("充值失败：" + data.errMsg);
                 }
+                if (cb != undefined) {
+                    cb(state, data)
+                }
+            })
+        },
+        findPassword:function(ph,password,confirmCode,cb) {
+
+            ph = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(ph));		// 将 WordArray 用 Base64 加密
+            pw =  String(CryptoJS.SHA1(password))
+
+            sendCmd("/wx/u/findPassword", "GET", {ph:ph,pw:pw,confirmCode:confirmCode}, function (statue, data) {
+                if (statue == 0) {
+                    alert("更改密码成功，跳转到主页")
+                    window.location.href = "/";
+                } else {
+                    alert(data.errorMeg);
+                }
+
                 if (cb != undefined) {
                     cb(state, data)
                 }
