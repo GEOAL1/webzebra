@@ -45,7 +45,7 @@
             <div class="form-group input-group-lg">
                 <label for="password" class="sr-only">Password</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="密码(6-20位)"
-                       ng-model="signup.password" ng-minlength="6" ng-maxlength="20" required>
+                       ng-model="signup.password" ng-minlength="6" ng-maxlength="20" required autocomplete="off">
             </div>
 
             <!--重复密码-->
@@ -53,7 +53,8 @@
                 <label for="confirmPassword" class="sr-only">Password</label>
 
                 <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
-                       placeholder="再次输入密码" ng-model="signup.confirmPassword" pw-check="password" required/>
+                       placeholder="再次输入密码" ng-model="signup.confirmPassword" pw-check="password"
+                       required autocomplete="off"/>
             </div>
 
             <!--掩证码-->
@@ -62,7 +63,7 @@
                     <label for="confirmCode" class="sr-only">valatileCode</label>
                     <input type="text" id="confirmCode" name="confirmCode" ng-model="signup.confirmCode"
                            class="form-control" placeholder="输入验证码"
-                           required>
+                           required autocomplete="off">
                 </div>
 
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-top: 6px;display: inline-block;"

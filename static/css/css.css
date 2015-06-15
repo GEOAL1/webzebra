@@ -4,7 +4,6 @@ body, html { margin: 0px; font-family: 微软雅黑; padding: 0px; font-size: 12
 a{ color:#fff; text-decoration:none;}
 a:visited{ color:#fff;}
 a.link{color:#fff; text-decoration:none;}
-.top { width:100%; height: 120px; background: #1acbbb; font-size: 45px; text-align: center; color: #fff; line-height: 120px; }
 .box { display: -webkit-box; display: -moz-box; display: box ; display: -o-box; width: 100%; height: 100%; -webkit-box-orient: vertical; -moz-box-orient: vertical; -o-box-orient: vertical; box-orient: vertical; }
 .top_info { width: 100%; height: 320px; background:url(../img/top_bg.jpg) no-repeat center; background-size:100%; text-align:center; padding-top:50px; }
 .head_img{ width:100%; height:182px; text-align:center;}

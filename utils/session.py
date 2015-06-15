@@ -105,3 +105,4 @@ if __name__ == '__main__':
    cli = redis.StrictRedis()
    for key in cli.scan_iter("session_*"):
     print key
+   cli.move()
