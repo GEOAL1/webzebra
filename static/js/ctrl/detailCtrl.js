@@ -63,15 +63,27 @@ app.controller("detailController", function ($timeout, $scope, $http, userServic
                 $scope.map=new soso.maps.Map(document.getElementById("mapContainer"),{
                     center:center,
                     zoom:15,
+                    scaleControl: true,
+                    scaleControlOptions: {
+                        //设置控件位置相对右下角对齐，向左排列
+                        position: qq.maps.ControlPosition.BOTTOM_RIGHT
+                    }
                 })
+
 
 
             geoService.addMark($scope.map,$scope.lng,$scope.lat,null,
                 function(mark){
+                    new qq.maps.Circle({
+                        center:mark.getPosition(),
+                        radius: 500,
+                        strokeWeight:1,
+                        map: $scope.map
+                    });
 
                 });
 
-                geoService.addMark($scope.map,$scope.bike.longitude,$scope.bike.latitude,"img/motor5.png",
+                geoService.addMark($scope.map,$scope.bike.longitude,$scope.bike.latitude,"img/zebra08.png",
                     function(mark){
                         $scope.map.panTo(mark.getPosition())
                     });
