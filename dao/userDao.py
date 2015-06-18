@@ -14,16 +14,6 @@ class UserDao(IMysqlDao):
     def selectAll(self):
         return self.db.query(self.defaultSelectSql % "1");
 
-    def add(self, user):
-        sql = "insert into t_user(phone_num,password) values(%s,%s)";
-        xid = self.db.execute(sql, user["phone"], user["password"]);
-        user["id"] = xid;
-        if xid > 0:
-            return user;
-        else:
-            raise CreateUserError()
-
-
     def selecUserInfoByUid(self,user_id):
         sql = "select * from t_user where user_id = %s"
         return self.db.get(sql,user_id)
@@ -40,6 +30,15 @@ class UserDao(IMysqlDao):
         return self.db.get(sql, username)
 
 
+    def add(self, user):
+        sql = "insert into t_user(phone_num,password) values(%s,%s)";
+        xid = self.db.execute(sql, user["phone"], user["password"]);
+        user["id"] = xid;
+        if xid > 0:
+            return user;
+        else:
+            raise CreateUserError()
+
     def updatePassowordByPhone(self,phone,password):
         sql = "update t_user set password = %s where phone_num=%s"
         if self.db.execute_rowcount(sql,password,phone) <= 0:
@@ -50,9 +49,6 @@ class UserDao(IMysqlDao):
             "update t_user set balance=%s+balance where user_id = %s"
         return self.db.update(sql,rechargeNum,userid)
 
-    def callTest(self):
-        sql = "call order_bike(1000103,123)"
-        return self.db.query(sql)
 
 if __name__ == '__main__':
     dao = UserDao();

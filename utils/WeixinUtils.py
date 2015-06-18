@@ -23,13 +23,17 @@ class WeixinMananger:
     def getAccessToken(self):
         token = self.__getRedisWXAccessToken()
         if token is None:
-            token = self.wechat.grant_token()
-            if token != None:
-                timeout = token["expires_in"]
-                self.redis.setex("wx_access_token", timeout, token["access_token"])
-                return token["access_token"]
-            else:
-                return None;
+            tryCnt = 0;
+            while tryCnt < 2:
+                token = self.wechat.grant_token()
+                if token != None:
+                    timeout = token["expires_in"]
+                    self.redis.setex("wx_access_token", 4800, token["access_token"])
+                    return token["access_token"]
+                else:
+                    tryCnt += 1
+                    continue
+            return None;
         else:
             return token
 
@@ -37,13 +41,16 @@ class WeixinMananger:
         ticket = self.__getRedisWXJsApiToken()
         if ticket is None:
             print self.getAccessToken()
-            ticket = self.wechat.grant_jsapi_ticket()
-            if (ticket != None):
-                timeout = ticket["expires_in"];
-                self.redis.setex("wx_jsapi_token", timeout, ticket["ticket"])
-                return ticket["ticket"]
-            else:
-                return None
+            tryCnt = 0;
+            while tryCnt < 2:
+                ticket = self.wechat.grant_jsapi_ticket()
+                if (ticket != None):
+                    timeout = ticket["expires_in"];
+                    self.redis.setex("wx_jsapi_token", 4800, ticket["ticket"])
+                    return ticket["ticket"]
+                else:
+                    tryCnt += 1;
+            return None
         else:
             return ticket
 
@@ -58,8 +65,9 @@ class WeixinMananger:
         data["appId"] = self.appid
         data["signature"] = self.wechat.generate_jsapi_signature(timestamp, noncestr, url, jsApiToken)
         data["jsApiList"] = ["openLocation", "getLocation", "scanQRCode", "showMenuItems"]
-        data["debug"] = False
+        data["debug"] = True
         return data
+
 
 if __name__ == '__main__':
     wxm = WeixinMananger();

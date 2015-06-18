@@ -17,39 +17,41 @@ class BikeDao(IMysqlDao):
     defaultDynamicSelectSql = "select * from t_bike_dynamic where %s"
     defaultCommonSelectSql = "select * from t_bike_common where %s"
     defautlDyUpdateSql = "update t_bike_dynamic set"
+
     '''
-        动态表操作
+        查询操作
     '''
     def selectDyAll(self):
         return self.db.query(self.defaultDynamicSelectSql % "1");
 
     def getRangeeDyByLoLa(self,centerLo,centerLa,scopeRange):
-        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on " \
+        sql = "select a.*,b.*, fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on " \
               " a.bike_id = b.bike_id  and fun_distance(%s,%s,a.latitude,a.longitude) < %s "
         ret = self.db.query(sql, centerLa, centerLo,centerLa, centerLo,scopeRange/1000.0);
         return ret
 
     def getIdleRangeeDyByLoLa(self,centerLo,centerLa,scopeRange):
-        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on " \
+        sql = "select a.*,b.*,fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on " \
               " a.bike_id = b.bike_id and a.order_state = 0 and fun_distance(%s,%s,a.latitude,a.longitude) < %s order by distance ASC limit 10"
         ret = self.db.query(sql, centerLa, centerLo,centerLa, centerLo,scopeRange/1000.0);
         return ret
 
 
     def getBikeDetailInfoByID(self, centerLo, centerLa, bike_id):
-        sql = "select a.*,b.price, fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on  a.bike_id=%s and b.bike_id=%s"
+        sql = "select a.*,b.*, fun_distance(%s,%s,latitude,longitude) as distance from t_bike_dynamic a  join  t_bike_common b  on  a.bike_id=%s and b.bike_id=%s"
         ret = self.db.query(sql, centerLa, centerLo, bike_id, bike_id);
         return ret
 
-    def setBikeeDyInfoById(self,bikeDynamicInfo):                                                              
+    def getBikeinfoByid(self,bikeId):
+        cond = "bike_id = %s "
+        sql = "select * from t_bike_common,t_bike_dynamic where t_bike_common.bike_id = %s and t_bike_dynamic.bike_id = %s";
+        ret = self.db.get(sql,bikeId,bikeId)
+        return ret
+
+
+    def setBikeeDyInfoById(self,bikeDynamicInfo):
         sql = "update t_bike_dynamic set cur_power = %d ,throttle_state = %d,brake_state = %d,motor_state = %d,lock_state = %d,indicator_state = %d,longitude = %f,latitude = %f,speed = %f , time_samp = '%s' where bike_id = %d" % (bikeDynamicInfo["cur_power"],bikeDynamicInfo["throttle_state"],bikeDynamicInfo["brake_state"],bikeDynamicInfo["motor_state"],bikeDynamicInfo["lock_state"],bikeDynamicInfo["indicator_state"],bikeDynamicInfo["longitude"],bikeDynamicInfo["latitude"],bikeDynamicInfo["speed"],bikeDynamicInfo["timesamp"],bikeDynamicInfo["bike_id"])
         self.db.execute(sql)
-
-    def getBikeDyInfoByid(self,bikeId):
-        cond = "bike_id = %s "
-        sql = self.defaultDynamicSelectSql % (cond)
-        ret = self.db.get(sql,bikeId)
-        return ret
     
     def setCurPower(self,cur_power,bikeID):
         cond = "cur_power = %d , time_samp = '%s' "

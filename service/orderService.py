@@ -10,7 +10,7 @@ import pytz
 class OrderService(IService):
     def orderBike(self,user_id,bike_id):
         user = self.userDao.selecUserInfoByUid(user_id)
-        bike = self.bikeDao.getBikeDyInfoByid(bike_id)
+        bike = self.bikeDao.getBikeinfoByid(bike_id)
         if(bike.order_state == 1):
             raise BikeIsOnServiceError()
             raise
@@ -51,7 +51,7 @@ class OrderService(IService):
         if(order.user_id != int(user_id)):
             raise OrderOwnerError()
 
-        bike  = self.bikeDao.getBikeDyInfoByid(order.bike_id)
+        bike  = self.bikeDao.getBikeinfoByid(order.bike_id)
 
         startTime = int(time.mktime(order.order_time.timetuple())) +3600*8;
 
